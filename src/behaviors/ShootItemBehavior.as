@@ -8,8 +8,8 @@
 package behaviors {
 
 // rat missiles
-public class ShootBehavior extends BehaviorBase{
-    public function ShootBehavior() {
+public class ShootItemBehavior extends BehaviorBase{
+    public function ShootItemBehavior() {
     }
 }
 }

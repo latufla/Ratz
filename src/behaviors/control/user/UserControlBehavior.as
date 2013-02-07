@@ -49,5 +49,9 @@ public class UserControlBehavior extends ControlBehavior{
     override public function get trap():Boolean{
         return _gamepad.trapKeyPressed;
     }
+
+    override public function get boost():Boolean{
+        return _gamepad.boostKeyPressed;
+    }
 }
 }

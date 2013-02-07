@@ -8,8 +8,8 @@
 package utils {
 import behaviors.BoostBehavior;
 import behaviors.gamepad.GamepadBehavior;
-import behaviors.ShootBehavior;
-import behaviors.TrapBehavior;
+import behaviors.ShootItemBehavior;
+import behaviors.TrapItemBehavior;
 
 import controller.ControllerBase;
 
@@ -21,8 +21,8 @@ public class TestUtil {
         var ratC:ControllerBase = new ControllerBase();
         var gamepad:GamepadBehavior = new GamepadBehavior();
         ratC.addBehavior(new BoostBehavior());
-        ratC.addBehavior(new ShootBehavior());
-        ratC.addBehavior(new TrapBehavior());
+        ratC.addBehavior(new ShootItemBehavior());
+        ratC.addBehavior(new TrapItemBehavior());
         ratC.addBehavior(gamepad);
 
         trace("-------------");

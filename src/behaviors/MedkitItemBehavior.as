@@ -12,8 +12,8 @@ import model.RObjectBase;
 
 import utils.PhysEngineConnector;
 
-public class MedkitBehavior extends BehaviorBase{
-    public function MedkitBehavior() {
+public class MedkitItemBehavior extends BehaviorBase{
+    public function MedkitItemBehavior() {
         super();
     }
 

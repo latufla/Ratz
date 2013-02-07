@@ -27,5 +27,9 @@ public class ControlBehavior extends BehaviorBase {
     public function get trap():Boolean{
         return false;
     }
+
+    public function get boost():Boolean{
+        return false;
+    }
 }
 }

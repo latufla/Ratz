@@ -19,6 +19,7 @@ public class GamepadBehavior extends BehaviorBase{
     private static const RIGHT_KEY:uint = 39;
     private static const RUN_KEY:uint = 16;
     private static const TRAP_KEY:uint = 90;
+    private static const BOOST_KEY:uint = 88;
 
     private var _keysLib:Array;
     private var _activeKeys:Array;
@@ -78,6 +79,10 @@ public class GamepadBehavior extends BehaviorBase{
 
     public function get trapKeyPressed():Boolean{
         return _activeKeys[TRAP_KEY];
+    }
+
+    public function get boostKeyPressed():Boolean{
+        return _activeKeys[BOOST_KEY];
     }
 }
 }

@@ -7,12 +7,12 @@
  */
 package {
 import behaviors.BoostBehavior;
-import behaviors.MedkitBehavior;
+import behaviors.MedkitItemBehavior;
 import behaviors.MoveBehavior;
-import behaviors.TrapCreateBehavior;
-import behaviors.gamepad.GamepadBehavior;
-import behaviors.ShootBehavior;
 import behaviors.TrapBehavior;
+import behaviors.gamepad.GamepadBehavior;
+import behaviors.ShootItemBehavior;
+import behaviors.TrapItemBehavior;
 import behaviors.control.user.UserControlBehavior;
 
 import controller.ControllerBase;
@@ -130,7 +130,8 @@ public class Engine extends Sprite{
         ratController.object = _rat;
         ratController.addBehavior(new UserControlBehavior());
         ratController.addBehavior(new MoveBehavior());
-        ratController.addBehavior(new TrapCreateBehavior());
+        ratController.addBehavior(new TrapBehavior());
+        ratController.addBehavior(new BoostBehavior());
         ratController.startBehaviors();
 
         var medkit:RObjectBase = new RObjectBase();
@@ -144,7 +145,7 @@ public class Engine extends Sprite{
 
         var medkitController:ControllerBase = new ControllerBase();
         medkitController.object = medkit;
-        medkitController.addBehavior(new MedkitBehavior());
+        medkitController.addBehavior(new MedkitItemBehavior());
         medkitController.startBehaviors();
 
         var trap:RObjectBase = new RObjectBase();
@@ -157,7 +158,7 @@ public class Engine extends Sprite{
 
         var trapController:ControllerBase = new ControllerBase();
         trapController.object = trap;
-        trapController.addBehavior(new TrapBehavior());
+        trapController.addBehavior(new TrapItemBehavior());
         trapController.startBehaviors();
     }
 }
