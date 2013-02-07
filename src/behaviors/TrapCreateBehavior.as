@@ -14,6 +14,8 @@ import flash.display.Stage;
 
 import flash.events.Event;
 import flash.geom.Point;
+import flash.utils.clearTimeout;
+import flash.utils.setTimeout;
 
 import model.RObjectBase;
 
@@ -21,19 +23,26 @@ import utils.RPolygon;
 import utils.RShape;
 
 public class TrapCreateBehavior extends BehaviorBase{
+
+    private var _timeout:int = 1000;
+    private var _timeoutId:uint;
+
     public function TrapCreateBehavior() {
         super();
     }
 
     // use timer or starling Enter Frame
     private function onEFApplyBehavior(e:Event):void {
-        var controlBehavior:ControlBehavior = _controller.getBehaviorByClass(ControlBehavior) as ControlBehavior;
-        if(!controlBehavior)
+        if(!_enabled)
             return;
 
-        if(controlBehavior.trap)
-            applyTrap(_controller.object);
+        var controlBehavior:ControlBehavior = _controller.getBehaviorByClass(ControlBehavior) as ControlBehavior;
+        if(!controlBehavior || !controlBehavior.trap)
+            return;
+
+        applyTrap(_controller.object);
     }
+
     override public function start(c:ControllerBase):void{
         super.start(c);
 
@@ -59,6 +68,9 @@ public class TrapCreateBehavior extends BehaviorBase{
         trapController.object = trap;
         trapController.addBehavior(new TrapBehavior());
         trapController.startBehaviors();
+
+        _enabled = false;
+        _timeoutId = setTimeout(function():void{_enabled = true; clearTimeout(_timeoutId)},_timeout);
     }
 }
 }

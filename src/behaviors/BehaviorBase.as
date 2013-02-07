@@ -10,18 +10,26 @@ import controller.ControllerBase;
 
 public class BehaviorBase {
 
-    public var _controller:ControllerBase;
+    protected var _controller:ControllerBase;
+    protected var _enabled:Boolean = true;
+
     public function BehaviorBase() {
     }
 
     public function start(c:ControllerBase):void{
         _controller = c;
-        trace("start ", this);
     }
 
     public function stop():void{
         _controller = null;
-        trace("stop ", this);
+    }
+
+    public function get enabled():Boolean {
+        return _enabled;
+    }
+
+    public function set enabled(value:Boolean):void {
+        _enabled = value;
     }
 }
 }

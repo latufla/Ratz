@@ -33,7 +33,6 @@ public class MedkitBehavior extends BehaviorBase{
 
     private function onInteraction(medkit:RObjectBase, target:RObjectBase):void{
         target.ammunition.health += medkit.ammunition.health;
-        trace("onInteraction")
     }
 }
 }

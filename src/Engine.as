@@ -132,7 +132,6 @@ public class Engine extends Sprite{
         ratController.addBehavior(new MoveBehavior());
         ratController.addBehavior(new TrapCreateBehavior());
         ratController.startBehaviors();
-        ratController.getBehaviorByClass(TrapCreateBehavior).stop();
 
         var medkit:RObjectBase = new RObjectBase();
         medkit.position = new Point(650, 250);
