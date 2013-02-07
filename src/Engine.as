@@ -9,6 +9,7 @@ package {
 import behaviors.BoostBehavior;
 import behaviors.MedkitItemBehavior;
 import behaviors.MoveBehavior;
+import behaviors.ShootBehavior;
 import behaviors.TrapBehavior;
 import behaviors.gamepad.GamepadBehavior;
 import behaviors.ShootItemBehavior;
@@ -132,6 +133,7 @@ public class Engine extends Sprite{
         ratController.addBehavior(new MoveBehavior());
         ratController.addBehavior(new TrapBehavior());
         ratController.addBehavior(new BoostBehavior());
+        ratController.addBehavior(new ShootBehavior());
         ratController.startBehaviors();
 
         var medkit:RObjectBase = new RObjectBase();

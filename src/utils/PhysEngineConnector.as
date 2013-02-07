@@ -102,6 +102,11 @@ public class PhysEngineConnector {
         return _stubVel;
     }
 
+    public function setVelocity(obj:RObjectBase, vel:Point):void{
+        var physObj:Body = _physObjects[obj];
+        physObj.velocity = Vec2.fromPoint(vel);
+    }
+
     public function getRotation(obj:RObjectBase):Number{
         var physObj:Body = _physObjects[obj];
         return physObj.rotation;
@@ -132,6 +137,20 @@ public class PhysEngineConnector {
         var physObj:Body = _physObjects[obj];
         var napeV:Vec2 = Vec2.fromPoint(imp)
         physObj.applyImpulse(physObj.localVectorToWorld(napeV));
+    }
+
+    public function localPointToGlobal(obj:RObjectBase, lp:Point):Point{
+        var physObj:Body = _physObjects[obj];
+        var napeV:Vec2 = Vec2.fromPoint(lp);
+
+        return physObj.localPointToWorld(napeV).toPoint();
+    }
+
+    public function localVecToGlobal(obj:RObjectBase, v:Point):Point{
+        var physObj:Body = _physObjects[obj];
+        var napeV:Vec2 = Vec2.fromPoint(v);
+
+        return physObj.localVectorToWorld(napeV).toPoint();
     }
 
     public function applyAngularImpulse(obj:RObjectBase, aImp:int):void{

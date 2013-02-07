@@ -53,5 +53,9 @@ public class UserControlBehavior extends ControlBehavior{
     override public function get boost():Boolean{
         return _gamepad.boostKeyPressed;
     }
+
+    override public function get shoot():Boolean{
+        return _gamepad.shootKeyPressed;
+    }
 }
 }

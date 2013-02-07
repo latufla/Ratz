@@ -6,10 +6,31 @@
  * To change this template use File | Settings | File Templates.
  */
 package behaviors {
+import controller.ControllerBase;
 
-// rat missiles
+import model.RObjectBase;
+
+import utils.PhysEngineConnector;
+
 public class ShootItemBehavior extends BehaviorBase{
     public function ShootItemBehavior() {
+        super();
+    }
+
+    override public function start(c:ControllerBase):void{
+        super.start(c);
+
+        PhysEngineConnector.instance.addInteractionListener(_controller.object, onInteraction);
+    }
+
+    override public function stop():void{
+        super.stop();
+
+        PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
+    }
+
+    private function onInteraction(shotItem:RObjectBase, target:RObjectBase):void{
+        target.ammunition.health -= shotItem.ammunition.health;
     }
 }
 }

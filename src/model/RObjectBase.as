@@ -72,6 +72,10 @@ public class RObjectBase {
         return PhysEngineConnector.instance.getVelocity(this);
     }
 
+    public function set velocity(value:Point):void {
+        PhysEngineConnector.instance.setVelocity(this, value);
+    }
+
     public function set shapes(value:Vector.<RShape>):void {
         _shapes = value;
         PhysEngineConnector.instance.setShapes(this, _shapes);
@@ -83,6 +87,14 @@ public class RObjectBase {
     public function set material(value:RMaterial):void {
         _material = value;
         PhysEngineConnector.instance.setMaterial(this, _material);
+    }
+
+    public function localToField(p:Point):Point{
+        return PhysEngineConnector.instance.localPointToGlobal(this, p);
+    }
+
+    public function localVecToField(v:Point):Point{
+        return PhysEngineConnector.instance.localVecToGlobal(this, v);
     }
 
     public function get ammunition():Ammunition {

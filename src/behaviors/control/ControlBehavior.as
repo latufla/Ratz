@@ -31,5 +31,9 @@ public class ControlBehavior extends BehaviorBase {
     public function get boost():Boolean{
         return false;
     }
+
+    public function get shoot():Boolean{
+        return false;
+    }
 }
 }
