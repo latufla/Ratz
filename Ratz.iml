@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="Flex" version="4">
+  <component name="FlexBuildConfigurationManager" active="Ratz">
+    <configurations>
+      <configuration name="Ratz" pure-as="true" main-class="Ratz" output-file="Ratz.swf" output-folder="$MODULE_DIR$/out/production/Ratz">
+        <dependencies target-player="11.1">
+          <entries>
+            <entry library-id="fc99edf7-304c-43a1-86ae-b710d3842c66">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-id="d8694408-7cd7-4f2a-95d6-42dd52900809">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-id="ff412a2a-52b3-4c53-81fb-aafd854fd5d8">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-id="30b53f84-8cff-44ab-b8b9-6503c7f979e3">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="flexSDK4.6" />
+        </dependencies>
+        <compiler-options />
+        <packaging-air-desktop />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+    </configurations>
+    <compiler-options />
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="flexSDK4.6" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="nape-debug" level="project" />
+    <orderEntry type="library" exported="" name="starling" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="fc99edf7-304c-43a1-86ae-b710d3842c66" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/starling.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" exported="" name="console" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="d8694408-7cd7-4f2a-95d6-42dd52900809" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/console.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" exported="" name="nape-dev" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="ff412a2a-52b3-4c53-81fb-aafd854fd5d8" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/nape-dev.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" exported="" name="GUI" level="project" />
+    <orderEntry type="library" exported="" name="DebugNapeCreateObjectPanel" level="project" />
+    <orderEntry type="library" exported="" name="DebugGUI" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="30b53f84-8cff-44ab-b8b9-6503c7f979e3" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/assets/DebugGUI.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+

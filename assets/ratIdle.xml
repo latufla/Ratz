@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:b2c44f66bf12191f4874ec96f661abd1$ -->
+<TextureAtlas imagePath="ratIdle.png">
+    <SubTexture name="idle_1" x="810" y="2" width="200" height="60"/>
+    <SubTexture name="idle_2" x="608" y="64" width="200" height="60"/>
+    <SubTexture name="idle_3" x="608" y="2" width="200" height="60"/>
+    <SubTexture name="idle_4" x="406" y="64" width="200" height="60"/>
+    <SubTexture name="idle_5" x="406" y="2" width="200" height="60"/>
+    <SubTexture name="idle_6" x="204" y="64" width="200" height="60"/>
+    <SubTexture name="idle_7" x="204" y="2" width="200" height="60"/>
+    <SubTexture name="idle_8" x="2" y="64" width="200" height="60"/>
+    <SubTexture name="idle_9" x="2" y="2" width="200" height="60"/>
+</TextureAtlas>

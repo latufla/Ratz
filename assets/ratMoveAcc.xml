@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:eddf21f4a5acd13acef9ef8eead91ad6$ -->
+<TextureAtlas imagePath="ratMoveAcc.png">
+    <SubTexture name="moveAcc_1" x="96" y="74" width="92" height="34" frameX="-44" frameY="-14" frameWidth="200" frameHeight="60"/>
+    <SubTexture name="moveAcc_2" x="96" y="110" width="92" height="32" frameX="-44" frameY="-15" frameWidth="200" frameHeight="60"/>
+    <SubTexture name="moveAcc_3" x="2" y="110" width="92" height="32" frameX="-44" frameY="-15" frameWidth="200" frameHeight="60"/>
+    <SubTexture name="moveAcc_4" x="2" y="76" width="92" height="32" frameX="-44" frameY="-16" frameWidth="200" frameHeight="60"/>
+    <SubTexture name="moveAcc_5" x="2" y="40" width="92" height="34" frameX="-44" frameY="-14" frameWidth="200" frameHeight="60"/>
+    <SubTexture name="moveAcc_6" x="96" y="38" width="92" height="34" frameX="-44" frameY="-15" frameWidth="200" frameHeight="60"/>
+    <SubTexture name="moveAcc_7" x="2" y="2" width="92" height="36" frameX="-44" frameY="-13" frameWidth="200" frameHeight="60"/>
+    <SubTexture name="moveAcc_8" x="96" y="2" width="92" height="34" frameX="-44" frameY="-15" frameWidth="200" frameHeight="60"/>
+</TextureAtlas>
