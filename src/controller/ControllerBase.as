@@ -10,6 +10,8 @@ import behaviors.BehaviorBase;
 
 import model.ObjectBase;
 
+import model.ObjectBase;
+
 import view.ViewBase;
 
 public class ControllerBase {
@@ -25,6 +27,16 @@ public class ControllerBase {
 
     private function init():void {
         _behaviors ||= new Vector.<BehaviorBase>();
+    }
+
+    public static function create(obj:ObjectBase, behaviors:Vector.<BehaviorBase>):ControllerBase{
+        var c:ControllerBase = new ControllerBase();
+        c.object = obj;
+        for each(var p:BehaviorBase in behaviors){
+            c.addBehavior(p);
+        }
+
+        return c;
     }
 
     public function addBehavior(b:BehaviorBase):void{

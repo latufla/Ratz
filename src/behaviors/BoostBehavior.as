@@ -31,7 +31,6 @@ public class BoostBehavior extends BehaviorBase{
     public function BoostBehavior() {
     }
 
-    // use timer or starling Enter Frame
     override public function doStep():void {
         if(!_enabled)
             return;

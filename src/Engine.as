@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package {
+import behaviors.BehaviorBase;
 import behaviors.BoostBehavior;
 import behaviors.MedkitItemBehavior;
 import behaviors.MoveBehavior;
@@ -44,8 +45,6 @@ public class Engine extends Sprite{
 
     private var _rat:ObjectBase;
     private var _spaceView:BitmapDebug;
-
-    private var _ratView:MovieClip;
 
     public static var ratController:ControllerBase;
 
@@ -90,48 +89,25 @@ public class Engine extends Sprite{
     }
 
     private function createNapeObject(params:Object):void{
-        _rat = new ObjectBase();
-        _rat.position = new Point(650, 700);
-        _rat.shapes = new <RShape>[new RPolygon(0, 0, 30, 60)];
-        _rat.interactionGroup = params["other"]["group"];
         var material:Object = params["material"];
-        _rat.material = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);
+        var rMaterial:RMaterial = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);
+        _rat = ObjectBase.create(new Point(650, 700), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, params["other"]["group"]);
 
-
-        ratController = new ControllerBase();
-        ratController.object = _rat;
-        ratController.addBehavior(new UserControlBehavior());
-        ratController.addBehavior(new MoveBehavior());
-        ratController.addBehavior(new TrapBehavior());
-        ratController.addBehavior(new BoostBehavior());
-        ratController.addBehavior(new ShootBehavior());
+        ratController = ControllerBase.create(_rat, new <BehaviorBase>[new UserControlBehavior(), new MoveBehavior(), new TrapBehavior(), new BoostBehavior(), new ShootBehavior()]);
         ratController.startBehaviors();
         _field.add(ratController);
 
-        var medkit:ObjectBase = new ObjectBase();
-        medkit.position = new Point(650, 250);
-        medkit.shapes = new <RShape>[new RPolygon(0, 0, 30, 30)];
-        var material:Object = params["material"];
-        medkit.material = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);
-
+        var medkit:ObjectBase = ObjectBase.create(new Point(650, 250), new <RShape>[new RPolygon(0, 0, 30, 30)], rMaterial, params["other"]["group"]);
         medkit.ammunition.health = 35;
 
-        var medkitController:ControllerBase = new ControllerBase();
-        medkitController.object = medkit;
-        medkitController.addBehavior(new MedkitItemBehavior());
+        var medkitController:ControllerBase = ControllerBase.create(medkit, new <BehaviorBase>[new MedkitItemBehavior()]);
         medkitController.startBehaviors();
         _field.add(medkitController);
 
-        var trap:ObjectBase = new ObjectBase();
-        trap.position = new Point(200, 200);
-        trap.shapes = new <RShape>[new RPolygon(0, 0, 20, 20)];
-        trap.material = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);
-
+        var trap:ObjectBase = ObjectBase.create(new Point(200, 200), new <RShape>[new RPolygon(0, 0, 20, 20)], rMaterial, params["other"]["group"]);
         trap.ammunition.health = 20;
 
-        var trapController:ControllerBase = new ControllerBase();
-        trapController.object = trap;
-        trapController.addBehavior(new TrapItemBehavior());
+        var trapController:ControllerBase = ControllerBase.create(trap, new <BehaviorBase>[new TrapItemBehavior()]);
         trapController.startBehaviors();
         _field.add(trapController);
     }

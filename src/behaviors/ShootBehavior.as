@@ -10,6 +10,9 @@ import behaviors.control.ControlBehavior;
 
 import controller.ControllerBase;
 
+import flash.display.Stage;
+
+import flash.events.Event;
 import flash.geom.Point;
 import flash.utils.clearTimeout;
 import flash.utils.setTimeout;
@@ -17,6 +20,7 @@ import flash.utils.setTimeout;
 import model.ObjectBase;
 
 import utils.Config;
+import utils.RMaterial;
 
 import utils.RPolygon;
 
@@ -43,15 +47,12 @@ public class ShootBehavior extends BehaviorBase {
     }
 
     private function applyShoot(obj:ObjectBase):void {
-        var shot:ObjectBase = new ObjectBase();
-        shot.shapes = new <RShape>[new RPolygon(0, 0, 6, 12)];
-        shot.position = obj.localToField(new Point(0, -41));
+        var pos:Point = obj.localToField(new Point(0, -41));
+        var shot:ObjectBase = ObjectBase.create(pos, new <RShape>[new RPolygon(0, 0, 6, 12)], new RMaterial(), 1);
         shot.ammunition.health = 20;
         shot.velocity = obj.localVecToField(new Point(0, -500));
 
-        var shotController:ControllerBase = new ControllerBase();
-        shotController.object = shot;
-        shotController.addBehavior(new ShootItemBehavior());
+        var shotController:ControllerBase = ControllerBase.create(shot, new <BehaviorBase>[new ShootItemBehavior()]);
         shotController.startBehaviors();
         Config.field.add(shotController);
 

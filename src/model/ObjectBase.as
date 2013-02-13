@@ -7,6 +7,7 @@
  */
 package model {
 import flash.geom.Point;
+import flash.geom.Point;
 import flash.geom.Rectangle;
 
 import utils.PhysEngineConnector;
@@ -18,7 +19,6 @@ import utils.RShape;
 public class ObjectBase {
     protected static const DEFAULT_SHAPE:RPolygon = new RPolygon(0, 0, 30, 60);
     protected static const DEFAULT_POSITION:Point = new Point(0, 0);
-    protected static const DEFAULT_MATERIAL:RMaterial = new RMaterial(0.8, 1, 1.4, 1.5, 0.01);
 
     private var _shapes:Vector.<RShape>;
     private var _material:RMaterial;
@@ -34,11 +34,21 @@ public class ObjectBase {
     private function init():void {
         PhysEngineConnector.instance.initObject(this);
         PhysEngineConnector.instance.setShapes(this, new <RShape>[DEFAULT_SHAPE]);
-        PhysEngineConnector.instance.setMaterial(this, DEFAULT_MATERIAL);
+        PhysEngineConnector.instance.setMaterial(this, new RMaterial());
         PhysEngineConnector.instance.setPosition(this, DEFAULT_POSITION);
 
         _ammunition = new Ammunition();
     }
+
+    public static function create(pos:Point, shapes:Vector.<RShape>, material:RMaterial, interactionGroup:int):ObjectBase{
+        var obj:ObjectBase = new ObjectBase();
+        obj.shapes = shapes;
+        obj.material = material;
+        obj.position = pos;
+        obj.interactionGroup = interactionGroup;
+
+        return obj;
+     }
 
     public function applyImpulse(imp:Point):void{
         PhysEngineConnector.instance.applyImpulse(this, imp);

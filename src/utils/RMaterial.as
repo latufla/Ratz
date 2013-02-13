@@ -16,7 +16,7 @@ public class RMaterial {
     private var _density:Number;
     private var _rollingFriction:Number;
 
-    public function RMaterial(e:Number, dF:Number, sF:Number, d:Number, rF:Number) {
+    public function RMaterial(e:Number = 0.8, dF:Number = 1, sF:Number = 1.4, d:Number = 1.5, rF:Number = 0.01) {
         _elasticity = e;
         _dynamicFriction = dF;
         _staticFriction = sF;

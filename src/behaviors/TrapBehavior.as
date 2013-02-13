@@ -17,6 +17,7 @@ import flash.utils.setTimeout;
 import model.ObjectBase;
 
 import utils.Config;
+import utils.RMaterial;
 
 import utils.RPolygon;
 import utils.RShape;
@@ -30,7 +31,6 @@ public class TrapBehavior extends BehaviorBase{
         super();
     }
 
-    // use timer or starling Enter Frame
     override public function doStep():void {
         if(!_enabled)
             return;
@@ -43,14 +43,11 @@ public class TrapBehavior extends BehaviorBase{
     }
 
     private function applyTrap(obj:ObjectBase):void {
-        var trap:ObjectBase = new ObjectBase();
-        trap.shapes = new <RShape>[new RPolygon(0, 0, 20, 20)];
-        trap.position = obj.localToField(new Point(0, 41));
+        var pos:Point = obj.localToField(new Point(0, 41));
+        var trap:ObjectBase = ObjectBase.create(pos, new <RShape>[new RPolygon(0, 0, 20, 20)], new RMaterial(), 1);
         trap.ammunition.health = 30;
 
-        var trapController:ControllerBase = new ControllerBase();
-        trapController.object = trap;
-        trapController.addBehavior(new TrapItemBehavior());
+        var trapController:ControllerBase = ControllerBase.create(trap, new <BehaviorBase>[new TrapItemBehavior()]);
         trapController.startBehaviors();
         Config.field.add(trapController);
 
