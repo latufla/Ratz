@@ -5,12 +5,9 @@
  * Time: 20:12
  * To change this template use File | Settings | File Templates.
  */
-package {
+package utils {
 import debug.AmmunitionPanel;
 
-import Field;
-
-import nape.callbacks.CbType;
 import nape.space.Space;
 
 public class Config {

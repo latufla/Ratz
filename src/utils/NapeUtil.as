@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package utils {
-import flash.display.Bitmap;
+import flash.display.BitmapData;
 
 import nape.geom.AABB;
 import nape.geom.GeomPoly;
@@ -17,15 +17,14 @@ import nape.geom.IsoFunction;
 import nape.geom.MarchingSquares;
 import nape.geom.Vec2;
 import nape.phys.Body;
-import nape.phys.BodyType;
 import nape.shape.Polygon;
 
 public class NapeUtil {
     public function NapeUtil() {
     }
 
-    public static function bodyFromBitmap(b:Bitmap):Body{
-        var bdIso:NapeBitmapDataIso = new NapeBitmapDataIso(b.bitmapData, 0x80);
+    public static function bodyFromBitmapData(bd:BitmapData):Body{
+        var bdIso:NapeBitmapDataIso = new NapeBitmapDataIso(bd, 0x80);
         return run(bdIso, bdIso.bounds);
     }
 

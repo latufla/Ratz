@@ -11,56 +11,31 @@ import behaviors.MedkitItemBehavior;
 import behaviors.MoveBehavior;
 import behaviors.ShootBehavior;
 import behaviors.TrapBehavior;
-import behaviors.gamepad.GamepadBehavior;
-import behaviors.ShootItemBehavior;
 import behaviors.TrapItemBehavior;
 import behaviors.control.user.UserControlBehavior;
 
 import controller.ControllerBase;
 
-import debug.AmmunitionPanel;
-
 import debug.NapeCreateObjectPanel;
 
+import flash.display.Bitmap;
+import flash.display.BitmapData;
 import flash.display.Stage;
 import flash.events.Event;
-import flash.events.KeyboardEvent;
 import flash.geom.Point;
-import flash.geom.Rectangle;
-
-import Field;
 
 import model.ObjectBase;
 
-import nape.geom.Vec2;
-
-import nape.phys.Body;
-import nape.phys.BodyType;
-import nape.phys.Material;
-import nape.shape.Polygon;
-import nape.shape.Polygon;
-import nape.shape.Shape;
 import nape.space.Space;
 import nape.util.BitmapDebug;
-import nape.util.Debug;
-
-import starling.core.Starling;
 
 import starling.display.MovieClip;
-
 import starling.display.Sprite;
-import starling.events.EnterFrameEvent;
-import starling.textures.Texture;
-import starling.textures.TextureAtlas;
 
-import utils.AssetsLib;
-
-import utils.NapeUtil;
-import utils.ObjectUtil;
+import utils.Config;
 import utils.RMaterial;
 import utils.RPolygon;
 import utils.RShape;
-import utils.TestUtil;
 
 public class Engine extends Sprite{
 
@@ -84,13 +59,9 @@ public class Engine extends Sprite{
     private function init():void {
         Config.space = new Space();
 
-        _field = new Field();
+        var border:BitmapData = Bitmap(new Lvl1ViewClass()).bitmapData;
+        _field = new Field(new Point(0, 50), border);
         Config.field = _field;
-
-        var map:Body = NapeUtil.bodyFromBitmap(new Lvl1ViewClass());
-        map.type = BodyType.STATIC;
-        map.position = new Vec2(400, 450);
-        map.space = Config.space;
 
         var stage:Stage = Ratz.STAGE;
         _spaceView = new BitmapDebug(stage.stageWidth, stage.stageHeight, stage.color);

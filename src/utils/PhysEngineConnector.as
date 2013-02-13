@@ -6,11 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 package utils {
+import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.utils.Dictionary;
-import flash.utils.getTimer;
-
-import Field;
 
 import model.ObjectBase;
 
@@ -33,6 +31,8 @@ public class PhysEngineConnector {
     private var _physObjects:Dictionary; // key RObjectBase, value Body
     private var _handlers:Dictionary;
 
+    private var _border:Body;
+
     private static var _instance:PhysEngineConnector;
 
     public function PhysEngineConnector() {
@@ -52,12 +52,17 @@ public class PhysEngineConnector {
 
     // TODO: more secure
     // TODO: fix this dirt with space when no needed
-    public function initField(f:Field):void{
+    public function initField(f:Field, bd:BitmapData):void{
         var space:Space = Config.space;
         if(_spaces[f])
             return;
 
         _spaces[f] = space;//new Space();
+
+        _border = NapeUtil.bodyFromBitmapData(bd);
+        _border.type = BodyType.STATIC;
+        _border.position = new Vec2(f.position.x + bd.width / 2, f.position.y + bd.height / 2);
+        _border.space = space;
 
         var sensorListener:InteractionListener = new InteractionListener(CbEvent.BEGIN, InteractionType.SENSOR,
                 CbType.ANY_BODY, CbType.ANY_BODY, interactionHandler);

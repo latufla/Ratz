@@ -10,14 +10,13 @@ import behaviors.control.ControlBehavior;
 
 import controller.ControllerBase;
 
-import flash.display.Stage;
-
-import flash.events.Event;
 import flash.geom.Point;
 import flash.utils.clearTimeout;
 import flash.utils.setTimeout;
 
 import model.ObjectBase;
+
+import utils.Config;
 
 import utils.RPolygon;
 import utils.RShape;

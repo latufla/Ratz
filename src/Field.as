@@ -8,20 +8,26 @@
 package {
 import controller.ControllerBase;
 
+import flash.display.BitmapData;
+
 import flash.events.Event;
+import flash.geom.Point;
 
 import utils.PhysEngineConnector;
 
 public class Field {
 
+    private var _position:Point;
     private var _controllers:Vector.<ControllerBase>;
-    public function Field() {
-        init();
+    public function Field(position:Point, border:BitmapData) {
+        _position = position.clone();
+
+        init(border);
     }
 
-    private function init():void {
+    private function init(border:BitmapData):void {
         _controllers = new Vector.<ControllerBase>();
-        PhysEngineConnector.instance.initField(this);
+        PhysEngineConnector.instance.initField(this, border);
 
         Ratz.STAGE.addEventListener(Event.ENTER_FRAME, onEFDoBehaviorsStep);
     }
@@ -41,6 +47,10 @@ public class Field {
 
     public function simulateStep(step:Number, debugView:* = null):void{
         PhysEngineConnector.instance.simulateStep(this, step, debugView);
+    }
+
+    public function get position():Point {
+        return _position;
     }
 }
 }
