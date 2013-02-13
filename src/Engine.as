@@ -46,7 +46,7 @@ public class Engine extends Sprite{
     private var _rat:ObjectBase;
     private var _spaceView:BitmapDebug;
 
-    public static var ratController:ControllerBase;
+    private var _ratController:ControllerBase;
 
     private var _field:Field;
 
@@ -93,9 +93,9 @@ public class Engine extends Sprite{
         var rMaterial:RMaterial = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);
         _rat = ObjectBase.create(new Point(650, 700), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, params["other"]["group"]);
 
-        ratController = ControllerBase.create(_rat, new <BehaviorBase>[new UserControlBehavior(), new MoveBehavior(), new TrapBehavior(), new BoostBehavior(), new ShootBehavior()]);
-        ratController.startBehaviors();
-        _field.add(ratController);
+        _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new UserControlBehavior(), new MoveBehavior(), new TrapBehavior(), new BoostBehavior(), new ShootBehavior()]);
+        _ratController.startBehaviors();
+        _field.add(_ratController);
 
         var medkit:ObjectBase = ObjectBase.create(new Point(650, 250), new <RShape>[new RPolygon(0, 0, 30, 30)], rMaterial, params["other"]["group"]);
         medkit.ammunition.health = 35;
