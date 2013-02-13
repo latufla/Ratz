@@ -8,7 +8,7 @@
 package {
 import debug.AmmunitionPanel;
 
-import model.Field;
+import Field;
 
 import nape.callbacks.CbType;
 import nape.space.Space;

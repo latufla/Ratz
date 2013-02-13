@@ -10,7 +10,7 @@ import flash.geom.Point;
 import flash.utils.Dictionary;
 import flash.utils.getTimer;
 
-import model.Field;
+import Field;
 
 import model.ObjectBase;
 

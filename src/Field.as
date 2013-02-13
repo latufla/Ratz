@@ -5,12 +5,10 @@
  * Time: 19:39
  * To change this template use File | Settings | File Templates.
  */
-package model {
+package {
 import controller.ControllerBase;
 
 import flash.events.Event;
-
-import flash.utils.Dictionary;
 
 import utils.PhysEngineConnector;
 

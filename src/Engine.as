@@ -28,7 +28,7 @@ import flash.events.KeyboardEvent;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 
-import model.Field;
+import Field;
 
 import model.ObjectBase;
 
