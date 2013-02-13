@@ -50,12 +50,12 @@ public class ShootBehavior extends BehaviorBase {
         shot.position = obj.localToField(new Point(0, -41));
         shot.ammunition.health = 20;
         shot.velocity = obj.localVecToField(new Point(0, -500));
-        Config.field.add(shot);
 
         var shotController:ControllerBase = new ControllerBase();
         shotController.object = shot;
         shotController.addBehavior(new ShootItemBehavior());
         shotController.startBehaviors();
+        Config.field.add(shotController);
 
         _enabled = false;
         _timeoutId = setTimeout(function():void{_enabled = true; clearTimeout(_timeoutId)},_timeout);

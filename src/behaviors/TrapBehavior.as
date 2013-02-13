@@ -62,12 +62,12 @@ public class TrapBehavior extends BehaviorBase{
         trap.shapes = new <RShape>[new RPolygon(0, 0, 20, 20)];
         trap.position = obj.localToField(new Point(0, 41));
         trap.ammunition.health = 30;
-        Config.field.add(trap);
 
         var trapController:ControllerBase = new ControllerBase();
         trapController.object = trap;
         trapController.addBehavior(new TrapItemBehavior());
         trapController.startBehaviors();
+        Config.field.add(trapController);
 
         _enabled = false;
         _timeoutId = setTimeout(function():void{_enabled = true; clearTimeout(_timeoutId)},_timeout);

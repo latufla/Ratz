@@ -24,6 +24,11 @@ public class BehaviorBase {
         _controller = null;
     }
 
+    // override if there is some EF behavior
+    public function doStep():void{
+
+    }
+
     public function get enabled():Boolean {
         return _enabled;
     }

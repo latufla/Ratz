@@ -125,7 +125,7 @@ public class Engine extends Sprite{
         _rat.interactionGroup = params["other"]["group"];
         var material:Object = params["material"];
         _rat.material = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);
-        _field.add(_rat);
+
 
         ratController = new ControllerBase();
         ratController.object = _rat;
@@ -135,6 +135,7 @@ public class Engine extends Sprite{
         ratController.addBehavior(new BoostBehavior());
         ratController.addBehavior(new ShootBehavior());
         ratController.startBehaviors();
+        _field.add(ratController);
 
         var medkit:RObjectBase = new RObjectBase();
         medkit.position = new Point(650, 250);
@@ -143,12 +144,12 @@ public class Engine extends Sprite{
         medkit.material = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);
 
         medkit.ammunition.health = 35;
-        _field.add(medkit);
 
         var medkitController:ControllerBase = new ControllerBase();
         medkitController.object = medkit;
         medkitController.addBehavior(new MedkitItemBehavior());
         medkitController.startBehaviors();
+        _field.add(medkitController);
 
         var trap:RObjectBase = new RObjectBase();
         trap.position = new Point(200, 200);
@@ -156,12 +157,12 @@ public class Engine extends Sprite{
         trap.material = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);
 
         trap.ammunition.health = 20;
-        _field.add(trap);
 
         var trapController:ControllerBase = new ControllerBase();
         trapController.object = trap;
         trapController.addBehavior(new TrapItemBehavior());
         trapController.startBehaviors();
+        _field.add(trapController);
     }
 }
 }
