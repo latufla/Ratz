@@ -31,8 +31,7 @@ public class ShootBehavior extends BehaviorBase {
     public function ShootBehavior() {
     }
 
-    // use timer or starling Enter Frame
-    private function onEFApplyBehavior(e:Event):void {
+    override public function doStep():void {
         if(!_enabled)
             return;
 
@@ -59,20 +58,6 @@ public class ShootBehavior extends BehaviorBase {
 
         _enabled = false;
         _timeoutId = setTimeout(function():void{_enabled = true; clearTimeout(_timeoutId)},_timeout);
-    }
-
-    override public function start(c:ControllerBase):void{
-        super.start(c);
-
-        var stage:Stage = Ratz.STAGE;
-        stage.addEventListener(Event.ENTER_FRAME, onEFApplyBehavior);
-    }
-
-    override public function stop():void{
-        super.stop();
-
-        var stage:Stage = Ratz.STAGE;
-        stage.removeEventListener(Event.ENTER_FRAME, onEFApplyBehavior);
     }
 }
 }

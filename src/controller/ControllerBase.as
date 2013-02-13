@@ -58,6 +58,12 @@ public class ControllerBase {
         }
     }
 
+    public function doBehaviorsStep():void{
+        for each(var p:BehaviorBase in _behaviors){
+            p.doStep();
+        }
+    }
+
     public function getBehaviorByClass(bClass:Class):BehaviorBase{
         for each(var p:BehaviorBase in _behaviors){
             if(p is bClass)

@@ -8,6 +8,8 @@
 package model {
 import controller.ControllerBase;
 
+import flash.events.Event;
+
 import flash.utils.Dictionary;
 
 import utils.PhysEngineConnector;
@@ -22,6 +24,14 @@ public class Field {
     private function init():void {
         _controllers = new Vector.<ControllerBase>();
         PhysEngineConnector.instance.initField(this);
+
+        Ratz.STAGE.addEventListener(Event.ENTER_FRAME, onEFDoBehaviorsStep);
+    }
+
+    private function onEFDoBehaviorsStep(e:Event):void {
+        for each(var p:ControllerBase in _controllers){
+            p.doBehaviorsStep();
+        }
     }
 
     public function add(c:ControllerBase):void{

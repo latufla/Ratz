@@ -18,10 +18,12 @@ public class BehaviorBase {
 
     public function start(c:ControllerBase):void{
         _controller = c;
+        _enabled = true;
     }
 
     public function stop():void{
         _controller = null;
+        _enabled = false;
     }
 
     // override if there is some EF behavior

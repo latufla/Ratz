@@ -32,7 +32,7 @@ public class BoostBehavior extends BehaviorBase{
     }
 
     // use timer or starling Enter Frame
-    private function onEFApplyBehavior(e:Event):void {
+    override public function doStep():void {
         if(!_enabled)
             return;
 
@@ -56,20 +56,6 @@ public class BoostBehavior extends BehaviorBase{
             _enabled = false;
             _timeoutId = setTimeout(function():void{_enabled = true; clearTimeout(_timeoutId)},_timeout);
         },_applyInterval);
-    }
-
-    override public function start(c:ControllerBase):void{
-        super.start(c);
-
-        var stage:Stage = Ratz.STAGE;
-        stage.addEventListener(Event.ENTER_FRAME, onEFApplyBehavior);
-    }
-
-    override public function stop():void{
-        super.stop();
-
-        var stage:Stage = Ratz.STAGE;
-        stage.removeEventListener(Event.ENTER_FRAME, onEFApplyBehavior);
     }
 }
 }

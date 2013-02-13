@@ -22,8 +22,12 @@ public class MoveBehavior extends BehaviorBase{
     public function MoveBehavior() {
     }
 
-    // use timer or starling Enter Frame
-    private function onEFApplyBehavior(e:Event):void {
+    override public function doStep():void{
+        if(!_enabled)
+            return;
+
+        super.doStep();
+
         var controlBehavior:ControlBehavior = _controller.getBehaviorByClass(ControlBehavior) as ControlBehavior;
         if(!controlBehavior)
             return;
@@ -36,20 +40,6 @@ public class MoveBehavior extends BehaviorBase{
 
         if(controlBehavior.turnLeft)
             applyTurnLeft(_controller.object);
-    }
-
-    override public function start(c:ControllerBase):void{
-        super.start(c);
-
-        var stage:Stage = Ratz.STAGE;
-        stage.addEventListener(Event.ENTER_FRAME, onEFApplyBehavior);
-    }
-
-    override public function stop():void{
-        super.stop();
-
-        var stage:Stage = Ratz.STAGE;
-        stage.removeEventListener(Event.ENTER_FRAME, onEFApplyBehavior);
     }
 
     private function applyRun(obj:RObjectBase):void{

@@ -32,7 +32,7 @@ public class TrapBehavior extends BehaviorBase{
     }
 
     // use timer or starling Enter Frame
-    private function onEFApplyBehavior(e:Event):void {
+    override public function doStep():void {
         if(!_enabled)
             return;
 
@@ -41,20 +41,6 @@ public class TrapBehavior extends BehaviorBase{
             return;
 
         applyTrap(_controller.object);
-    }
-
-    override public function start(c:ControllerBase):void{
-        super.start(c);
-
-        var stage:Stage = Ratz.STAGE;
-        stage.addEventListener(Event.ENTER_FRAME, onEFApplyBehavior);
-    }
-
-    override public function stop():void{
-        super.stop();
-
-        var stage:Stage = Ratz.STAGE;
-        stage.removeEventListener(Event.ENTER_FRAME, onEFApplyBehavior);
     }
 
     private function applyTrap(obj:RObjectBase):void {
