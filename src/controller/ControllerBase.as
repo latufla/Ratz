@@ -8,14 +8,14 @@
 package controller {
 import behaviors.BehaviorBase;
 
-import model.RObjectBase;
+import model.ObjectBase;
 
 import view.ViewBase;
 
 public class ControllerBase {
 
     protected var _view:ViewBase
-    protected var _object:RObjectBase;
+    protected var _object:ObjectBase;
 
     protected var _behaviors:Vector.<BehaviorBase>;
 
@@ -81,11 +81,11 @@ public class ControllerBase {
         _view = value;
     }
 
-    public function get object():RObjectBase {
+    public function get object():ObjectBase {
         return _object;
     }
 
-    public function set object(value:RObjectBase):void {
+    public function set object(value:ObjectBase):void {
         _object = value;
     }
 

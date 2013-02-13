@@ -30,7 +30,7 @@ import flash.geom.Rectangle;
 
 import model.Field;
 
-import model.RObjectBase;
+import model.ObjectBase;
 
 import nape.geom.Vec2;
 
@@ -67,7 +67,7 @@ public class Engine extends Sprite{
     [Embed(source="../assets/lvl1.png")]
     private var Lvl1ViewClass:Class;
 
-    private var _rat:RObjectBase;
+    private var _rat:ObjectBase;
     private var _spaceView:BitmapDebug;
 
     private var _ratView:MovieClip;
@@ -119,7 +119,7 @@ public class Engine extends Sprite{
     }
 
     private function createNapeObject(params:Object):void{
-        _rat = new RObjectBase();
+        _rat = new ObjectBase();
         _rat.position = new Point(650, 700);
         _rat.shapes = new <RShape>[new RPolygon(0, 0, 30, 60)];
         _rat.interactionGroup = params["other"]["group"];
@@ -137,7 +137,7 @@ public class Engine extends Sprite{
         ratController.startBehaviors();
         _field.add(ratController);
 
-        var medkit:RObjectBase = new RObjectBase();
+        var medkit:ObjectBase = new ObjectBase();
         medkit.position = new Point(650, 250);
         medkit.shapes = new <RShape>[new RPolygon(0, 0, 30, 30)];
         var material:Object = params["material"];
@@ -151,7 +151,7 @@ public class Engine extends Sprite{
         medkitController.startBehaviors();
         _field.add(medkitController);
 
-        var trap:RObjectBase = new RObjectBase();
+        var trap:ObjectBase = new ObjectBase();
         trap.position = new Point(200, 200);
         trap.shapes = new <RShape>[new RPolygon(0, 0, 20, 20)];
         trap.material = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);

@@ -12,7 +12,7 @@ import flash.utils.getTimer;
 
 import model.Field;
 
-import model.RObjectBase;
+import model.ObjectBase;
 
 import nape.callbacks.CbEvent;
 import nape.callbacks.CbType;
@@ -64,55 +64,55 @@ public class PhysEngineConnector {
         space.listeners.add(sensorListener);
     }
 
-    public function initObject(obj:RObjectBase):void{
+    public function initObject(obj:ObjectBase):void{
         _physObjects[obj] ||= new Body(BodyType.DYNAMIC);
     }
 
-    public function addObjectToField(f:Field, o:RObjectBase):void{
+    public function addObjectToField(f:Field, o:ObjectBase):void{
         _physObjects[o].space = _spaces[f];
     }
 
-    public function removeObjectFromField(o:RObjectBase):void{
+    public function removeObjectFromField(o:ObjectBase):void{
         _physObjects[o].space = null;
     }
 
-    public function destroyObject(o:RObjectBase):void{
+    public function destroyObject(o:ObjectBase):void{
         removeObjectFromField(o);
         delete _physObjects[o];
     }
 
     private var _stubPos:Point = new Point();
-    public function getPosition(obj:RObjectBase):Point{
+    public function getPosition(obj:ObjectBase):Point{
         var physObj:Body = _physObjects[obj];
         _stubPos.x = physObj.position.x;
         _stubPos.y = physObj.position.y;
         return _stubPos;
     }
 
-    public function setPosition(obj:RObjectBase, pos:Point):void{
+    public function setPosition(obj:ObjectBase, pos:Point):void{
         var physObj:Body = _physObjects[obj];
         physObj.position.setxy(pos.x, pos.y);
     }
 
     private var _stubVel:Point = new Point();
-    public function getVelocity(obj:RObjectBase):Point{
+    public function getVelocity(obj:ObjectBase):Point{
         var physObj:Body = _physObjects[obj];
         _stubVel.x = physObj.position.x;
         _stubVel.y = physObj.position.y;
         return _stubVel;
     }
 
-    public function setVelocity(obj:RObjectBase, vel:Point):void{
+    public function setVelocity(obj:ObjectBase, vel:Point):void{
         var physObj:Body = _physObjects[obj];
         physObj.velocity = Vec2.fromPoint(vel);
     }
 
-    public function getRotation(obj:RObjectBase):Number{
+    public function getRotation(obj:ObjectBase):Number{
         var physObj:Body = _physObjects[obj];
         return physObj.rotation;
     }
 
-    public function setShapes(obj:RObjectBase, shapes:Vector.<RShape>):void{
+    public function setShapes(obj:ObjectBase, shapes:Vector.<RShape>):void{
         var physObj:Body = _physObjects[obj];
         physObj.shapes.clear();
         for each(var p:RShape in shapes){
@@ -121,46 +121,46 @@ public class PhysEngineConnector {
         physObj.align();
     }
 
-    public function setMaterial(obj:RObjectBase, material:RMaterial):void{
+    public function setMaterial(obj:ObjectBase, material:RMaterial):void{
         var physObj:Body = _physObjects[obj];
         physObj.setShapeMaterials(material.toPhysEngineObj());
     }
 
     // TODO: use for all shapes
-    public function setPseudo(obj:RObjectBase):void{
+    public function setPseudo(obj:ObjectBase):void{
         var physObj:Body = _physObjects[obj];
         physObj.shapes.at(0).filter.collisionGroup = 2;
         physObj.shapes.at(0).sensorEnabled = true;
     }
 
-    public function applyImpulse(obj:RObjectBase, imp:Point):void{
+    public function applyImpulse(obj:ObjectBase, imp:Point):void{
         var physObj:Body = _physObjects[obj];
         var napeV:Vec2 = Vec2.fromPoint(imp)
         physObj.applyImpulse(physObj.localVectorToWorld(napeV));
     }
 
-    public function localPointToGlobal(obj:RObjectBase, lp:Point):Point{
+    public function localPointToGlobal(obj:ObjectBase, lp:Point):Point{
         var physObj:Body = _physObjects[obj];
         var napeV:Vec2 = Vec2.fromPoint(lp);
 
         return physObj.localPointToWorld(napeV).toPoint();
     }
 
-    public function localVecToGlobal(obj:RObjectBase, v:Point):Point{
+    public function localVecToGlobal(obj:ObjectBase, v:Point):Point{
         var physObj:Body = _physObjects[obj];
         var napeV:Vec2 = Vec2.fromPoint(v);
 
         return physObj.localVectorToWorld(napeV).toPoint();
     }
 
-    public function applyAngularImpulse(obj:RObjectBase, aImp:int):void{
+    public function applyAngularImpulse(obj:ObjectBase, aImp:int):void{
         var physObj:Body = _physObjects[obj];
         physObj.applyAngularImpulse(aImp);
     }
 
     // TODO: fix fps usage
     private var _pw:Number = 1 / Config.fps;
-    public function applyTerrainFriction(obj:RObjectBase, k:Number = 0.2, angularK:Number = 0.1):void{
+    public function applyTerrainFriction(obj:ObjectBase, k:Number = 0.2, angularK:Number = 0.1):void{
         var physObj:Body = _physObjects[obj];
         physObj.velocity.muleq(Math.pow(k, _pw));
         physObj.angularVel *= Math.pow(angularK, _pw);
@@ -178,7 +178,7 @@ public class PhysEngineConnector {
         debugView.flush();
     }
 
-    public function addInteractionListener(obj:RObjectBase, handler:Function):void{
+    public function addInteractionListener(obj:ObjectBase, handler:Function):void{
         var body:Body = _physObjects[obj];
         if(!body)
             return;
@@ -187,13 +187,13 @@ public class PhysEngineConnector {
     }
 
 
-    public function removeInteractionListener(obj:RObjectBase, handler:Function):void{
+    public function removeInteractionListener(obj:ObjectBase, handler:Function):void{
         delete _handlers[obj];
     }
 
     private function interactionHandler(cb:InteractionCallback):void{
-        var obj1:RObjectBase =  getObjBy(cb.int1.castBody);
-        var obj2:RObjectBase =  getObjBy(cb.int2.castBody);
+        var obj1:ObjectBase =  getObjBy(cb.int1.castBody);
+        var obj2:ObjectBase =  getObjBy(cb.int2.castBody);
 
         if(!obj1 || !obj2)
             return;
@@ -207,7 +207,7 @@ public class PhysEngineConnector {
             handler(obj2, obj1);
     }
 
-    private function getObjBy(b:Body):RObjectBase{
+    private function getObjBy(b:Body):ObjectBase{
         for (var p:* in _physObjects){
             if(b == _physObjects[p])
                 return p;

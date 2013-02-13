@@ -17,7 +17,7 @@ import flash.geom.Point;
 import flash.utils.clearTimeout;
 import flash.utils.setTimeout;
 
-import model.RObjectBase;
+import model.ObjectBase;
 
 public class BoostBehavior extends BehaviorBase{
 
@@ -44,7 +44,7 @@ public class BoostBehavior extends BehaviorBase{
             applyBoost(_controller.object);
     }
 
-    private function applyBoost(obj:RObjectBase):void {
+    private function applyBoost(obj:ObjectBase):void {
         obj.applyImpulse(new Point(0, -10));
 
         // TODO: find better decision

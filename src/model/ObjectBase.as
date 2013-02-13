@@ -15,7 +15,7 @@ import utils.RMaterial;
 import utils.RPolygon;
 import utils.RShape;
 
-public class RObjectBase {
+public class ObjectBase {
     protected static const DEFAULT_SHAPE:RPolygon = new RPolygon(0, 0, 30, 60);
     protected static const DEFAULT_POSITION:Point = new Point(0, 0);
     protected static const DEFAULT_MATERIAL:RMaterial = new RMaterial(0.8, 1, 1.4, 1.5, 0.01);
@@ -27,7 +27,7 @@ public class RObjectBase {
 
     private var _ammunition:Ammunition;
 
-    public function RObjectBase() {
+    public function ObjectBase() {
         init();
     }
 

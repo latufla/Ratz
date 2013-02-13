@@ -17,7 +17,7 @@ import flash.geom.Point;
 import flash.utils.clearTimeout;
 import flash.utils.setTimeout;
 
-import model.RObjectBase;
+import model.ObjectBase;
 
 import utils.RPolygon;
 import utils.RShape;
@@ -43,8 +43,8 @@ public class TrapBehavior extends BehaviorBase{
         applyTrap(_controller.object);
     }
 
-    private function applyTrap(obj:RObjectBase):void {
-        var trap:RObjectBase = new RObjectBase();
+    private function applyTrap(obj:ObjectBase):void {
+        var trap:ObjectBase = new ObjectBase();
         trap.shapes = new <RShape>[new RPolygon(0, 0, 20, 20)];
         trap.position = obj.localToField(new Point(0, 41));
         trap.ammunition.health = 30;

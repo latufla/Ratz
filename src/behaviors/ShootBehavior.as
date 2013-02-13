@@ -17,7 +17,7 @@ import flash.geom.Point;
 import flash.utils.clearTimeout;
 import flash.utils.setTimeout;
 
-import model.RObjectBase;
+import model.ObjectBase;
 
 import utils.RPolygon;
 
@@ -43,8 +43,8 @@ public class ShootBehavior extends BehaviorBase {
             applyShoot(_controller.object);
     }
 
-    private function applyShoot(obj:RObjectBase):void {
-        var shot:RObjectBase = new RObjectBase();
+    private function applyShoot(obj:ObjectBase):void {
+        var shot:ObjectBase = new ObjectBase();
         shot.shapes = new <RShape>[new RPolygon(0, 0, 6, 12)];
         shot.position = obj.localToField(new Point(0, -41));
         shot.ammunition.health = 20;

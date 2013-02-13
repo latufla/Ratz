@@ -8,7 +8,7 @@
 package behaviors {
 import controller.ControllerBase;
 
-import model.RObjectBase;
+import model.ObjectBase;
 
 import utils.PhysEngineConnector;
 
@@ -29,7 +29,7 @@ public class ShootItemBehavior extends BehaviorBase{
         PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
     }
 
-    private function onInteraction(shotItem:RObjectBase, target:RObjectBase):void{
+    private function onInteraction(shotItem:ObjectBase, target:ObjectBase):void{
         target.ammunition.health -= shotItem.ammunition.health;
     }
 }

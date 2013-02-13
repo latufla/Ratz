@@ -8,7 +8,7 @@
 package behaviors {
 import controller.ControllerBase;
 
-import model.RObjectBase;
+import model.ObjectBase;
 
 import utils.PhysEngineConnector;
 
@@ -31,7 +31,7 @@ public class TrapItemBehavior extends BehaviorBase{
         PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
     }
 
-    private function onInteraction(trap:RObjectBase, target:RObjectBase):void{
+    private function onInteraction(trap:ObjectBase, target:ObjectBase):void{
         target.ammunition.health -= trap.ammunition.health;
     }
 }

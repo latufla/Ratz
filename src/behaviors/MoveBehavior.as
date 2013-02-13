@@ -16,7 +16,7 @@ import flash.display.Stage;
 import flash.events.Event;
 import flash.geom.Point;
 
-import model.RObjectBase;
+import model.ObjectBase;
 
 public class MoveBehavior extends BehaviorBase{
     public function MoveBehavior() {
@@ -42,17 +42,17 @@ public class MoveBehavior extends BehaviorBase{
             applyTurnLeft(_controller.object);
     }
 
-    private function applyRun(obj:RObjectBase):void{
+    private function applyRun(obj:ObjectBase):void{
         obj.applyImpulse(new Point(0, -10));
     }
 
-    private function applyTurnLeft(obj:RObjectBase):void{
+    private function applyTurnLeft(obj:ObjectBase):void{
         var velocity:Point = obj.velocity;
         if((Math.abs(velocity.x) > 10 || Math.abs(velocity.y) > 10))
             obj.applyAngularImpulse(-150);
     }
 
-    private function applyTurnRight(obj:RObjectBase):void{
+    private function applyTurnRight(obj:ObjectBase):void{
         var velocity:Point = obj.velocity;
         if((Math.abs(velocity.x) > 10 || Math.abs(velocity.y) > 10))
             obj.applyAngularImpulse(150);
