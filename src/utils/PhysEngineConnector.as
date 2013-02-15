@@ -103,8 +103,8 @@ public class PhysEngineConnector {
     private var _stubVel:Point = new Point();
     public function getVelocity(obj:ObjectBase):Point{
         var physObj:Body = _physObjects[obj];
-        _stubVel.x = physObj.position.x;
-        _stubVel.y = physObj.position.y;
+        _stubVel.x = physObj.velocity.x;
+        _stubVel.y = physObj.velocity.y;
         return _stubVel;
     }
 

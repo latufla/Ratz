@@ -37,6 +37,8 @@ public class Waypoint extends ObjectBase{
         _registeredObjects = new Vector.<ObjectBase>();
     }
 
-
+    public function indexOf(obj:ObjectBase):int{
+        return _registeredObjects.indexOf(obj);
+    }
 }
 }

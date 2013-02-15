@@ -56,10 +56,29 @@ public class WaypointManager {
     }
 
     private function onInteraction(wp:ObjectBase, rat:ObjectBase):void {
-        trace(wp.name, rat.name);
-//        if(wp is Waypoint && rat is Rat){
-//            (wp as Waypoint).register(rat);
-//        }
+
+        if(!(wp is Waypoint) || rat.name != "rat" || (wp as Waypoint).indexOf(rat) != -1)
+            return;
+
+        var wpIdx:int = _waypointSequence.indexOf(wp);
+        if(wpIdx == -1)
+            return;
+
+        var passAllPrevWaypoints:Boolean = true;
+        for (var i:int = 0; i < wpIdx; i++) {
+            passAllPrevWaypoints = (_waypointSequence[i].indexOf(rat) != -1);
+            if(!passAllPrevWaypoints)
+                break;
+
+        }
+        if(passAllPrevWaypoints){
+
+            trace(VectorUtil.getDirection(new Point(rat.bounds.x, rat.bounds.y)), (wp as Waypoint).getDirectionTo(getPrevWaypoint(wp as Waypoint)));
+            //(wp as Waypoint).getDirectionTo(getPrevWaypoint(wp as Waypoint))
+            (wp as Waypoint).register(rat);
+            trace(wp.name, rat.name);
+        }
+
     }
 
     public function remove(wp:Waypoint):void{
@@ -77,6 +96,15 @@ public class WaypointManager {
         for each(var p:Waypoint in _waypointSequence){
             p.unregisterAll();
         }
+    }
+
+    private function getPrevWaypoint(wp:Waypoint):Waypoint{
+        var curWpIdx:int = _waypointSequence.indexOf(wp);
+        if(curWpIdx == -1)
+            return null;
+
+        var prevWpIdx:uint = curWpIdx != 0 ? curWpIdx - 1 : _waypointSequence.length - 1;
+        return _waypointSequence[prevWpIdx];
     }
 }
 }
