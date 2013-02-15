@@ -8,6 +8,7 @@
 package utils {
 import flash.display.BitmapData;
 import flash.geom.Point;
+import flash.geom.Rectangle;
 import flash.utils.Dictionary;
 
 import model.ObjectBase;
@@ -61,7 +62,7 @@ public class PhysEngineConnector {
 
         _border = NapeUtil.bodyFromBitmapData(bd);
         _border.type = BodyType.STATIC;
-        _border.position = new Vec2(f.position.x + bd.width / 2, f.position.y + bd.height / 2);
+        _border.position = new Vec2(bd.width / 2, bd.height / 2);
         _border.space = space;
 
         var sensorListener:InteractionListener = new InteractionListener(CbEvent.BEGIN, InteractionType.SENSOR,
@@ -156,6 +157,11 @@ public class PhysEngineConnector {
         var napeV:Vec2 = Vec2.fromPoint(v);
 
         return physObj.localVectorToWorld(napeV).toPoint();
+    }
+
+    public function getBounds(obj:ObjectBase):Rectangle{
+        var physObj:Body = _physObjects[obj];
+        return physObj.bounds.toRect();
     }
 
     public function applyAngularImpulse(obj:ObjectBase, aImp:int):void{

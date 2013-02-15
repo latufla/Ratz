@@ -24,6 +24,9 @@ import flash.display.BitmapData;
 import flash.display.Stage;
 import flash.events.Event;
 import flash.geom.Point;
+import flash.geom.Rectangle;
+
+import managers.WaypointManager;
 
 import model.ObjectBase;
 
@@ -62,18 +65,27 @@ public class Engine extends Sprite{
         _field = new Field(new Point(0, 50), border);
         Config.field = _field;
 
+        var wps:Vector.<Rectangle> = new Vector.<Rectangle>();
+        wps.push(new Rectangle(590, 30, 180, 180));
+        wps.push(new Rectangle(30, 30, 180, 180));
+        wps.push(new Rectangle(30, 590, 180, 180));
+        wps.push(new Rectangle(590, 590, 180, 180));
+        WaypointManager.instance.init(wps);
+
         var stage:Stage = Ratz.STAGE;
+        Config.ammunitionPanel.x = 20;
+        Config.ammunitionPanel.y = 15;
+        stage.addChild(Config.ammunitionPanel);
+
         _spaceView = new BitmapDebug(stage.stageWidth, stage.stageHeight, stage.color);
+        _spaceView.display.x = 0;
+        _spaceView.display.y = 50;
         stage.addChild(_spaceView.display);
         stage.addEventListener(Event.ENTER_FRAME, mainLoop);
 
         var createBodyPanel:NapeCreateObjectPanel = new NapeCreateObjectPanel(createNapeObject);
         createBodyPanel.x = 810;
         stage.addChild(createBodyPanel);
-
-        Config.ammunitionPanel.x = 20;
-        Config.ammunitionPanel.y = 15;
-        stage.addChild(Config.ammunitionPanel);
     }
 
 
@@ -92,6 +104,7 @@ public class Engine extends Sprite{
         var material:Object = params["material"];
         var rMaterial:RMaterial = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);
         _rat = ObjectBase.create(new Point(650, 700), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, params["other"]["group"]);
+        _rat.name = "rat";
 
         _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new UserControlBehavior(), new MoveBehavior(), new TrapBehavior(), new BoostBehavior(), new ShootBehavior()]);
         _ratController.startBehaviors();

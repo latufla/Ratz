@@ -29,7 +29,7 @@ public class ControllerBase {
         _behaviors ||= new Vector.<BehaviorBase>();
     }
 
-    public static function create(obj:ObjectBase, behaviors:Vector.<BehaviorBase>):ControllerBase{
+    public static function create(obj:ObjectBase, behaviors:Vector.<BehaviorBase> = null):ControllerBase{
         var c:ControllerBase = new ControllerBase();
         c.object = obj;
         for each(var p:BehaviorBase in behaviors){

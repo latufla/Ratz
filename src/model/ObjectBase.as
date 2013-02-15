@@ -27,6 +27,8 @@ public class ObjectBase {
 
     private var _ammunition:Ammunition;
 
+    private var _name:String = "dummy";
+
     public function ObjectBase() {
         init();
     }
@@ -107,6 +109,10 @@ public class ObjectBase {
         return PhysEngineConnector.instance.localVecToGlobal(this, v);
     }
 
+    public function get bounds():Rectangle{
+        return PhysEngineConnector.instance.getBounds(this);
+    }
+
     public function get ammunition():Ammunition {
         return _ammunition;
     }
@@ -121,6 +127,35 @@ public class ObjectBase {
 
     public function set interactionGroup(value:int):void {
         _interactionGroup = value;
+    }
+
+    public function getDirectionTo(obj:ObjectBase):Point{
+        var b1:Rectangle = obj.bounds;
+        var b2:Rectangle = bounds;
+
+        var dir:Point = new Point(b1.x - b2.x, b1.y - b2.y);
+        //dir.normalize(1);
+
+        dir.x = dir.x != 0 ? dir.x / Math.abs(dir.x) : 0;
+        dir.y = dir.y != 0 ? dir.y / Math.abs(dir.y) : 0;
+
+        return dir;
+    }
+
+    public function addInteractionListener(onInteraction:Function):void{
+        PhysEngineConnector.instance.addInteractionListener(this, onInteraction);
+    }
+
+    public function removeInteractionListener(onInteraction:Function):void{
+        PhysEngineConnector.instance.removeInteractionListener(this, removeInteractionListener);
+    }
+
+    public function get name():String {
+        return _name;
+    }
+
+    public function set name(value:String):void {
+        _name = value;
     }
 }
 }

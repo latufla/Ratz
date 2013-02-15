@@ -6,10 +6,10 @@
  * To change this template use File | Settings | File Templates.
  */
 package {
+
 import controller.ControllerBase;
 
 import flash.display.BitmapData;
-
 import flash.events.Event;
 import flash.geom.Point;
 
@@ -41,8 +41,6 @@ public class Field {
     public function add(c:ControllerBase):void{
         PhysEngineConnector.instance.addObjectToField(this, c.object);
         _controllers.push(c);
-
-        trace(this, c.object);
     }
 
     public function simulateStep(step:Number, debugView:* = null):void{
