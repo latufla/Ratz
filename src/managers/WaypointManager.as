@@ -45,7 +45,7 @@ public class WaypointManager {
             add(wp);
         }
 
-        _waypointSequence.allVisitedCb = onSequenceFinish;
+        _waypointSequence.allPassedCb = onSequenceFinish;
     }
 
     public function add(wp:Waypoint):void{
