@@ -15,7 +15,6 @@ public class VectorUtil {
             return;
 
         var idx:int = v.indexOf(e);
-        trace(idx);
         if(idx != -1)
             v.splice(idx, 1);
     }

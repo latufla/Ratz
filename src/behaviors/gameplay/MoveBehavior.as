@@ -5,7 +5,8 @@
  * Time: 20:17
  * To change this template use File | Settings | File Templates.
  */
-package behaviors {
+package behaviors.gameplay {
+import behaviors.BehaviorBase;
 import behaviors.control.ControlBehavior;
 import behaviors.gamepad.GamepadBehavior;
 import behaviors.control.user.UserControlBehavior;

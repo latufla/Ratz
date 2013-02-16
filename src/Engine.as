@@ -7,12 +7,12 @@
  */
 package {
 import behaviors.BehaviorBase;
-import behaviors.BoostBehavior;
-import behaviors.MedkitItemBehavior;
-import behaviors.MoveBehavior;
-import behaviors.ShootBehavior;
-import behaviors.TrapBehavior;
-import behaviors.TrapItemBehavior;
+import behaviors.gameplay.BoostBehavior;
+import behaviors.gameplay.MedkitItemBehavior;
+import behaviors.gameplay.MoveBehavior;
+import behaviors.gameplay.ShootBehavior;
+import behaviors.gameplay.TrapBehavior;
+import behaviors.gameplay.TrapItemBehavior;
 import behaviors.control.user.UserControlBehavior;
 
 import controller.ControllerBase;

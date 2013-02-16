@@ -7,6 +7,7 @@
  */
 package behaviors.gamepad {
 import behaviors.*;
+import behaviors.BehaviorBase;
 
 import controller.ControllerBase;
 

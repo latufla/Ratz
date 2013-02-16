@@ -6,10 +6,10 @@
  * To change this template use File | Settings | File Templates.
  */
 package utils {
-import behaviors.BoostBehavior;
+import behaviors.gameplay.BoostBehavior;
 import behaviors.gamepad.GamepadBehavior;
-import behaviors.ShootItemBehavior;
-import behaviors.TrapItemBehavior;
+import behaviors.gameplay.ShootItemBehavior;
+import behaviors.gameplay.TrapItemBehavior;
 
 import controller.ControllerBase;
 

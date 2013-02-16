@@ -14,6 +14,7 @@ import flash.geom.Rectangle;
 
 import model.ObjectBase;
 import model.Waypoint;
+import model.WaypointSequence;
 
 import utils.Config;
 import utils.RPolygon;
@@ -22,9 +23,8 @@ import utils.RShape;
 import utils.VectorUtil;
 
 public class WaypointManager {
-    // TODO: use Vector.<ControllerBase>
-    private var _waypointSequence:Vector.<Waypoint> = new Vector.<Waypoint>(); // order matters
-    private var _lastVisitedWaypoint:Waypoint;
+
+    private var _waypointSequence:WaypointSequence = new WaypointSequence(); // order matters
 
     private static var _instance:WaypointManager;
     public function WaypointManager() {
@@ -44,11 +44,12 @@ public class WaypointManager {
             wp.isPseudo = true;
             add(wp);
         }
+
+        _waypointSequence.allVisitedCb = onSequenceFinish;
     }
 
     public function add(wp:Waypoint):void{
-        _waypointSequence.push(wp);
-        wp.name = "Waypoint " + _waypointSequence.length;
+        _waypointSequence.add(wp)
         wp.addInteractionListener(onInteraction);
 
         Config.field.add(ControllerBase.create(wp));
@@ -58,61 +59,16 @@ public class WaypointManager {
         if(rat.name != "rat")
             return;
 
-        // first waypoint
-        if(!_lastVisitedWaypoint){
-
-            if(wp.indexOf(rat) == -1)
-                wp.register(rat);
-
-            _lastVisitedWaypoint = wp;
-            return;
-        }
-
-        var passLap:Boolean;
-        for each(var p:Waypoint in _waypointSequence){
-            passLap = (p.indexOf(rat) != -1);
-            if(!passLap)
-                break;
-        }
-
-        if(passLap){
-            trace("End Lap");
-            unregisterFromAll(rat);
-            _waypointSequence[0].register(rat);
-        }
-
-        var prevWp:Waypoint = getPrevWaypoint(wp);
-        if(_lastVisitedWaypoint == prevWp && prevWp.indexOf(rat) != -1){
-            if(wp.indexOf(rat) == -1)
-                wp.register(rat);
-        }
-        _lastVisitedWaypoint = wp;
+        _waypointSequence.visit(wp, rat);
     }
 
-    public function remove(wp:Waypoint):void{
-        VectorUtil.removeElement(_waypointSequence, wp);
-        wp.removeInteractionListener(onInteraction);
+    private function onSequenceFinish():void{
+        trace("End Lap");
     }
 
-    public function unregisterFromAll(obj:ObjectBase):void{
-        for each(var p:Waypoint in _waypointSequence){
-            p.unregister(obj);
-        }
-    }
-
-    public function clearAllRegistrations():void{
-        for each(var p:Waypoint in _waypointSequence){
-            p.unregisterAll();
-        }
-    }
-
-    private function getPrevWaypoint(wp:Waypoint):Waypoint{
-        var curWpIdx:int = _waypointSequence.indexOf(wp);
-        if(curWpIdx == -1)
-            return null;
-
-        var prevWpIdx:uint = curWpIdx != 0 ? curWpIdx - 1 : _waypointSequence.length - 1;
-        return _waypointSequence[prevWpIdx];
-    }
+//    public function remove(wp:Waypoint):void{
+//        VectorUtil.removeElement(_waypointSequence, wp);
+//        wp.removeInteractionListener(onInteraction);
+//    }
 }
 }
