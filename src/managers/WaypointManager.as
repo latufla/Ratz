@@ -22,10 +22,9 @@ import utils.RShape;
 import utils.VectorUtil;
 
 public class WaypointManager {
-
-
     // TODO: use Vector.<ControllerBase>
     private var _waypointSequence:Vector.<Waypoint> = new Vector.<Waypoint>(); // order matters
+    private var _lastVisitedWaypoint:Waypoint;
 
     private static var _instance:WaypointManager;
     public function WaypointManager() {
@@ -42,7 +41,6 @@ public class WaypointManager {
             var wp:Waypoint = new Waypoint();
             wp.position = new Point(p.x, p.y);
             wp.shapes = new <RShape>[new RPolygon(0, 0, p.width, p.height)];
-            wp.name = "Waypoint " + p.x + "" + p.y;
             wp.isPseudo = true;
             add(wp);
         }
@@ -50,35 +48,45 @@ public class WaypointManager {
 
     public function add(wp:Waypoint):void{
         _waypointSequence.push(wp);
+        wp.name = "Waypoint " + _waypointSequence.length;
         wp.addInteractionListener(onInteraction);
 
         Config.field.add(ControllerBase.create(wp));
     }
 
-    private function onInteraction(wp:ObjectBase, rat:ObjectBase):void {
-
-        if(!(wp is Waypoint) || rat.name != "rat" || (wp as Waypoint).indexOf(rat) != -1)
+    private function onInteraction(wp:Waypoint, rat:ObjectBase):void {
+        if(rat.name != "rat")
             return;
 
-        var wpIdx:int = _waypointSequence.indexOf(wp);
-        if(wpIdx == -1)
-            return;
+        // first waypoint
+        if(!_lastVisitedWaypoint){
 
-        var passAllPrevWaypoints:Boolean = true;
-        for (var i:int = 0; i < wpIdx; i++) {
-            passAllPrevWaypoints = (_waypointSequence[i].indexOf(rat) != -1);
-            if(!passAllPrevWaypoints)
+            if(wp.indexOf(rat) == -1)
+                wp.register(rat);
+
+            _lastVisitedWaypoint = wp;
+            return;
+        }
+
+        var passLap:Boolean;
+        for each(var p:Waypoint in _waypointSequence){
+            passLap = (p.indexOf(rat) != -1);
+            if(!passLap)
                 break;
-
-        }
-        if(passAllPrevWaypoints){
-
-            trace(VectorUtil.getDirection(new Point(rat.bounds.x, rat.bounds.y)), (wp as Waypoint).getDirectionTo(getPrevWaypoint(wp as Waypoint)));
-            //(wp as Waypoint).getDirectionTo(getPrevWaypoint(wp as Waypoint))
-            (wp as Waypoint).register(rat);
-            trace(wp.name, rat.name);
         }
 
+        if(passLap){
+            trace("End Lap");
+            unregisterFromAll(rat);
+            _waypointSequence[0].register(rat);
+        }
+
+        var prevWp:Waypoint = getPrevWaypoint(wp);
+        if(_lastVisitedWaypoint == prevWp && prevWp.indexOf(rat) != -1){
+            if(wp.indexOf(rat) == -1)
+                wp.register(rat);
+        }
+        _lastVisitedWaypoint = wp;
     }
 
     public function remove(wp:Waypoint):void{

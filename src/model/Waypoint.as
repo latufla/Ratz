@@ -27,10 +27,12 @@ public class Waypoint extends ObjectBase{
 
     public function register(obj:ObjectBase):void{
         _registeredObjects.push(obj);
+        trace("register:", name, obj.name);
     }
 
     public function unregister(obj:ObjectBase):void{
         VectorUtil.removeElement(_registeredObjects, obj);
+        trace(_registeredObjects);
     }
 
     public function unregisterAll():void{

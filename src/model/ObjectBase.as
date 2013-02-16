@@ -134,11 +134,7 @@ public class ObjectBase {
         var b2:Rectangle = bounds;
 
         var dir:Point = new Point(b1.x - b2.x, b1.y - b2.y);
-        //dir.normalize(1);
-
-        dir.x = dir.x != 0 ? dir.x / Math.abs(dir.x) : 0;
-        dir.y = dir.y != 0 ? dir.y / Math.abs(dir.y) : 0;
-
+        dir.normalize(1);
         return dir;
     }
 

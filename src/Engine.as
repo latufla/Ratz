@@ -66,10 +66,10 @@ public class Engine extends Sprite{
         Config.field = _field;
 
         var wps:Vector.<Rectangle> = new Vector.<Rectangle>();
+        wps.push(new Rectangle(590, 590, 180, 180));
         wps.push(new Rectangle(590, 30, 180, 180));
         wps.push(new Rectangle(30, 30, 180, 180));
         wps.push(new Rectangle(30, 590, 180, 180));
-        wps.push(new Rectangle(590, 590, 180, 180));
         WaypointManager.instance.init(wps);
 
         var stage:Stage = Ratz.STAGE;
