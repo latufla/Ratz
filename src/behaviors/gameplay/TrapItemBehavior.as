@@ -33,10 +33,10 @@ public class TrapItemBehavior extends BehaviorBase{
     }
 
     override public function stop():void{
-        super.stop();
         _controller.object.isPseudo = false;
-
         PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
+
+        super.stop();
     }
 
     private function onInteraction(trap:ObjectBase, rat:ObjectBase):void{

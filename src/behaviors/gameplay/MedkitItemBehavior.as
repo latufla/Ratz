@@ -33,10 +33,10 @@ public class MedkitItemBehavior extends BehaviorBase{
     }
 
     override public function stop():void{
-        super.stop();
         _controller.object.isPseudo = false;
-
         PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
+
+        super.stop();
     }
 
     private function onInteraction(medkit:ObjectBase, rat:ObjectBase):void{

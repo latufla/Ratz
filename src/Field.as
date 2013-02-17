@@ -50,6 +50,7 @@ public class Field {
     }
 
     public function remove(c:ControllerBase):void{
+        c.stopBehaviors();
         PhysEngineConnector.instance.destroyObject(c.object);
         VectorUtil.removeElement(_controllers, c);
     }

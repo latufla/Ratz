@@ -40,20 +40,20 @@ public class WaypointItemBehavior extends BehaviorBase {
 
     override public function start(c:ControllerBase):void{
         super.start(c);
+
         var obj:ObjectBase = _controller.object;
         obj.isPseudo = true;
         obj.visible = false;
-
         PhysEngineConnector.instance.addInteractionListener(_controller.object, onInteraction);
     }
 
     override public function stop():void{
-        super.stop();
         var obj:ObjectBase = _controller.object;
         obj.isPseudo = false;
         obj.visible = true;
-
         PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
+
+        super.stop();
     }
 
     public function register(obj:ObjectBase):void{

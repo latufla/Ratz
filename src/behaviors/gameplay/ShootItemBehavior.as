@@ -28,9 +28,9 @@ public class ShootItemBehavior extends BehaviorBase{
     }
 
     override public function stop():void{
-        super.stop();
-
         PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
+
+        super.stop();
     }
 
     private function onInteraction(shot:ObjectBase, rat:ObjectBase):void{
