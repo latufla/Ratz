@@ -98,7 +98,7 @@ public class Engine extends Sprite{
             return;
 
         _rat.applyTerrainFriction(0.2, 0.01);
-        Config.ammunitionPanel.info = _rat.ammunition;
+        Config.ammunitionPanel.data = _rat.ammunition;
     }
 
     private function createNapeObject(params:Object):void{
