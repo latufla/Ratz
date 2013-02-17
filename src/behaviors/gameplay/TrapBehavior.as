@@ -37,16 +37,15 @@ public class TrapBehavior extends BehaviorBase{
             return;
 
         var controlBehavior:ControlBehavior = _controller.getBehaviorByClass(ControlBehavior) as ControlBehavior;
-        if(!controlBehavior || !controlBehavior.trap)
+        if(!controlBehavior)
             return;
 
-        applyTrap(_controller.object);
+        var obj:ObjectBase = _controller.object;
+        if(controlBehavior.trap && obj.ammunition.traps > 0)
+            applyTrap(obj);
     }
 
     private function applyTrap(obj:ObjectBase):void {
-        if(obj.ammunition.traps <= 0)
-            return;
-
         obj.ammunition.traps--;
 
         var pos:Point = obj.localToField(new Point(0, 51));

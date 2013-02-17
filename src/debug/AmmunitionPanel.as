@@ -34,7 +34,7 @@ public class AmmunitionPanel extends DebugAmmunitionPanelView{
         var tx:int = f.x;
         var ty:int = f.y;
         f.textColor = color;
-        TweenUtil.tween(f, 100, {x: tx - (f.width >> 2), y: ty - (f.height >> 2), scaleX: 1.5, scaleY: 1.5,
+        TweenUtil.tween(f, 200, {x: tx - (f.width * 1.5 / 6), y: ty - (f.height * 1.5 / 6), scaleX: 1.5, scaleY: 1.5,
             onComplete: function():void{
                 f.textColor = 0x000000;
                 TweenUtil.tween(f, 100, {x: tx, y: ty, scaleX: 1, scaleY: 1});

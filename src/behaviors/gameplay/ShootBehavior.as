@@ -45,14 +45,12 @@ public class ShootBehavior extends BehaviorBase {
         if(!controlBehavior)
             return;
 
-        if(controlBehavior.shoot)
-            applyShoot(_controller.object);
+        var obj:ObjectBase = _controller.object;
+        if(controlBehavior.shoot && obj.ammunition.shots > 0)
+            applyShoot(obj);
     }
 
     private function applyShoot(obj:ObjectBase):void {
-        if(obj.ammunition.shots <= 0)
-            return;
-
         obj.ammunition.shots--;
 
         var pos:Point = obj.localToField(new Point(0, -41));

@@ -8,9 +8,9 @@
 package model {
 public class Ammunition {
 
-    private var _shots:int = 5;
-    private var _boost:int = 1;
-    private var _traps:int = 5;
+    private var _shots:int = 2;
+    private var _boost:int = 2;
+    private var _traps:int = 2;
 
     private var _health:int = 100;
 

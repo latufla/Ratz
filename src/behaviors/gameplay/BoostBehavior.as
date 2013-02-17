@@ -22,7 +22,7 @@ import model.ObjectBase;
 
 public class BoostBehavior extends BehaviorBase{
 
-    private var _applyInterval:int = 2000;
+    private var _applyTime:int = 2000;
     private var _applyTimeoutId:uint;
     private var _applying:Boolean = false;
 
@@ -40,8 +40,9 @@ public class BoostBehavior extends BehaviorBase{
         if(!controlBehavior)
             return;
 
-        if((controlBehavior.boost && _controller.object.ammunition.boost > 0) || _applying)
-            applyBoost(_controller.object);
+        var obj:ObjectBase = _controller.object;
+        if(_applying || (controlBehavior.boost && obj.ammunition.boost > 0))
+            applyBoost(obj);
     }
 
     private function applyBoost(obj:ObjectBase):void {
@@ -60,7 +61,7 @@ public class BoostBehavior extends BehaviorBase{
 
             _enabled = false;
             _timeoutId = setTimeout(function():void{_enabled = true; clearTimeout(_timeoutId)},_timeout);
-        },_applyInterval);
+        },_applyTime);
     }
 }
 }
