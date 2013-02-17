@@ -141,6 +141,11 @@ public class PhysEngineConnector {
         physObj.shapes.at(0).sensorEnabled = true;
     }
 
+    public function getPseudo(obj:ObjectBase):Boolean{
+        var physObj:Body = _physObjects[obj];
+        return physObj.shapes.at(0).sensorEnabled;
+    }
+
     public function applyImpulse(obj:ObjectBase, imp:Point):void{
         var physObj:Body = _physObjects[obj];
         var napeV:Vec2 = Vec2.fromPoint(imp)

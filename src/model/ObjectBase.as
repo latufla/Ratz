@@ -68,6 +68,10 @@ public class ObjectBase {
         PhysEngineConnector.instance.setPseudo(this);
     }
 
+    public function get isPseudo():Boolean{
+        return PhysEngineConnector.instance.getPseudo(this);
+    }
+
     public function get position():Point {
         return PhysEngineConnector.instance.getPosition(this);
     }
