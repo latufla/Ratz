@@ -17,6 +17,8 @@ import flash.geom.Point;
 
 import model.ObjectBase;
 
+import utils.Config;
+
 import utils.PhysEngineConnector;
 import utils.VectorUtil;
 
@@ -32,6 +34,8 @@ public class Field {
     }
 
     private function init(border:BitmapData):void {
+        Config.field = this;
+
         _controllers = new Vector.<ControllerBase>();
         PhysEngineConnector.instance.initField(this, border);
 

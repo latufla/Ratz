@@ -6,6 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 package utils {
+import controller.ControllerBase;
+
 import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
@@ -61,15 +63,24 @@ public class PhysEngineConnector {
             return;
 
         _spaces[f] = space;//new Space();
-
-        _border = NapeUtil.bodyFromBitmapData(bd);
-        _border.type = BodyType.STATIC;
-        _border.position = new Vec2(bd.width / 2, bd.height / 2);
-        _border.space = space;
+        createBorder(f, bd);
 
         var sensorListener:InteractionListener = new InteractionListener(CbEvent.BEGIN, InteractionType.ANY,
                 CbType.ANY_BODY, CbType.ANY_BODY, interactionHandler);
         space.listeners.add(sensorListener);
+    }
+
+    // TODO: fix this dirt
+    private function createBorder(f:Field, bd:BitmapData):void{
+        _border = NapeUtil.bodyFromBitmapData(bd);
+        _border.type = BodyType.STATIC;
+        _border.position = new Vec2(bd.width / 2, bd.height / 2);
+        _border.space = _spaces[f];
+
+        var obj:ObjectBase = new ObjectBase();
+        _physObjects[obj] = _border;
+        var borderC:ControllerBase = ControllerBase.create(obj);
+        Config.field.add(borderC);
     }
 
     public function initObject(obj:ObjectBase):void{

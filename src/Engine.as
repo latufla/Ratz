@@ -63,7 +63,6 @@ public class Engine extends Sprite{
 
         var border:BitmapData = Bitmap(new Lvl1ViewClass()).bitmapData;
         _field = new Field(new Point(0, 50), border);
-        Config.field = _field;
 
         var wps:Vector.<Rectangle> = new Vector.<Rectangle>();
         wps.push(new Rectangle(600, 380, 172, 24));

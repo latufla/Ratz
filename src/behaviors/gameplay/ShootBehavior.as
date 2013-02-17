@@ -56,7 +56,7 @@ public class ShootBehavior extends BehaviorBase {
         obj.ammunition.shots--;
 
         var pos:Point = obj.localToField(new Point(0, -41));
-        var shot:ObjectBase = ObjectBase.create(pos, new <RShape>[new RPolygon(0, 0, 6, 12)], new RMaterial(), 1);
+        var shot:ObjectBase = ObjectBase.create(pos, new <RShape>[new RPolygon(0, 0, 6, 6)], new RMaterial(), 1);
         shot.ammunition.health = 20;
         shot.velocity = obj.localVecToField(new Point(0, -500));
 
