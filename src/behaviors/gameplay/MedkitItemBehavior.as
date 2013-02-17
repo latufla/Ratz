@@ -14,6 +14,8 @@ import flash.geom.Point;
 
 import model.ObjectBase;
 
+import utils.Config;
+
 import utils.GuiUtil;
 
 import utils.PhysEngineConnector;
@@ -37,8 +39,12 @@ public class MedkitItemBehavior extends BehaviorBase{
         PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
     }
 
-    private function onInteraction(medkit:ObjectBase, target:ObjectBase):void{
-        target.ammunition.health += medkit.ammunition.health;
+    private function onInteraction(medkit:ObjectBase, rat:ObjectBase):void{
+        var ratC:ControllerBase = Config.field.getControllerByObject(rat);
+        if(!ratC.isRat)
+            return;
+
+        rat.ammunition.health += medkit.ammunition.health;
 
         var pos:Point = medkit.position;
         GuiUtil.showPopupText(Ratz.STAGE, new Point(pos.x, pos.y), "+" + medkit.ammunition.health);

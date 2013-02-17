@@ -67,7 +67,7 @@ public class PhysEngineConnector {
         _border.position = new Vec2(bd.width / 2, bd.height / 2);
         _border.space = space;
 
-        var sensorListener:InteractionListener = new InteractionListener(CbEvent.BEGIN, InteractionType.SENSOR,
+        var sensorListener:InteractionListener = new InteractionListener(CbEvent.BEGIN, InteractionType.ANY,
                 CbType.ANY_BODY, CbType.ANY_BODY, interactionHandler);
         space.listeners.add(sensorListener);
     }

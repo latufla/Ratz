@@ -7,9 +7,7 @@
  */
 package controller {
 import behaviors.BehaviorBase;
-
-import model.ObjectBase;
-
+import behaviors.control.ControlBehavior;
 import model.ObjectBase;
 
 import view.ViewBase;
@@ -109,6 +107,10 @@ public class ControllerBase {
     // make private, use getBehaviorByClass()
     public function get behaviors():Vector.<BehaviorBase> {
         return _behaviors;
+    }
+
+    public function get isRat():Boolean{
+        return getBehaviorByClass(ControlBehavior);
     }
 }
 }

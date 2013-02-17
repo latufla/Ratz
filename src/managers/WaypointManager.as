@@ -7,10 +7,7 @@
  */
 package managers {
 import behaviors.BehaviorBase;
-import behaviors.control.ControlBehavior;
 import behaviors.core.WaypointItemBehavior;
-
-import controller.ControllerBase;
 
 import controller.ControllerBase;
 
@@ -64,7 +61,7 @@ public class WaypointManager {
 
     private function onInteraction(wp:ObjectBase, rat:ObjectBase):void {
         var ratC:ControllerBase = Config.field.getControllerByObject(rat);
-        if(!ratC.getBehaviorByClass(ControlBehavior))
+        if(!ratC.isRat)
             return;
 
         var wpc:ControllerBase = Config.field.getControllerByObject(wp);

@@ -12,6 +12,8 @@ import controller.ControllerBase;
 
 import model.ObjectBase;
 
+import utils.Config;
+
 import utils.PhysEngineConnector;
 
 public class ShootItemBehavior extends BehaviorBase{
@@ -31,8 +33,12 @@ public class ShootItemBehavior extends BehaviorBase{
         PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
     }
 
-    private function onInteraction(shotItem:ObjectBase, target:ObjectBase):void{
-        target.ammunition.health -= shotItem.ammunition.health;
+    private function onInteraction(shotItem:ObjectBase, rat:ObjectBase):void{
+        var ratC:ControllerBase = Config.field.getControllerByObject(rat);
+        if(!ratC.isRat)
+            return;
+
+        rat.ammunition.health -= shotItem.ammunition.health;
     }
 }
 }
