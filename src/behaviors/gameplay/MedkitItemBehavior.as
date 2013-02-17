@@ -10,7 +10,11 @@ import behaviors.BehaviorBase;
 
 import controller.ControllerBase;
 
+import flash.geom.Point;
+
 import model.ObjectBase;
+
+import utils.GuiUtil;
 
 import utils.PhysEngineConnector;
 
@@ -35,6 +39,9 @@ public class MedkitItemBehavior extends BehaviorBase{
 
     private function onInteraction(medkit:ObjectBase, target:ObjectBase):void{
         target.ammunition.health += medkit.ammunition.health;
+
+        var pos:Point = medkit.position;
+        GuiUtil.showPopupText(Ratz.STAGE, new Point(pos.x, pos.y), "+" + medkit.ammunition.health);
     }
 }
 }

@@ -10,7 +10,12 @@ import behaviors.BehaviorBase;
 
 import controller.ControllerBase;
 
+import flash.geom.Point;
+
 import model.ObjectBase;
+
+
+import utils.GuiUtil;
 
 import utils.PhysEngineConnector;
 
@@ -35,6 +40,9 @@ public class TrapItemBehavior extends BehaviorBase{
 
     private function onInteraction(trap:ObjectBase, target:ObjectBase):void{
         target.ammunition.health -= trap.ammunition.health;
+
+        var pos:Point = trap.position;
+        GuiUtil.showPopupText(Ratz.STAGE, new Point(pos.x, pos.y), "-" + trap.ammunition.health, 20, 0xFF0000);
     }
 }
 }
