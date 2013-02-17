@@ -153,5 +153,9 @@ public class ObjectBase {
     public function set name(value:String):void {
         _name = value;
     }
+
+    public function set visible(value:Boolean):void{
+        PhysEngineConnector.instance.setVisible(this, value);
+    }
 }
 }

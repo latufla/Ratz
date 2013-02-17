@@ -13,6 +13,8 @@ import flash.utils.Dictionary;
 
 import model.ObjectBase;
 
+import model.ObjectBase;
+
 import nape.callbacks.CbEvent;
 import nape.callbacks.CbType;
 import nape.callbacks.InteractionCallback;
@@ -187,6 +189,11 @@ public class PhysEngineConnector {
         debugView.clear();
         debugView.draw(space);
         debugView.flush();
+    }
+
+    public function setVisible(obj:ObjectBase, value:Boolean):void{
+        var physObj:Body = _physObjects[obj];
+        physObj.debugDraw = value;
     }
 
     public function addInteractionListener(obj:ObjectBase, handler:Function):void{

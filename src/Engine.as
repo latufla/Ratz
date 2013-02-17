@@ -117,7 +117,7 @@ public class Engine extends Sprite{
         medkitController.startBehaviors();
         _field.add(medkitController);
 
-        var trap:ObjectBase = ObjectBase.create(new Point(200, 200), new <RShape>[new RPolygon(0, 0, 20, 20)], rMaterial, params["other"]["group"]);
+        var trap:ObjectBase = ObjectBase.create(new Point(150, 200), new <RShape>[new RPolygon(0, 0, 20, 20)], rMaterial, params["other"]["group"]);
         trap.ammunition.health = 20;
 
         var trapController:ControllerBase = ControllerBase.create(trap, new <BehaviorBase>[new TrapItemBehavior()]);
