@@ -44,6 +44,11 @@ public class TrapBehavior extends BehaviorBase{
     }
 
     private function applyTrap(obj:ObjectBase):void {
+        if(obj.ammunition.traps <= 0)
+            return;
+
+        obj.ammunition.traps--;
+
         var pos:Point = obj.localToField(new Point(0, 41));
         var trap:ObjectBase = ObjectBase.create(pos, new <RShape>[new RPolygon(0, 0, 20, 20)], new RMaterial(), 1);
         trap.ammunition.health = 30;

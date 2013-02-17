@@ -21,6 +21,8 @@ import flash.utils.setTimeout;
 import model.ObjectBase;
 
 import utils.Config;
+
+import utils.Config;
 import utils.RMaterial;
 
 import utils.RPolygon;
@@ -48,6 +50,11 @@ public class ShootBehavior extends BehaviorBase {
     }
 
     private function applyShoot(obj:ObjectBase):void {
+        if(obj.ammunition.shots <= 0)
+            return;
+
+        obj.ammunition.shots--;
+
         var pos:Point = obj.localToField(new Point(0, -41));
         var shot:ObjectBase = ObjectBase.create(pos, new <RShape>[new RPolygon(0, 0, 6, 12)], new RMaterial(), 1);
         shot.ammunition.health = 20;

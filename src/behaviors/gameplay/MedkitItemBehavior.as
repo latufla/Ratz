@@ -48,6 +48,8 @@ public class MedkitItemBehavior extends BehaviorBase{
 
         var pos:Point = medkit.position;
         GuiUtil.showPopupText(Ratz.STAGE, new Point(pos.x, pos.y), "+" + medkit.ammunition.health);
+
+        Config.field.remove(Config.field.getControllerByObject(medkit));
     }
 }
 }

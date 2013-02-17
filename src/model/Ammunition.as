@@ -8,9 +8,9 @@
 package model {
 public class Ammunition {
 
-    private var _shots:uint = 1;
-    private var _boost:uint = 1;
-    private var _traps:uint = 1;
+    private var _shots:uint = 5;
+    private var _boost:uint = 5;
+    private var _traps:uint = 5;
 
     private var _health:int = 100;
 
@@ -42,12 +42,12 @@ public class Ammunition {
         _traps = value;
     }
 
-    public function get health():uint {
+    public function get health():int {
         return _health;
     }
 
-    public function set health(value:uint):void {
-        _health = value;
+    public function set health(value:int):void {
+        _health = value > 0 ? value : 0;
     }
 }
 }

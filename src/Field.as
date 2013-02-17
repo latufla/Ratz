@@ -18,6 +18,7 @@ import flash.geom.Point;
 import model.ObjectBase;
 
 import utils.PhysEngineConnector;
+import utils.VectorUtil;
 
 public class Field {
 
@@ -46,6 +47,11 @@ public class Field {
     public function add(c:ControllerBase):void{
         PhysEngineConnector.instance.addObjectToField(this, c.object);
         _controllers.push(c);
+    }
+
+    public function remove(c:ControllerBase):void{
+        PhysEngineConnector.instance.destroyObject(c.object);
+        VectorUtil.removeElement(_controllers, c);
     }
 
     public function simulateStep(step:Number, debugView:* = null):void{
