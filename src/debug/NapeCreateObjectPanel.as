@@ -33,7 +33,9 @@ public class NapeCreateObjectPanel extends DebugNapeCreateObjectPanelView{
         mDensityField.text = "1.5";
         mRollingFrictionField.text = "0.01";
 
-        createButton.addEventListener(MouseEvent.CLICK, onClickCreate);
+        onClickCreate(null);
+        createButton.enabled = false;
+//        createButton.addEventListener(MouseEvent.CLICK, onClickCreate);
     }
 
     private function onClickCreate(e:MouseEvent):void {
