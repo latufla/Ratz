@@ -40,12 +40,17 @@ public class BoostBehavior extends BehaviorBase{
         if(!controlBehavior)
             return;
 
-        if(controlBehavior.boost || _applying)
+        if((controlBehavior.boost && _controller.object.ammunition.boost > 0) || _applying)
             applyBoost(_controller.object);
     }
 
     private function applyBoost(obj:ObjectBase):void {
         obj.applyImpulse(new Point(0, -10));
+
+        if(_applying)
+            return;
+
+        obj.ammunition.boost--;
 
         // TODO: find better decision
         _applying = true;
