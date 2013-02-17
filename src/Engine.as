@@ -104,7 +104,7 @@ public class Engine extends Sprite{
         var material:Object = params["material"];
         var rMaterial:RMaterial = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);
         _rat = ObjectBase.create(new Point(650, 700), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, params["other"]["group"]);
-        _rat.name = "rat";
+        _rat.name = "Rat 1";
 
         _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new UserControlBehavior(), new MoveBehavior(), new TrapBehavior(), new BoostBehavior(), new ShootBehavior()]);
         _ratController.startBehaviors();

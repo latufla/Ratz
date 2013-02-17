@@ -85,6 +85,11 @@ public class ControllerBase {
         return null;
     }
 
+    // not class but concrete behavior
+    public function hasBehavior(b:BehaviorBase):Boolean{
+        return _behaviors.indexOf(b) != -1;
+    }
+
     public function get view():ViewBase {
         return _view;
     }

@@ -6,6 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 package managers {
+import behaviors.BehaviorBase;
+import behaviors.control.ControlBehavior;
+import behaviors.core.WaypointItemBehavior;
+
+import controller.ControllerBase;
+
 import controller.ControllerBase;
 
 import flash.geom.Point;
@@ -13,10 +19,10 @@ import flash.geom.Point;
 import flash.geom.Rectangle;
 
 import model.ObjectBase;
-import model.Waypoint;
 import model.WaypointSequence;
 
 import utils.Config;
+import utils.GuiUtil;
 import utils.RPolygon;
 import utils.RShape;
 
@@ -38,37 +44,40 @@ public class WaypointManager {
 
     public function init(wps:Vector.<Rectangle>):void{
         for each(var p:Rectangle in wps){
-            var wp:Waypoint = new Waypoint();
+            var wp:ObjectBase = new ObjectBase();
             wp.position = new Point(p.x, p.y);
             wp.shapes = new <RShape>[new RPolygon(0, 0, p.width, p.height)];
-            wp.isPseudo = true;
             add(wp);
         }
 
-        _waypointSequence.allPassedCb = onSequenceFinish;
+        _waypointSequence.completeCb = onSequenceComplete;
     }
 
-    public function add(wp:Waypoint):void{
-        _waypointSequence.add(wp)
-        wp.addInteractionListener(onInteraction);
+    private function add(wp:ObjectBase):void{
+        var wpBehavior:WaypointItemBehavior = new WaypointItemBehavior(onInteraction);
+        _waypointSequence.add(wpBehavior);
 
-        Config.field.add(ControllerBase.create(wp));
+        var wpc:ControllerBase = ControllerBase.create(wp, new <BehaviorBase>[wpBehavior]);
+        wpc.startBehaviors();
+        Config.field.add(wpc);
     }
 
-    private function onInteraction(wp:Waypoint, rat:ObjectBase):void {
-        if(rat.name != "rat")
+    private function onInteraction(wp:ObjectBase, rat:ObjectBase):void {
+        var ratC:ControllerBase = Config.field.getControllerByObject(rat);
+        if(!ratC.getBehaviorByClass(ControlBehavior))
             return;
 
-        _waypointSequence.visit(wp, rat);
+        var wpc:ControllerBase = Config.field.getControllerByObject(wp);
+        var wpBehavior:WaypointItemBehavior = wpc.getBehaviorByClass(WaypointItemBehavior) as WaypointItemBehavior;
+        _waypointSequence.visit(wpBehavior, rat);
     }
 
-    private function onSequenceFinish():void{
-        trace("End Lap");
+    private function onSequenceComplete(obj:ObjectBase):void{
+        GuiUtil.showPopupText(Ratz.STAGE, new Point(300, 320), "Lap End By "+ obj.name, 30, 0x0000FF);
     }
 
-//    public function remove(wp:Waypoint):void{
-//        VectorUtil.removeElement(_waypointSequence, wp);
-//        wp.removeInteractionListener(onInteraction);
-//    }
+    private function remove(wp:ControllerBase):void{
+
+    }
 }
 }

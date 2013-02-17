@@ -7,11 +7,15 @@
  */
 package {
 
+import behaviors.BehaviorBase;
+
 import controller.ControllerBase;
 
 import flash.display.BitmapData;
 import flash.events.Event;
 import flash.geom.Point;
+
+import model.ObjectBase;
 
 import utils.PhysEngineConnector;
 
@@ -19,6 +23,7 @@ public class Field {
 
     private var _position:Point;
     private var _controllers:Vector.<ControllerBase>;
+
     public function Field(position:Point, border:BitmapData) {
         _position = position.clone();
 
@@ -49,6 +54,24 @@ public class Field {
 
     public function get position():Point {
         return _position;
+    }
+
+    public function getControllerByObject(obj:ObjectBase):ControllerBase{
+        for each(var p:ControllerBase in _controllers){
+            if(p.object == obj)
+                return p;
+        }
+
+        return null;
+    }
+
+    public function getControllerByBehavior(b:BehaviorBase):ControllerBase{
+        for each(var p:ControllerBase in _controllers){
+            if(p.hasBehavior(b))
+                return p;
+        }
+
+        return null;
     }
 }
 }
