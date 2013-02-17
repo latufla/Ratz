@@ -66,10 +66,11 @@ public class Engine extends Sprite{
         Config.field = _field;
 
         var wps:Vector.<Rectangle> = new Vector.<Rectangle>();
-        wps.push(new Rectangle(590, 590, 180, 180));
-        wps.push(new Rectangle(590, 30, 180, 180));
+        wps.push(new Rectangle(600, 380, 172, 24));
+        wps.push(new Rectangle(600, 30, 172, 180));
         wps.push(new Rectangle(30, 30, 180, 180));
         wps.push(new Rectangle(30, 590, 180, 180));
+        wps.push(new Rectangle(600, 590, 172, 180));
         WaypointManager.instance.init(wps);
 
         var stage:Stage = Ratz.STAGE;
@@ -103,7 +104,7 @@ public class Engine extends Sprite{
     private function createNapeObject(params:Object):void{
         var material:Object = params["material"];
         var rMaterial:RMaterial = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);
-        _rat = ObjectBase.create(new Point(650, 700), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, params["other"]["group"]);
+        _rat = ObjectBase.create(new Point(650, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, params["other"]["group"]);
         _rat.name = "Rat 1";
 
         _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new UserControlBehavior(), new MoveBehavior(), new TrapBehavior(), new BoostBehavior(), new ShootBehavior()]);
