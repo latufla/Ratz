@@ -131,6 +131,11 @@ public class PhysEngineConnector {
         return physObj.rotation;
     }
 
+    public function setRotation(obj:ObjectBase, value:Number):void {
+        var physObj:Body = _physObjects[obj];
+        physObj.rotation = value;
+    }
+
     public function setShapes(obj:ObjectBase, shapes:Vector.<RShape>):void{
         var physObj:Body = _physObjects[obj];
         physObj.shapes.clear();
@@ -249,6 +254,5 @@ public class PhysEngineConnector {
 
         return null;
     }
-
 }
 }

@@ -92,12 +92,8 @@ public class Engine extends Sprite{
     private function mainLoop(e:Event):void {
         _field.simulateStep(1 / 60, _spaceView);
 
-        // friction
-        if(!_rat)
-            return;
-
-        _rat.applyTerrainFriction(0.2, 0.01);
-        Config.ammunitionPanel.data = _rat.ammunition;
+        if(_rat)
+            Config.ammunitionPanel.data = _rat.ammunition;
     }
 
     private function createNapeObject(params:Object):void{
