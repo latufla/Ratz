@@ -20,7 +20,11 @@ import flash.geom.Point;
 import model.ObjectBase;
 
 public class MoveBehavior extends BehaviorBase{
+
+    private static const STOPPAGE_MIN_VEL:int = 40;
+    private static const NULL_VELOCITY:Point = new Point();
     public function MoveBehavior() {
+        super();
     }
 
     override public function doStep():void{
@@ -33,30 +37,41 @@ public class MoveBehavior extends BehaviorBase{
         if(!controlBehavior)
             return;
 
+        var obj:ObjectBase = _controller.object;
         if(controlBehavior.run)
-            applyRun(_controller.object);
+            applyRun(obj);
+        else
+            applyStoppage(obj);
 
         if(controlBehavior.turnRight)
-            applyTurnRight(_controller.object);
+            applyTurnRight(obj);
 
         if(controlBehavior.turnLeft)
-            applyTurnLeft(_controller.object);
+            applyTurnLeft(obj);
+
+        obj.applyTerrainFriction(0.2, 0.01);
     }
 
     private function applyRun(obj:ObjectBase):void{
         obj.applyImpulse(new Point(0, -10));
     }
 
+    private function applyStoppage(obj:ObjectBase):void {
+        if(shouldNullVelocity(obj))
+            obj.velocity = new Point(0, 0);
+    }
+
     private function applyTurnLeft(obj:ObjectBase):void{
-        var velocity:Point = obj.velocity;
-        if((Math.abs(velocity.x) > 10 || Math.abs(velocity.y) > 10))
-            obj.applyAngularImpulse(-150);
+        obj.applyAngularImpulse(-200);
     }
 
     private function applyTurnRight(obj:ObjectBase):void{
-        var velocity:Point = obj.velocity;
-        if((Math.abs(velocity.x) > 10 || Math.abs(velocity.y) > 10))
-            obj.applyAngularImpulse(150);
+        obj.applyAngularImpulse(200);
+    }
+
+    private function shouldNullVelocity(obj:ObjectBase):Boolean{
+        var vel:Point = obj.velocity;
+        return !vel.equals(NULL_VELOCITY) && Math.abs(vel.x) < STOPPAGE_MIN_VEL && Math.abs(vel.y) < STOPPAGE_MIN_VEL;
     }
 }
 }

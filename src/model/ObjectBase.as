@@ -84,6 +84,10 @@ public class ObjectBase {
         return PhysEngineConnector.instance.getRotation(this);
     }
 
+    public function set rotation(value:Number):void {
+        PhysEngineConnector.instance.setRotation(this, value);
+    }
+
     public function get velocity():Point {
         return PhysEngineConnector.instance.getVelocity(this);
     }
