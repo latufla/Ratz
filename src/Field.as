@@ -55,6 +55,7 @@ public class Field {
     public function add(c:ControllerBase):void{
         PhysEngineConnector.instance.addObjectToField(this, c.object);
         _controllers.push(c);
+        c.startBehaviors();
     }
 
     public function remove(c:ControllerBase):void{

@@ -53,7 +53,6 @@ public class TrapBehavior extends BehaviorBase{
         trap.ammunition.health = 30;
 
         var trapController:ControllerBase = ControllerBase.create(trap, new <BehaviorBase>[new TrapItemBehavior()]);
-        trapController.startBehaviors();
         Config.field.add(trapController);
 
         _enabled = false;

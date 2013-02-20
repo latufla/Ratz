@@ -39,17 +39,17 @@ public class TrapItemBehavior extends BehaviorBase{
         super.stop();
     }
 
-    private function onInteraction(trap:ObjectBase, rat:ObjectBase):void{
-        var ratC:ControllerBase = Config.field.getControllerByObject(rat);
+    private function onInteraction(trap:ObjectBase, obj:ObjectBase):void{
+        var ratC:ControllerBase = obj.controller;
         if(!ratC.isRat)
             return;
 
-        rat.ammunition.health -= trap.ammunition.health;
+        obj.ammunition.health -= trap.ammunition.health;
 
         var pos:Point = trap.position;
         GuiUtil.showPopupText(Ratz.STAGE, new Point(pos.x, pos.y), "-" + trap.ammunition.health, 20, 0xFF0000);
 
-        Config.field.remove(Config.field.getControllerByObject(trap));
+        Config.field.remove(trap.controller);
     }
 }
 }

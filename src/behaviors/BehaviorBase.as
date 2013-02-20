@@ -8,6 +8,8 @@
 package behaviors {
 import controller.ControllerBase;
 
+import utils.Config;
+
 public class BehaviorBase {
 
     private var _id:int;

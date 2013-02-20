@@ -62,18 +62,17 @@ public class WaypointManager {
         _waypointSequence.add(wpBehavior);
 
         var wpc:ControllerBase = ControllerBase.create(wp, new <BehaviorBase>[wpBehavior]);
-        wpc.startBehaviors();
         Config.field.add(wpc);
     }
 
-    private function onInteraction(wp:ObjectBase, rat:ObjectBase):void {
-        var ratC:ControllerBase = Config.field.getControllerByObject(rat);
+    private function onInteraction(wp:ObjectBase, obj:ObjectBase):void {
+        var ratC:ControllerBase = obj.controller;
         if(!ratC.isRat)
             return;
 
-        var wpc:ControllerBase = Config.field.getControllerByObject(wp);
+        var wpc:ControllerBase = wp.controller;
         var wpBehavior:WaypointItemBehavior = wpc.getBehaviorByClass(WaypointItemBehavior) as WaypointItemBehavior;
-        _waypointSequence.visit(wpBehavior, rat);
+        _waypointSequence.visit(wpBehavior, obj);
     }
 
     private function onSequenceComplete(obj:ObjectBase):void{

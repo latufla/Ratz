@@ -10,6 +10,8 @@ import behaviors.BehaviorBase;
 import behaviors.control.ControlBehavior;
 import model.ObjectBase;
 
+import utils.VectorUtil;
+
 import view.ViewBase;
 
 public class ControllerBase {
@@ -45,15 +47,8 @@ public class ControllerBase {
     }
 
     public function removeBehavior(b:BehaviorBase):void{
-        var i:int = _behaviors.indexOf(b);
-
-        if(i == -1)
-            throw new Error("can`t remove behavior: no such behavior");
-
-        _behaviors[i].stop();
-        _behaviors.splice(i, 1);
-
-        trace("remove ", b);
+        b.stop();
+        VectorUtil.removeElement(b, _behaviors);
     }
 
     public function startBehaviors():void{

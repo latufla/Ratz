@@ -6,9 +6,13 @@
  * To change this template use File | Settings | File Templates.
  */
 package model {
+import controller.ControllerBase;
+
 import flash.geom.Point;
 import flash.geom.Point;
 import flash.geom.Rectangle;
+
+import utils.Config;
 
 import utils.PhysEngineConnector;
 
@@ -17,6 +21,8 @@ import utils.RPolygon;
 import utils.RShape;
 
 public class ObjectBase {
+    private var _name:String = "dummy";
+
     protected static const DEFAULT_SHAPE:RPolygon = new RPolygon(0, 0, 30, 60);
     protected static const DEFAULT_POSITION:Point = new Point(0, 0);
 
@@ -26,8 +32,6 @@ public class ObjectBase {
     private var _interactionGroup:int = 1;
 
     private var _ammunition:Ammunition;
-
-    private var _name:String = "dummy";
 
     public function ObjectBase() {
         init();
@@ -96,12 +100,20 @@ public class ObjectBase {
         PhysEngineConnector.instance.setVelocity(this, value);
     }
 
+    public function get shapes():Vector.<RShape> {
+        return _shapes;
+    }
+
     public function set shapes(value:Vector.<RShape>):void {
         _shapes = value;
         PhysEngineConnector.instance.setShapes(this, _shapes);
 
         if(_material)
             PhysEngineConnector.instance.setMaterial(this, _material);
+    }
+
+    public function get material():RMaterial {
+        return _material;
     }
 
     public function set material(value:RMaterial):void {
@@ -164,6 +176,10 @@ public class ObjectBase {
 
     public function set visible(value:Boolean):void{
         PhysEngineConnector.instance.setVisible(this, value);
+    }
+
+    public function get controller():ControllerBase{
+        return Config.field.getControllerByObject(this);
     }
 }
 }

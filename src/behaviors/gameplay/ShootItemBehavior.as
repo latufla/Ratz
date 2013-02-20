@@ -34,12 +34,12 @@ public class ShootItemBehavior extends BehaviorBase{
     }
 
     private function onInteraction(shot:ObjectBase, obj:ObjectBase):void{
-        var ratC:ControllerBase = Config.field.getControllerByObject(obj);
+        var ratC:ControllerBase = obj.controller;
         if(ratC.isRat)
             obj.ammunition.health -= shot.ammunition.health;
 
         if(!obj.isPseudo)
-            Config.field.remove(Config.field.getControllerByObject(shot));
+            Config.field.remove(shot.controller);
     }
 }
 }

@@ -45,6 +45,7 @@ public class GamepadBehavior extends BehaviorBase{
 
     override public function stop():void{
         super.stop();
+        _activeKeys = [];
 
         var stage:Stage = Ratz.STAGE;
         stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
