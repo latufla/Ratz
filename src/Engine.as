@@ -7,6 +7,7 @@
  */
 package {
 import behaviors.BehaviorBase;
+import behaviors.core.StatDisplayBehavior;
 import behaviors.gameplay.BoostBehavior;
 import behaviors.gameplay.MedkitItemBehavior;
 import behaviors.gameplay.MoveBehavior;
@@ -91,9 +92,6 @@ public class Engine extends Sprite{
 
     private function mainLoop(e:Event):void {
         _field.simulateStep(1 / 60, _spaceView);
-
-        if(_rat)
-            Config.ammunitionPanel.data = _rat.ammunition;
     }
 
     private function createNapeObject(params:Object):void{
@@ -102,7 +100,12 @@ public class Engine extends Sprite{
         _rat = ObjectBase.create(new Point(650, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, params["other"]["group"]);
         _rat.name = "Rat 1";
 
-        _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new UserControlBehavior(), new MoveBehavior(), new TrapBehavior(), new BoostBehavior(), new ShootBehavior()]);
+        _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new UserControlBehavior(),
+            new MoveBehavior(),
+            new TrapBehavior(),
+            new BoostBehavior(),
+            new ShootBehavior(),
+            new StatDisplayBehavior()]);
         _ratController.startBehaviors();
         _field.add(_ratController);
 
