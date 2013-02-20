@@ -36,6 +36,8 @@ public class TrapBehavior extends BehaviorBase{
         if(!_enabled)
             return;
 
+        super.doStep();
+
         var controlBehavior:ControlBehavior = _controller.getBehaviorByClass(ControlBehavior) as ControlBehavior;
         if(!controlBehavior)
             return;

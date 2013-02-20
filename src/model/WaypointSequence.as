@@ -38,11 +38,11 @@ public class WaypointSequence {
                 _completeCb(obj);
 
             unregisterFromAll(obj);
-            delete _lastVisitedWaypoints[obj];
+            delete _lastVisitedWaypoints[obj.name];
         }
 
         tryRegister(wp, obj);
-        _lastVisitedWaypoints[obj] = wp;
+        _lastVisitedWaypoints[obj.name] = wp;
     }
 
     public function set completeCb(value:Function):void {
@@ -55,7 +55,7 @@ public class WaypointSequence {
 
     private function tryRegister(wp:WaypointItemBehavior, obj:ObjectBase):void {
         var prevWp:WaypointItemBehavior = getPrev(wp);
-        if(!_lastVisitedWaypoints[obj] || (_lastVisitedWaypoints[obj] == prevWp && prevWp.isRegistered(obj))){
+        if(!_lastVisitedWaypoints[obj.name] || (_lastVisitedWaypoints[obj.name] == prevWp && prevWp.isRegistered(obj))){
             if(!wp.isRegistered(obj))
                 wp.register(obj);
         }
@@ -77,7 +77,7 @@ public class WaypointSequence {
     }
 
     private function sequenceCompleted(wp:WaypointItemBehavior, obj:ObjectBase):Boolean {
-        if(_lastVisitedWaypoints[obj] != getPrev(wp))
+        if(_lastVisitedWaypoints[obj.name] != getPrev(wp))
             return false;
 
         var passLap:Boolean;

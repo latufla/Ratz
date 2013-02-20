@@ -19,6 +19,8 @@ public class StatDisplayBehavior extends BehaviorBase{
         if(!_enabled)
             return;
 
+        super.doStep();
+
         Config.ammunitionPanel.data = _controller.object.ammunition;
     }
 }

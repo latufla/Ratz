@@ -7,10 +7,9 @@
  */
 package behaviors.gameplay {
 import behaviors.BehaviorBase;
-
 import controller.ControllerBase;
 
-import controller.ControllerBase;
+import flash.utils.clearTimeout;
 
 import flash.utils.setTimeout;
 
@@ -30,6 +29,8 @@ public class DeathBehavior extends BehaviorBase{
         if(!_enabled)
             return;
 
+        super.doStep();
+
         var obj:ObjectBase = _controller.object;
         if(obj.ammunition.health <=0 && obj.controller)
             applyDeath(obj);
@@ -40,10 +41,12 @@ public class DeathBehavior extends BehaviorBase{
         var recoveryObj:ObjectBase = ObjectBase.create(obj.position, obj.shapes, obj.material, obj.interactionGroup);
         recoveryObj.name = obj.name;
         recoveryObj.ammunition = obj.ammunition;
-        var recoveryC:ControllerBase = ControllerBase.create(recoveryObj, obj.controller.behaviors.concat());
+        var recoveryC:ControllerBase = ControllerBase.create(recoveryObj, obj.controller.behaviors);
         Config.field.remove(obj.controller);
 
         _recoverId = setTimeout(function ():void{
+            clearTimeout(_recoverId);
+
             obj.ammunition.health = 100;
             Config.field.add(recoveryC);
         }, _recoverTimeout);

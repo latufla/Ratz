@@ -24,7 +24,7 @@ import utils.VectorUtil;
 public class WaypointItemBehavior extends BehaviorBase {
 
     private var _interactionCb:Function;
-    private var _registeredList:Vector.<ObjectBase>;
+    private var _registeredList:Vector.<String>;
 
     public function WaypointItemBehavior(interactionCb:Function) {
         super();
@@ -34,7 +34,7 @@ public class WaypointItemBehavior extends BehaviorBase {
     }
 
     private function init():void {
-        _registeredList = new Vector.<ObjectBase>();
+        _registeredList = new Vector.<String>();
     }
 
     override public function start(c:ControllerBase):void{
@@ -56,22 +56,22 @@ public class WaypointItemBehavior extends BehaviorBase {
     }
 
     public function register(obj:ObjectBase):void{
-        _registeredList.push(obj);
+        _registeredList.push(obj.name);
 
         GuiUtil.showPopupText(Ratz.STAGE, new Point(300, 350), name, 30, 0x0000FF);
-        trace(name, obj.name);
+//        trace(name, obj.name);
     }
 
     public function unregister(obj:ObjectBase):void{
-        VectorUtil.removeElement(_registeredList, obj);
+        VectorUtil.removeElement(_registeredList, obj.name);
     }
 
     public function unregisterAll():void{
-        _registeredList = new Vector.<ObjectBase>();
+        _registeredList = new Vector.<String>();
     }
 
     public function isRegistered(obj:ObjectBase):Boolean{
-        return _registeredList.indexOf(obj) != -1;
+        return _registeredList.indexOf(obj.name) != -1;
     }
 
     private function onInteraction(waypoint:ObjectBase, target:ObjectBase):void{

@@ -61,7 +61,7 @@ public class BehaviorBase {
     }
 
     public function toString():String{
-        return "{ type: " + this + ", id: " + _id + ", name: " + _name + " }";
+        return "{ id: " + _id + ", name: " + _name + " }";
     }
 }
 }
