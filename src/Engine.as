@@ -39,6 +39,7 @@ import starling.display.MovieClip;
 import starling.display.Sprite;
 
 import utils.Config;
+import utils.FPSCounter;
 import utils.RMaterial;
 import utils.RPolygon;
 import utils.RShape;
@@ -86,6 +87,8 @@ public class Engine extends Sprite{
         var createBodyPanel:NapeCreateObjectPanel = new NapeCreateObjectPanel(createNapeObject);
         createBodyPanel.x = 810;
         stage.addChild(createBodyPanel);
+
+        stage.addChild(new FPSCounter(5, 5));
     }
 
 
