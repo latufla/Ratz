@@ -75,7 +75,10 @@ public class WaypointManager {
             var lastToNext:Point = lastVisWp.getDirectionTo(nextRegWp);
             var lastToObj:Point = lastVisWp.getDirectionTo(obj);
 
-            if(Math.abs(NapeUtil.angleFromVector(lastToObj) - NapeUtil.angleFromVector(lastToPrev)) < Math.abs(NapeUtil.angleFromVector(lastToObj) - NapeUtil.angleFromVector(lastToNext)))
+            var lastToPrevAngleDiff:Number = Math.abs(NapeUtil.angleFromVector(lastToObj) - NapeUtil.angleFromVector(lastToPrev));
+            var lastToNextAngleDiff:Number = Math.abs(NapeUtil.angleFromVector(lastToObj) - NapeUtil.angleFromVector(lastToNext));
+
+            if(lastToPrevAngleDiff < lastToNextAngleDiff)
                 obj.rotation = NapeUtil.angleFromVector(prevRegWp.getDirectionTo(lastVisWp));
             else
                 obj.rotation = NapeUtil.angleFromVector(lastVisWp.getDirectionTo(nextRegWp));
