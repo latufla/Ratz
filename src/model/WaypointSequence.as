@@ -7,16 +7,23 @@
  */
 package model {
 import behaviors.core.WaypointItemBehavior;
-import utils.VectorUtil;
+
+import flash.utils.Dictionary;
 
 public class WaypointSequence {
 
-    private var _list:Vector.<WaypointItemBehavior> = new Vector.<WaypointItemBehavior>(); // order matters
-    private var _lastVisited:WaypointItemBehavior;
+    private var _list:Vector.<WaypointItemBehavior>; // order matters
+    private var _lastVisitedWaypoints:Dictionary; // ObjectBase -> WaypointItemBehavior
 
     private var _completeCb:Function;
 
     public function WaypointSequence() {
+        init();
+    }
+
+    private function init():void {
+        _list = new Vector.<WaypointItemBehavior>();
+        _lastVisitedWaypoints = new Dictionary();
     }
 
     public function add(wp:WaypointItemBehavior):void{
@@ -25,21 +32,17 @@ public class WaypointSequence {
         wp.name = "Waypoint " + _list.length;
     }
 
-    public function remove(wp:WaypointItemBehavior):void{
-        VectorUtil.removeElement(_list, wp);
-    }
-
     public function visit(wp:WaypointItemBehavior, obj:ObjectBase):void{
         if(sequenceCompleted(wp, obj)){
             if(_completeCb != null)
                 _completeCb(obj);
 
             unregisterFromAll(obj);
-            _lastVisited = null;
+            delete _lastVisitedWaypoints[obj];
         }
 
         tryRegister(wp, obj);
-        _lastVisited = wp;
+        _lastVisitedWaypoints[obj] = wp;
     }
 
     public function set completeCb(value:Function):void {
@@ -48,7 +51,7 @@ public class WaypointSequence {
 
     private function tryRegister(wp:WaypointItemBehavior, obj:ObjectBase):void {
         var prevWp:WaypointItemBehavior = getPrev(wp);
-        if(!_lastVisited || (_lastVisited == prevWp && prevWp.isRegistered(obj))){
+        if(!_lastVisitedWaypoints[obj] || (_lastVisitedWaypoints[obj] == prevWp && prevWp.isRegistered(obj))){
             if(!wp.isRegistered(obj))
                 wp.register(obj);
         }
@@ -70,7 +73,7 @@ public class WaypointSequence {
     }
 
     private function sequenceCompleted(wp:WaypointItemBehavior, obj:ObjectBase):Boolean {
-        if(_lastVisited != getPrev(wp))
+        if(_lastVisitedWaypoints[obj] != getPrev(wp))
             return false;
 
         var passLap:Boolean;

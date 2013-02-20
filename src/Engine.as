@@ -63,15 +63,13 @@ public class Engine extends Sprite{
         Config.space = new Space();
 
         var border:BitmapData = Bitmap(new Lvl1ViewClass()).bitmapData;
-        _field = new Field(new Point(0, 50), border);
-
         var wps:Vector.<Rectangle> = new Vector.<Rectangle>();
         wps.push(new Rectangle(600, 380, 172, 24));
         wps.push(new Rectangle(600, 30, 172, 180));
         wps.push(new Rectangle(30, 30, 180, 180));
         wps.push(new Rectangle(30, 590, 180, 180));
         wps.push(new Rectangle(600, 590, 172, 180));
-        WaypointManager.instance.init(wps);
+        _field = new Field(border, wps);
 
         var stage:Stage = Ratz.STAGE;
         Config.ammunitionPanel.x = 20;

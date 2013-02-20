@@ -57,19 +57,19 @@ public class MoveBehavior extends BehaviorBase{
     }
 
     private function applyStoppage(obj:ObjectBase):void {
-        if(shouldNullVelocity(obj))
+        if(shouldSetVelocityToZero(obj))
             obj.velocity = new Point(0, 0);
     }
 
     private function applyTurnLeft(obj:ObjectBase):void{
-        obj.applyAngularImpulse(-200);
+        obj.applyAngularImpulse(-150);
     }
 
     private function applyTurnRight(obj:ObjectBase):void{
-        obj.applyAngularImpulse(200);
+        obj.applyAngularImpulse(150);
     }
 
-    private function shouldNullVelocity(obj:ObjectBase):Boolean{
+    private function shouldSetVelocityToZero(obj:ObjectBase):Boolean{
         var vel:Point = obj.velocity;
         return !vel.equals(NULL_VELOCITY) && Math.abs(vel.x) < STOPPAGE_MIN_VEL && Math.abs(vel.y) < STOPPAGE_MIN_VEL;
     }

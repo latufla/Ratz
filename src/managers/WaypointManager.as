@@ -27,7 +27,7 @@ import utils.VectorUtil;
 
 public class WaypointManager {
 
-    private var _waypointSequence:WaypointSequence = new WaypointSequence(); // order matters
+    private var _waypoints:WaypointSequence = new WaypointSequence(); // order matters
 
     private static var _instance:WaypointManager;
     public function WaypointManager() {
@@ -47,12 +47,12 @@ public class WaypointManager {
             add(wp);
         }
 
-        _waypointSequence.completeCb = onSequenceComplete;
+        _waypoints.completeCb = onSequenceComplete;
     }
 
     private function add(wp:ObjectBase):void{
         var wpBehavior:WaypointItemBehavior = new WaypointItemBehavior(onInteraction);
-        _waypointSequence.add(wpBehavior);
+        _waypoints.add(wpBehavior);
 
         var wpc:ControllerBase = ControllerBase.create(wp, new <BehaviorBase>[wpBehavior]);
         wpc.startBehaviors();
@@ -66,15 +66,11 @@ public class WaypointManager {
 
         var wpc:ControllerBase = Config.field.getControllerByObject(wp);
         var wpBehavior:WaypointItemBehavior = wpc.getBehaviorByClass(WaypointItemBehavior) as WaypointItemBehavior;
-        _waypointSequence.visit(wpBehavior, rat);
+        _waypoints.visit(wpBehavior, rat);
     }
 
     private function onSequenceComplete(obj:ObjectBase):void{
         GuiUtil.showPopupText(Ratz.STAGE, new Point(300, 320), "Lap End By "+ obj.name, 30, 0x0000FF);
-    }
-
-    private function remove(wp:ControllerBase):void{
-
     }
 }
 }

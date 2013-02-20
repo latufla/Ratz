@@ -23,6 +23,7 @@ import utils.VectorUtil;
 
 public class WaypointItemBehavior extends BehaviorBase {
 
+    private var _id:int;
     private var _name:String;
     private var _interactionCb:Function;
     private var _registeredList:Vector.<ObjectBase>;
@@ -86,6 +87,14 @@ public class WaypointItemBehavior extends BehaviorBase {
 
     public function set name(value:String):void {
         _name = value;
+    }
+
+    public function get id():int {
+        return _id;
+    }
+
+    public function set id(value:int):void {
+        _id = value;
     }
 }
 }

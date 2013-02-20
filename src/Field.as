@@ -14,6 +14,9 @@ import controller.ControllerBase;
 import flash.display.BitmapData;
 import flash.events.Event;
 import flash.geom.Point;
+import flash.geom.Rectangle;
+
+import managers.WaypointManager;
 
 import model.ObjectBase;
 
@@ -24,22 +27,24 @@ import utils.VectorUtil;
 
 public class Field {
 
-    private var _position:Point;
     private var _controllers:Vector.<ControllerBase>;
 
-    public function Field(position:Point, border:BitmapData) {
-        _position = position.clone();
-
-        init(border);
+    public function Field(border:BitmapData, waypoints:Vector.<Rectangle>) {
+        init(border, waypoints);
     }
 
-    private function init(border:BitmapData):void {
+    private function init(border:BitmapData, waypoints:Vector.<Rectangle>):void {
         Config.field = this;
 
         _controllers = new Vector.<ControllerBase>();
         PhysEngineConnector.instance.initField(this, border);
+        initWaypoints(waypoints);
 
         Ratz.STAGE.addEventListener(Event.ENTER_FRAME, onEFDoBehaviorsStep);
+    }
+
+    private function initWaypoints(waypoints:Vector.<Rectangle>):void {
+        WaypointManager.instance.init(waypoints);
     }
 
     private function onEFDoBehaviorsStep(e:Event):void {
@@ -61,10 +66,6 @@ public class Field {
 
     public function simulateStep(step:Number, debugView:* = null):void{
         PhysEngineConnector.instance.simulateStep(this, step, debugView);
-    }
-
-    public function get position():Point {
-        return _position;
     }
 
     public function getControllerByObject(obj:ObjectBase):ControllerBase{
