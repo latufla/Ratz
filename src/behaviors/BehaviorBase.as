@@ -10,6 +10,9 @@ import controller.ControllerBase;
 
 public class BehaviorBase {
 
+    private var _id:int;
+    private var _name:String;
+
     protected var _controller:ControllerBase;
     protected var _enabled:Boolean = true;
 
@@ -37,6 +40,26 @@ public class BehaviorBase {
 
     public function set enabled(value:Boolean):void {
         _enabled = value;
+    }
+
+    public function get name():String {
+        return _name;
+    }
+
+    public function set name(value:String):void {
+        _name = value;
+    }
+
+    public function get id():int {
+        return _id;
+    }
+
+    public function set id(value:int):void {
+        _id = value;
+    }
+
+    public function toString():String{
+        return "{ type: " + this + ", id: " + _id + ", name: " + _name + " }";
     }
 }
 }

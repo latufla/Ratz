@@ -13,7 +13,6 @@ import controller.ControllerBase;
 
 import flash.display.BitmapData;
 import flash.events.Event;
-import flash.geom.Point;
 import flash.geom.Rectangle;
 
 import managers.WaypointManager;
@@ -84,6 +83,12 @@ public class Field {
         }
 
         return null;
+    }
+
+    public function getControllersByBehaviorClass(bClass:Class):Vector.<ControllerBase>{
+        return _controllers.filter(function (e:ControllerBase, i:int, v:Vector.<ControllerBase>):Boolean{
+            return e is bClass;
+        });
     }
 }
 }

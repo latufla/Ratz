@@ -49,6 +49,10 @@ public class WaypointSequence {
         _completeCb = value;
     }
 
+    public function get list():Vector.<WaypointItemBehavior> {
+        return _list;
+    }
+
     private function tryRegister(wp:WaypointItemBehavior, obj:ObjectBase):void {
         var prevWp:WaypointItemBehavior = getPrev(wp);
         if(!_lastVisitedWaypoints[obj] || (_lastVisitedWaypoints[obj] == prevWp && prevWp.isRegistered(obj))){

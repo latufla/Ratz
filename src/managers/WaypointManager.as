@@ -23,11 +23,9 @@ import utils.GuiUtil;
 import utils.RPolygon;
 import utils.RShape;
 
-import utils.VectorUtil;
-
 public class WaypointManager {
 
-    private var _waypoints:WaypointSequence = new WaypointSequence(); // order matters
+    private var _waypointSequence:WaypointSequence = new WaypointSequence(); // order matters
 
     private static var _instance:WaypointManager;
     public function WaypointManager() {
@@ -47,12 +45,21 @@ public class WaypointManager {
             add(wp);
         }
 
-        _waypoints.completeCb = onSequenceComplete;
+        _waypointSequence.completeCb = onSequenceComplete;
+    }
+
+    public function get waypoints():Vector.<ControllerBase>{
+        var wpBehaviors:Vector.<WaypointItemBehavior> = _waypointSequence.list;
+        var wps:Vector.<ControllerBase> = new Vector.<ControllerBase>();
+        for each(var p:WaypointItemBehavior in wpBehaviors){
+            wps.push(Config.field.getControllerByBehavior(p));
+        }
+        return wps;
     }
 
     private function add(wp:ObjectBase):void{
         var wpBehavior:WaypointItemBehavior = new WaypointItemBehavior(onInteraction);
-        _waypoints.add(wpBehavior);
+        _waypointSequence.add(wpBehavior);
 
         var wpc:ControllerBase = ControllerBase.create(wp, new <BehaviorBase>[wpBehavior]);
         wpc.startBehaviors();
@@ -66,7 +73,7 @@ public class WaypointManager {
 
         var wpc:ControllerBase = Config.field.getControllerByObject(wp);
         var wpBehavior:WaypointItemBehavior = wpc.getBehaviorByClass(WaypointItemBehavior) as WaypointItemBehavior;
-        _waypoints.visit(wpBehavior, rat);
+        _waypointSequence.visit(wpBehavior, rat);
     }
 
     private function onSequenceComplete(obj:ObjectBase):void{
