@@ -20,6 +20,7 @@ import model.WaypointSequence;
 
 import utils.Config;
 import utils.GuiUtil;
+import utils.NapeUtil;
 import utils.RPolygon;
 import utils.RShape;
 
@@ -55,6 +56,30 @@ public class WaypointManager {
             wps.push(Config.field.getControllerByBehavior(p));
         }
         return wps;
+    }
+
+    public function correctToNextWaypointWhenRespawn(obj:ObjectBase):void {
+        var lastVisitedWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
+        var prevRegisteredWpB:WaypointItemBehavior = _waypointSequence.getPrevWaypoint(lastVisitedWpB);
+        var nextRegisteredWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastVisitedWpB);
+
+        var lastVisWp:ObjectBase = Config.field.getControllerByBehavior(lastVisitedWpB).object;
+        var nextRegWp:ObjectBase = Config.field.getControllerByBehavior(nextRegisteredWpB).object;
+        if(lastVisWp.intersects(obj)){
+            obj.rotation = NapeUtil.angleFromVector(lastVisWp.getDirectionTo(nextRegWp));
+            obj.position = lastVisWp.center;
+        } else{
+            var prevRegWp:ObjectBase = Config.field.getControllerByBehavior(prevRegisteredWpB).object;
+
+            var lastToPrev:Point = lastVisWp.getDirectionTo(prevRegWp);
+            var lastToNext:Point = lastVisWp.getDirectionTo(nextRegWp);
+            var lastToObj:Point = lastVisWp.getDirectionTo(obj);
+
+            if(Math.abs(NapeUtil.angleFromVector(lastToObj) - NapeUtil.angleFromVector(lastToPrev)) < Math.abs(NapeUtil.angleFromVector(lastToObj) - NapeUtil.angleFromVector(lastToNext)))
+                obj.rotation = NapeUtil.angleFromVector(prevRegWp.getDirectionTo(lastVisWp));
+            else
+                obj.rotation = NapeUtil.angleFromVector(lastVisWp.getDirectionTo(nextRegWp));
+        }
     }
 
     private function add(wp:ObjectBase):void{

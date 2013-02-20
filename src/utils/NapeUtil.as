@@ -7,6 +7,7 @@
  */
 package utils {
 import flash.display.BitmapData;
+import flash.geom.Point;
 
 import nape.geom.AABB;
 import nape.geom.GeomPoly;
@@ -23,12 +24,17 @@ public class NapeUtil {
     public function NapeUtil() {
     }
 
+    public static function angleFromVector(v:Point):Number{
+        var v2:Vec2 = Vec2.fromPoint(v);
+        return v2.angle + Math.PI / 2;
+    }
+
     public static function bodyFromBitmapData(bd:BitmapData):Body{
         var bdIso:NapeBitmapDataIso = new NapeBitmapDataIso(bd, 0x80);
         return run(bdIso, bdIso.bounds);
     }
 
-    public static function run(iso:IsoFunction, bounds:AABB, granularity:Vec2=null, quality:int=2, simplification:Number=1.5):Body {
+    private static function run(iso:IsoFunction, bounds:AABB, granularity:Vec2=null, quality:int=2, simplification:Number=1.5):Body {
         var body:Body = new Body();
 
         if (granularity==null) granularity = Vec2.weak(8, 8);

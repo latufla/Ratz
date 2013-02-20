@@ -158,6 +158,18 @@ public class ObjectBase {
         return dir;
     }
 
+    public function intersects(obj:ObjectBase):Boolean{
+        var b1:Rectangle = obj.bounds;
+        var b2:Rectangle = bounds;
+
+        return b2.intersects(b1);
+    }
+
+    public function get center():Point{
+        var b:Rectangle = bounds;
+        return new Point(b.x + b.width / 2, b.y + b.height / 2);
+    }
+
     public function addInteractionListener(onInteraction:Function):void{
         PhysEngineConnector.instance.addInteractionListener(this, onInteraction);
     }

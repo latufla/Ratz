@@ -53,8 +53,13 @@ public class WaypointSequence {
         return _list;
     }
 
+    public function getLastWaypointVisitedBy(obj:ObjectBase){
+        return _lastVisitedWaypoints[obj.name];
+    }
+
+
     private function tryRegister(wp:WaypointItemBehavior, obj:ObjectBase):void {
-        var prevWp:WaypointItemBehavior = getPrev(wp);
+        var prevWp:WaypointItemBehavior = getPrevWaypoint(wp);
         if(!_lastVisitedWaypoints[obj.name] || (_lastVisitedWaypoints[obj.name] == prevWp && prevWp.isRegistered(obj))){
             if(!wp.isRegistered(obj))
                 wp.register(obj);
@@ -67,7 +72,7 @@ public class WaypointSequence {
         }
     }
 
-    private function getPrev(wp:WaypointItemBehavior):WaypointItemBehavior{
+    public function getPrevWaypoint(wp:WaypointItemBehavior):WaypointItemBehavior{
         var curWpIdx:int = _list.indexOf(wp);
         if(curWpIdx == -1)
             return null;
@@ -76,8 +81,17 @@ public class WaypointSequence {
         return _list[prevWpIdx];
     }
 
+    public function getNextWaypoint(wp:WaypointItemBehavior):WaypointItemBehavior{
+        var curWpIdx:int = _list.indexOf(wp);
+        if(curWpIdx == -1)
+            return null;
+
+        var nextWpIdx:uint = curWpIdx != _list.length - 1 ? curWpIdx + 1 : 0;
+        return _list[nextWpIdx];
+    }
+
     private function sequenceCompleted(wp:WaypointItemBehavior, obj:ObjectBase):Boolean {
-        if(_lastVisitedWaypoints[obj.name] != getPrev(wp))
+        if(_lastVisitedWaypoints[obj.name] != getPrevWaypoint(wp))
             return false;
 
         var passLap:Boolean;

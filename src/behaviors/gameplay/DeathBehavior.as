@@ -13,6 +13,8 @@ import flash.utils.clearTimeout;
 
 import flash.utils.setTimeout;
 
+import managers.WaypointManager;
+
 import model.ObjectBase;
 
 import utils.Config;
@@ -47,9 +49,11 @@ public class DeathBehavior extends BehaviorBase{
         _recoverId = setTimeout(function ():void{
             clearTimeout(_recoverId);
 
+            WaypointManager.instance.correctToNextWaypointWhenRespawn(recoveryObj);
             obj.ammunition.health = 100;
             Config.field.add(recoveryC);
         }, _recoverTimeout);
     }
+
 }
 }
