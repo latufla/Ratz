@@ -16,7 +16,7 @@ public class BehaviorBase {
     private var _name:String;
 
     protected var _controller:ControllerBase;
-    protected var _enabled:Boolean = true;
+    protected var _enabled:Boolean = false;
 
     public function BehaviorBase() {
     }

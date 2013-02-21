@@ -103,16 +103,7 @@ public class Engine extends Sprite{
         _rat = ObjectBase.create(new Point(650, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, params["other"]["group"]);
         _rat.name = "Rat 1";
 
-        _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new UserControlBehavior(),
-            new MoveBehavior(),
-            new TrapBehavior(),
-            new BoostBehavior(),
-            new ShootBehavior(),
-            new DeathBehavior(),
-            new StatDisplayBehavior()]);
-        _field.add(_ratController);
-
-//        _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new AIControlBehavior(),
+//        _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new UserControlBehavior(),
 //            new MoveBehavior(),
 //            new TrapBehavior(),
 //            new BoostBehavior(),
@@ -121,47 +112,56 @@ public class Engine extends Sprite{
 //            new StatDisplayBehavior()]);
 //        _field.add(_ratController);
 
-        var medkit:ObjectBase = ObjectBase.create(new Point(650, 250), new <RShape>[new RPolygon(0, 0, 30, 30)], rMaterial, params["other"]["group"]);
-        medkit.ammunition.health = 35;
+        _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new AIControlBehavior(),
+            new MoveBehavior(),
+            new TrapBehavior(),
+            new BoostBehavior(),
+            new ShootBehavior(),
+            new DeathBehavior(),
+            new StatDisplayBehavior()]);
+        _field.add(_ratController);
 
-        var medkitController:ControllerBase = ControllerBase.create(medkit, new <BehaviorBase>[new MedkitItemBehavior()]);
-        _field.add(medkitController);
-
-        var medkit2:ObjectBase = ObjectBase.create(new Point(130, 500), new <RShape>[new RPolygon(0, 0, 30, 30)], rMaterial, params["other"]["group"]);
-        medkit2.ammunition.health = 35;
-
-        var medkitController2:ControllerBase = ControllerBase.create(medkit2, new <BehaviorBase>[new MedkitItemBehavior()]);
-        _field.add(medkitController2);
-
-        var trap:ObjectBase = ObjectBase.create(new Point(660, 70), new <RShape>[new RPolygon(0, 0, 20, 20)], rMaterial, params["other"]["group"]);
-        trap.ammunition.health = 120;
-
-        var trapController:ControllerBase = ControllerBase.create(trap, new <BehaviorBase>[new TrapItemBehavior()]);
-        _field.add(trapController);
-
-        var trap2:ObjectBase = ObjectBase.create(new Point(70, 70), new <RShape>[new RPolygon(0, 0, 20, 20)], rMaterial, params["other"]["group"]);
-        trap2.ammunition.health = 120;
-
-        var trapController2:ControllerBase = ControllerBase.create(trap2, new <BehaviorBase>[new TrapItemBehavior()]);
-        _field.add(trapController2);
-
-        var trap3:ObjectBase = ObjectBase.create(new Point(400, 70), new <RShape>[new RPolygon(0, 0, 20, 20)], rMaterial, params["other"]["group"]);
-        trap3.ammunition.health = 120;
-
-        var trapController3:ControllerBase = ControllerBase.create(trap3, new <BehaviorBase>[new TrapItemBehavior()]);
-        _field.add(trapController3);
-
-        var trap4:ObjectBase = ObjectBase.create(new Point(70, 300), new <RShape>[new RPolygon(0, 0, 20, 20)], rMaterial, params["other"]["group"]);
-        trap4.ammunition.health = 120;
-
-        var trapController4:ControllerBase = ControllerBase.create(trap4, new <BehaviorBase>[new TrapItemBehavior()]);
-        _field.add(trapController4);
-
-        var trap5:ObjectBase = ObjectBase.create(new Point(400, 650), new <RShape>[new RPolygon(0, 0, 20, 20)], rMaterial, params["other"]["group"]);
-        trap5.ammunition.health = 120;
-
-        var trapController5:ControllerBase = ControllerBase.create(trap5, new <BehaviorBase>[new TrapItemBehavior()]);
-        _field.add(trapController5);
+//        var medkit:ObjectBase = ObjectBase.create(new Point(650, 250), new <RShape>[new RPolygon(0, 0, 30, 30)], rMaterial, params["other"]["group"]);
+//        medkit.ammunition.health = 35;
+//
+//        var medkitController:ControllerBase = ControllerBase.create(medkit, new <BehaviorBase>[new MedkitItemBehavior()]);
+//        _field.add(medkitController);
+//
+//        var medkit2:ObjectBase = ObjectBase.create(new Point(130, 500), new <RShape>[new RPolygon(0, 0, 30, 30)], rMaterial, params["other"]["group"]);
+//        medkit2.ammunition.health = 35;
+//
+//        var medkitController2:ControllerBase = ControllerBase.create(medkit2, new <BehaviorBase>[new MedkitItemBehavior()]);
+//        _field.add(medkitController2);
+//
+//        var trap:ObjectBase = ObjectBase.create(new Point(660, 70), new <RShape>[new RPolygon(0, 0, 20, 20)], rMaterial, params["other"]["group"]);
+//        trap.ammunition.health = 120;
+//
+//        var trapController:ControllerBase = ControllerBase.create(trap, new <BehaviorBase>[new TrapItemBehavior()]);
+//        _field.add(trapController);
+//
+//        var trap2:ObjectBase = ObjectBase.create(new Point(70, 70), new <RShape>[new RPolygon(0, 0, 20, 20)], rMaterial, params["other"]["group"]);
+//        trap2.ammunition.health = 120;
+//
+//        var trapController2:ControllerBase = ControllerBase.create(trap2, new <BehaviorBase>[new TrapItemBehavior()]);
+//        _field.add(trapController2);
+//
+//        var trap3:ObjectBase = ObjectBase.create(new Point(400, 70), new <RShape>[new RPolygon(0, 0, 20, 20)], rMaterial, params["other"]["group"]);
+//        trap3.ammunition.health = 120;
+//
+//        var trapController3:ControllerBase = ControllerBase.create(trap3, new <BehaviorBase>[new TrapItemBehavior()]);
+//        _field.add(trapController3);
+//
+//        var trap4:ObjectBase = ObjectBase.create(new Point(70, 300), new <RShape>[new RPolygon(0, 0, 20, 20)], rMaterial, params["other"]["group"]);
+//        trap4.ammunition.health = 120;
+//
+//        var trapController4:ControllerBase = ControllerBase.create(trap4, new <BehaviorBase>[new TrapItemBehavior()]);
+//        _field.add(trapController4);
+//
+//        var trap5:ObjectBase = ObjectBase.create(new Point(400, 650), new <RShape>[new RPolygon(0, 0, 20, 20)], rMaterial, params["other"]["group"]);
+//        trap5.ammunition.health = 120;
+//
+//        var trapController5:ControllerBase = ControllerBase.create(trap5, new <BehaviorBase>[new TrapItemBehavior()]);
+//        _field.add(trapController5);
     }
 }
 }

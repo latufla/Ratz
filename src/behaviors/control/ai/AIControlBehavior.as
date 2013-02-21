@@ -16,8 +16,6 @@ import flash.geom.Point;
 
 import flash.utils.setInterval;
 
-import flash.utils.setTimeout;
-
 import managers.WaypointManager;
 
 import model.ObjectBase;
@@ -28,6 +26,10 @@ public class AIControlBehavior extends ControlBehavior{
 
     private var _run:Boolean;
     private var _turnLeft:Boolean;
+    private var _turnRight:Boolean;
+
+    private var _rotateTo:Number;
+
     public function AIControlBehavior() {
         super();
     }
@@ -35,7 +37,6 @@ public class AIControlBehavior extends ControlBehavior{
     override public function start(c:ControllerBase):void{
         super.start(c);
         WaypointManager.instance.addEventListener(CustomEvent.WAYPOINT_VISIT, onWaypointVisit);
-        setInterval(function():void{_turnLeft = false;}, 3000);
     }
 
     override public function stop():void{
@@ -52,7 +53,13 @@ public class AIControlBehavior extends ControlBehavior{
     }
 
     private function resolveRotation():void {
-
+        var rotationDiff:Number = _rotateTo - _controller.object.rotation + 2 * Math.PI;
+        if(Math.abs(_rotateTo - (_controller.object.rotation + 2*Math.PI)) > 0.06){
+            _turnLeft = _rotateTo - (_controller.object.rotation + 2*Math.PI) < 0;
+            _turnRight = _rotateTo - (_controller.object.rotation + 2*Math.PI) > 0;
+        } else{
+            _turnLeft = _turnRight = false;
+        }
     }
 
     private function resolveOptionalActions():void{
@@ -74,22 +81,19 @@ public class AIControlBehavior extends ControlBehavior{
     }
 
     private function onWaypointVisit(e:CustomEvent):void {
-        setTimeout(function():void{
-            var justVisitedWp:ObjectBase = e.data.waypoint;
-            var nextToVisitWp:ObjectBase = e.data.nextToVisitWaypoint;
-            var dir:Point = justVisitedWp.getDirectionTo(nextToVisitWp);
-            e.data.object.rotation = NapeUtil.angleFromVector(dir);
-        }, 200);
+        var justVisitedWp:ObjectBase = e.data.waypoint;
+        var nextToVisitWp:ObjectBase = e.data.nextToVisitWaypoint;
+        var dir:Point = justVisitedWp.getDirectionTo(nextToVisitWp);
+        _rotateTo = NapeUtil.angleFromVector(dir);
     }
 
     override public function get turnLeft():Boolean{
         return _turnLeft;
     }
 
-//
-//    override public function get turnRight():Boolean{
-//        return ;
-//    }
+    override public function get turnRight():Boolean{
+        return _turnRight;
+    }
 
     override public function get run():Boolean{
         return _run;
