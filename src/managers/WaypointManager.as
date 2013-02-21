@@ -8,8 +8,13 @@
 package managers {
 import behaviors.BehaviorBase;
 import behaviors.core.WaypointItemBehavior;
+import behaviors.core.WaypointItemBehavior;
 
 import controller.ControllerBase;
+
+import event.CustomEvent;
+
+import flash.events.EventDispatcher;
 
 import flash.geom.Point;
 
@@ -24,7 +29,7 @@ import utils.NapeUtil;
 import utils.RPolygon;
 import utils.RShape;
 
-public class WaypointManager {
+public class WaypointManager extends EventDispatcher{
 
     private var _waypointSequence:WaypointSequence = new WaypointSequence(); // order matters
 
@@ -101,6 +106,12 @@ public class WaypointManager {
         var wpc:ControllerBase = wp.controller;
         var wpBehavior:WaypointItemBehavior = wpc.getBehaviorByClass(WaypointItemBehavior) as WaypointItemBehavior;
         _waypointSequence.visit(wpBehavior, obj);
+
+        if(wpBehavior != _waypointSequence.list[0]){
+            var nextWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(wpBehavior);
+            var nextWpC:ControllerBase = Config.field.getControllerByBehavior(nextWpB);
+            dispatchEvent(new CustomEvent(CustomEvent.WAYPOINT_VISIT, {waypoint: wp, nextToVisitWaypoint: nextWpC.object, object: obj}));
+        }
     }
 
     private function onSequenceComplete(obj:ObjectBase):void{

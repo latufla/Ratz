@@ -9,6 +9,8 @@ package behaviors.gameplay {
 import behaviors.BehaviorBase;
 import controller.ControllerBase;
 
+import flash.geom.Point;
+
 import flash.utils.clearTimeout;
 
 import flash.utils.setTimeout;
@@ -18,6 +20,7 @@ import managers.WaypointManager;
 import model.ObjectBase;
 
 import utils.Config;
+import utils.GuiUtil;
 
 public class DeathBehavior extends BehaviorBase{
 
@@ -40,6 +43,9 @@ public class DeathBehavior extends BehaviorBase{
 
     // TODO: think about standart clone
     private function applyDeath(obj:ObjectBase):void {
+        var pos:Point = obj.position;
+        GuiUtil.showStaticText(Ratz.STAGE, new Point(pos.x, pos.y), "BAAAAANG!!!", 30, 0xFF0000);
+
         var recoveryObj:ObjectBase = ObjectBase.create(obj.position, obj.shapes, obj.material, obj.interactionGroup);
         recoveryObj.name = obj.name;
         recoveryObj.ammunition = obj.ammunition;
