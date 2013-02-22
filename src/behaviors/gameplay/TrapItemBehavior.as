@@ -18,7 +18,7 @@ import utils.Config;
 
 import utils.GuiUtil;
 
-import utils.PhysEngineConnector;
+import utils.nape.PhysEngineConnector;
 
 public class TrapItemBehavior extends BehaviorBase{
     public function TrapItemBehavior() {

@@ -18,7 +18,7 @@ import model.ObjectBase;
 
 import utils.Config;
 import utils.GuiUtil;
-import utils.PhysEngineConnector;
+import utils.nape.PhysEngineConnector;
 import utils.VectorUtil;
 
 public class WaypointItemBehavior extends BehaviorBase {

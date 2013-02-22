@@ -5,7 +5,9 @@
  * Time: 15:47
  * To change this template use File | Settings | File Templates.
  */
-package utils {
+package utils.nape {
+import utils.*;
+
 import controller.ControllerBase;
 
 import flash.display.BitmapData;

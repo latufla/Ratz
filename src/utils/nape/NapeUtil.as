@@ -5,7 +5,9 @@
  * Time: 14:40
  * To change this template use File | Settings | File Templates.
  */
-package utils {
+package utils.nape {
+import utils.*;
+
 import flash.display.BitmapData;
 import flash.geom.Point;
 
@@ -22,11 +24,6 @@ import nape.shape.Polygon;
 
 public class NapeUtil {
     public function NapeUtil() {
-    }
-
-    public static function angleFromVector(v:Point):Number{
-        var v2:Vec2 = Vec2.fromPoint(v);
-        return v2.angle + Math.PI / 2;
     }
 
     public static function bodyFromBitmapData(bd:BitmapData):Body{

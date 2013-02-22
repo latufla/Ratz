@@ -25,9 +25,9 @@ import model.WaypointSequence;
 
 import utils.Config;
 import utils.GuiUtil;
-import utils.NapeUtil;
-import utils.RPolygon;
-import utils.RShape;
+import utils.MathUtil;
+import utils.nape.RPolygon;
+import utils.nape.RShape;
 
 public class WaypointManager extends EventDispatcher{
 
@@ -71,7 +71,7 @@ public class WaypointManager extends EventDispatcher{
         var lastVisWp:ObjectBase = Config.field.getControllerByBehavior(lastVisitedWpB).object;
         var nextRegWp:ObjectBase = Config.field.getControllerByBehavior(nextRegisteredWpB).object;
         if(lastVisWp.intersects(obj)){
-            obj.rotation = NapeUtil.angleFromVector(lastVisWp.getDirectionTo(nextRegWp));
+            obj.rotation = MathUtil.angleFromVector(lastVisWp.getDirectionTo(nextRegWp));
             obj.position = lastVisWp.center;
         } else{
             var prevRegWp:ObjectBase = Config.field.getControllerByBehavior(prevRegisteredWpB).object;
@@ -80,13 +80,13 @@ public class WaypointManager extends EventDispatcher{
             var lastToNext:Point = lastVisWp.getDirectionTo(nextRegWp);
             var lastToObj:Point = lastVisWp.getDirectionTo(obj);
 
-            var lastToPrevAngleDiff:Number = Math.abs(NapeUtil.angleFromVector(lastToObj) - NapeUtil.angleFromVector(lastToPrev));
-            var lastToNextAngleDiff:Number = Math.abs(NapeUtil.angleFromVector(lastToObj) - NapeUtil.angleFromVector(lastToNext));
+            var lastToPrevAngleDiff:Number = Math.abs(MathUtil.angleFromVector(lastToObj) - MathUtil.angleFromVector(lastToPrev));
+            var lastToNextAngleDiff:Number = Math.abs(MathUtil.angleFromVector(lastToObj) - MathUtil.angleFromVector(lastToNext));
 
             if(lastToPrevAngleDiff < lastToNextAngleDiff)
-                obj.rotation = NapeUtil.angleFromVector(prevRegWp.getDirectionTo(lastVisWp));
+                obj.rotation = MathUtil.angleFromVector(prevRegWp.getDirectionTo(lastVisWp));
             else
-                obj.rotation = NapeUtil.angleFromVector(lastVisWp.getDirectionTo(nextRegWp));
+                obj.rotation = MathUtil.angleFromVector(lastVisWp.getDirectionTo(nextRegWp));
         }
     }
 
@@ -107,11 +107,9 @@ public class WaypointManager extends EventDispatcher{
         var wpBehavior:WaypointItemBehavior = wpc.getBehaviorByClass(WaypointItemBehavior) as WaypointItemBehavior;
         _waypointSequence.visit(wpBehavior, obj);
 
-        if(wpBehavior != _waypointSequence.list[0]){
-            var nextWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(wpBehavior);
-            var nextWpC:ControllerBase = Config.field.getControllerByBehavior(nextWpB);
-            dispatchEvent(new CustomEvent(CustomEvent.WAYPOINT_VISIT, {waypoint: wp, nextToVisitWaypoint: nextWpC.object, object: obj}));
-        }
+        var nextWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(wpBehavior);
+        var nextWpC:ControllerBase = Config.field.getControllerByBehavior(nextWpB);
+        dispatchEvent(new CustomEvent(CustomEvent.WAYPOINT_VISIT, {waypoint: wp, nextToVisitWaypoint: nextWpC.object, object: obj}));
     }
 
     private function onSequenceComplete(obj:ObjectBase):void{

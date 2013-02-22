@@ -41,9 +41,9 @@ import starling.display.Sprite;
 
 import utils.Config;
 import utils.FPSCounter;
-import utils.RMaterial;
-import utils.RPolygon;
-import utils.RShape;
+import utils.nape.RMaterial;
+import utils.nape.RPolygon;
+import utils.nape.RShape;
 
 public class Engine extends Sprite{
 

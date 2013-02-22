@@ -5,7 +5,7 @@
  * Time: 15:09
  * To change this template use File | Settings | File Templates.
  */
-package utils {
+package utils.nape {
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.DisplayObject;

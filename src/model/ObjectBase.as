@@ -14,11 +14,11 @@ import flash.geom.Rectangle;
 
 import utils.Config;
 
-import utils.PhysEngineConnector;
+import utils.nape.PhysEngineConnector;
 
-import utils.RMaterial;
-import utils.RPolygon;
-import utils.RShape;
+import utils.nape.RMaterial;
+import utils.nape.RPolygon;
+import utils.nape.RShape;
 
 public class ObjectBase {
     private var _name:String = "dummy";

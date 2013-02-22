@@ -14,7 +14,7 @@ import model.ObjectBase;
 
 import utils.Config;
 
-import utils.PhysEngineConnector;
+import utils.nape.PhysEngineConnector;
 
 public class ShootItemBehavior extends BehaviorBase{
     public function ShootItemBehavior() {

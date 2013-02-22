@@ -13,14 +13,11 @@ import controller.ControllerBase;
 import event.CustomEvent;
 
 import flash.geom.Point;
-
-import flash.utils.setInterval;
-
 import managers.WaypointManager;
 
 import model.ObjectBase;
 
-import utils.NapeUtil;
+import utils.MathUtil;
 
 public class AIControlBehavior extends ControlBehavior{
 
@@ -28,7 +25,7 @@ public class AIControlBehavior extends ControlBehavior{
     private var _turnLeft:Boolean;
     private var _turnRight:Boolean;
 
-    private var _rotateTo:Number;
+    private var _rotateToVector:Point;
 
     public function AIControlBehavior() {
         super();
@@ -53,10 +50,14 @@ public class AIControlBehavior extends ControlBehavior{
     }
 
     private function resolveRotation():void {
-        var rotationDiff:Number = _rotateTo - _controller.object.rotation + 2 * Math.PI;
-        if(Math.abs(_rotateTo - (_controller.object.rotation + 2*Math.PI)) > 0.06){
-            _turnLeft = _rotateTo - (_controller.object.rotation + 2*Math.PI) < 0;
-            _turnRight = _rotateTo - (_controller.object.rotation + 2*Math.PI) > 0;
+        if(!_rotateToVector)
+            return;
+
+        var curRotationVector:Point = MathUtil.vectorFromAngle(_controller.object.rotation);
+        var angleDiff:Number = MathUtil.getAngleBetween(_rotateToVector, curRotationVector);
+        if(Math.abs(angleDiff) > 0.06){
+            _turnLeft = angleDiff > 0;
+            _turnRight = angleDiff < 0;
         } else{
             _turnLeft = _turnRight = false;
         }
@@ -83,8 +84,7 @@ public class AIControlBehavior extends ControlBehavior{
     private function onWaypointVisit(e:CustomEvent):void {
         var justVisitedWp:ObjectBase = e.data.waypoint;
         var nextToVisitWp:ObjectBase = e.data.nextToVisitWaypoint;
-        var dir:Point = justVisitedWp.getDirectionTo(nextToVisitWp);
-        _rotateTo = NapeUtil.angleFromVector(dir);
+        _rotateToVector = justVisitedWp.getDirectionTo(nextToVisitWp);
     }
 
     override public function get turnLeft():Boolean{

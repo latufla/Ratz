@@ -23,11 +23,11 @@ import model.ObjectBase;
 import utils.Config;
 
 import utils.Config;
-import utils.RMaterial;
+import utils.nape.RMaterial;
 
-import utils.RPolygon;
+import utils.nape.RPolygon;
 
-import utils.RShape;
+import utils.nape.RShape;
 
 public class ShootBehavior extends BehaviorBase {
 

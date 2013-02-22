@@ -18,10 +18,10 @@ import flash.utils.setTimeout;
 import model.ObjectBase;
 
 import utils.Config;
-import utils.RMaterial;
+import utils.nape.RMaterial;
 
-import utils.RPolygon;
-import utils.RShape;
+import utils.nape.RPolygon;
+import utils.nape.RShape;
 
 public class TrapBehavior extends BehaviorBase{
 

@@ -27,7 +27,6 @@ public class Ratz extends Sprite {
         stConnector.start();
 
 //        Cc.startOnStage(this);
-        trace("HWrd");
     }
 }
 }
