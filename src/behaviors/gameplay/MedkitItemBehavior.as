@@ -39,7 +39,7 @@ public class MedkitItemBehavior extends BehaviorBase{
         super.stop();
     }
 
-    private function onInteraction(medkit:ObjectBase, rat:ObjectBase):void{
+    override protected function onInteraction(medkit:ObjectBase, rat:ObjectBase):void{
         var ratC:ControllerBase = rat.controller;
         if(!ratC.isRat)
             return;

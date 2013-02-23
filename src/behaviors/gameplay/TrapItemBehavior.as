@@ -39,7 +39,7 @@ public class TrapItemBehavior extends BehaviorBase{
         super.stop();
     }
 
-    private function onInteraction(trap:ObjectBase, obj:ObjectBase):void{
+    override protected function onInteraction(trap:ObjectBase, obj:ObjectBase):void{
         var ratC:ControllerBase = obj.controller;
         if(!ratC.isRat)
             return;

@@ -74,7 +74,7 @@ public class WaypointItemBehavior extends BehaviorBase {
         return _registeredList.indexOf(obj.name) != -1;
     }
 
-    private function onInteraction(waypoint:ObjectBase, target:ObjectBase):void{
+    override protected function onInteraction(waypoint:ObjectBase, target:ObjectBase):void{
         if(_interactionCb)
             _interactionCb(waypoint, target);
     }

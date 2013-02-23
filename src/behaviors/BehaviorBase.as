@@ -8,7 +8,7 @@
 package behaviors {
 import controller.ControllerBase;
 
-import utils.Config;
+import model.ObjectBase;
 
 public class BehaviorBase {
 
@@ -36,12 +36,9 @@ public class BehaviorBase {
 
     }
 
-    public function get enabled():Boolean {
-        return _enabled;
-    }
+    // override if there is some event behavior
+    protected function onInteraction(obj:ObjectBase, target:ObjectBase):void{
 
-    public function set enabled(value:Boolean):void {
-        _enabled = value;
     }
 
     public function get name():String {

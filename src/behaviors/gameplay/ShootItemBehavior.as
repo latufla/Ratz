@@ -33,7 +33,7 @@ public class ShootItemBehavior extends BehaviorBase{
         super.stop();
     }
 
-    private function onInteraction(shot:ObjectBase, obj:ObjectBase):void{
+    override protected function onInteraction(shot:ObjectBase, obj:ObjectBase):void{
         var ratC:ControllerBase = obj.controller;
         if(ratC.isRat)
             obj.ammunition.health -= shot.ammunition.health;
