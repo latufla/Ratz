@@ -49,6 +49,7 @@ public class AIControlBehavior extends ControlBehavior{
         resolveRotation();
     }
 
+    // TODO: resolve situation, when object intersects waypoint, but cant move by vector to next wp cause of wall
     private function resolveRotation():void {
         if(!_rotateToVector)
             return;

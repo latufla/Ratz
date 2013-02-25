@@ -8,6 +8,8 @@
 package controller {
 import behaviors.BehaviorBase;
 import behaviors.control.ControlBehavior;
+import behaviors.gameplay.WallItemBehavior;
+
 import model.ObjectBase;
 
 import utils.VectorUtil;
@@ -16,7 +18,7 @@ import view.ViewBase;
 
 public class ControllerBase {
 
-    protected var _view:ViewBase
+    protected var _view:ViewBase;
     protected var _object:ObjectBase;
 
     protected var _behaviors:Vector.<BehaviorBase>;
@@ -106,6 +108,10 @@ public class ControllerBase {
 
     public function get isRat():Boolean{
         return getBehaviorByClass(ControlBehavior);
+    }
+
+    public function get isWall():Boolean{
+        return getBehaviorByClass(WallItemBehavior);
     }
 }
 }

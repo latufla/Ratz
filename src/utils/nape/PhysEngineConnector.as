@@ -6,6 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 package utils.nape {
+import behaviors.BehaviorBase;
+import behaviors.gameplay.WallItemBehavior;
+
 import utils.*;
 
 import controller.ControllerBase;
@@ -14,8 +17,6 @@ import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import flash.utils.Dictionary;
-
-import model.ObjectBase;
 
 import model.ObjectBase;
 
@@ -81,7 +82,7 @@ public class PhysEngineConnector {
 
         var obj:ObjectBase = new ObjectBase();
         _physObjects[obj] = _border;
-        var borderC:ControllerBase = ControllerBase.create(obj);
+        var borderC:ControllerBase = ControllerBase.create(obj, new <BehaviorBase>[new WallItemBehavior()]);
         Config.field.add(borderC);
     }
 
