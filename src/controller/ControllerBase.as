@@ -8,6 +8,7 @@
 package controller {
 import behaviors.BehaviorBase;
 import behaviors.control.ControlBehavior;
+import behaviors.gameplay.RatMoveBehavior;
 import behaviors.gameplay.WallItemBehavior;
 
 import model.ObjectBase;
@@ -107,7 +108,7 @@ public class ControllerBase {
     }
 
     public function get isRat():Boolean{
-        return getBehaviorByClass(ControlBehavior);
+        return getBehaviorByClass(RatMoveBehavior);
     }
 
     public function get isWall():Boolean{

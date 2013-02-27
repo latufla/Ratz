@@ -12,7 +12,7 @@ import behaviors.core.StatDisplayBehavior;
 import behaviors.gameplay.BoostBehavior;
 import behaviors.gameplay.DeathBehavior;
 import behaviors.gameplay.MedkitItemBehavior;
-import behaviors.gameplay.MoveBehavior;
+import behaviors.gameplay.RatMoveBehavior;
 import behaviors.gameplay.ShootBehavior;
 import behaviors.gameplay.TrapBehavior;
 import behaviors.gameplay.TrapItemBehavior;
@@ -104,7 +104,7 @@ public class Engine extends Sprite{
         _rat.name = "Rat 1";
 
         _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new UserControlBehavior(),
-            new MoveBehavior(),
+            new RatMoveBehavior(),
             new TrapBehavior(),
             new BoostBehavior(),
             new ShootBehavior(),

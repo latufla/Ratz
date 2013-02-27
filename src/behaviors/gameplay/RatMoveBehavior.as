@@ -19,11 +19,13 @@ import flash.geom.Point;
 
 import model.ObjectBase;
 
-public class MoveBehavior extends BehaviorBase{
+// note this is a rat
+public class RatMoveBehavior extends BehaviorBase{
 
-    private static const STOPPAGE_MIN_VEL:int = 40;
-    private static const NULL_VELOCITY:Point = new Point();
-    public function MoveBehavior() {
+    public static const STOPPAGE_MIN_VEL:int = 50;
+    public static const IDLE_ROTATION:Number = Math.PI / 30;
+
+    public function RatMoveBehavior() {
         super();
     }
 
@@ -44,10 +46,10 @@ public class MoveBehavior extends BehaviorBase{
             applyStoppage(obj);
 
         if(controlBehavior.turnRight)
-            applyTurnRight(obj);
+            applyTurnRight(obj, controlBehavior.run);
 
         if(controlBehavior.turnLeft)
-            applyTurnLeft(obj);
+            applyTurnLeft(obj, controlBehavior.run);
 
         obj.applyTerrainFriction(0.2, 0.01);
     }
@@ -57,21 +59,29 @@ public class MoveBehavior extends BehaviorBase{
     }
 
     private function applyStoppage(obj:ObjectBase):void {
-        if(shouldSetVelocityToZero(obj))
-            obj.velocity = new Point(0, 0);
+        var velM:int = obj.velocity.length; // whatever is small
+        if(velM > 0 && !velocitySufficient(obj))
+            obj.velocity = new Point();
     }
 
-    private function applyTurnLeft(obj:ObjectBase):void{
-        obj.applyAngularImpulse(-150);
+    private function applyTurnLeft(obj:ObjectBase, run:Boolean):void{
+        if(run || velocitySufficient(obj)){
+            obj.applyAngularImpulse(-150);
+        } else {
+            obj.rotation -= IDLE_ROTATION; // TODO: make correction when Math.PI/2 close
+        }
     }
 
-    private function applyTurnRight(obj:ObjectBase):void{
-        obj.applyAngularImpulse(150);
+    private function applyTurnRight(obj:ObjectBase, run:Boolean):void{
+        if(run || velocitySufficient(obj)){
+            obj.applyAngularImpulse(150);
+        } else {
+            obj.rotation += IDLE_ROTATION;
+        }
     }
 
-    private function shouldSetVelocityToZero(obj:ObjectBase):Boolean{
-        var vel:Point = obj.velocity;
-        return !vel.equals(NULL_VELOCITY) && Math.abs(vel.x) < STOPPAGE_MIN_VEL && Math.abs(vel.y) < STOPPAGE_MIN_VEL;
+    private function velocitySufficient(obj:ObjectBase):Boolean{
+        return obj.velocity.length >= STOPPAGE_MIN_VEL;
     }
 }
 }
