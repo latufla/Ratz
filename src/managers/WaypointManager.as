@@ -31,7 +31,7 @@ import utils.nape.RShape;
 
 public class WaypointManager extends EventDispatcher{
 
-    private var _waypointSequence:WaypointSequence = new WaypointSequence(); // order matters
+    private var _waypointSequence:WaypointSequence; // order matters
 
     private static var _instance:WaypointManager;
     public function WaypointManager() {
@@ -43,15 +43,18 @@ public class WaypointManager extends EventDispatcher{
         return _instance;
     }
 
-    public function init(wps:Vector.<Rectangle>):void{
-        for each(var p:Rectangle in wps){
-            var wp:ObjectBase = new ObjectBase();
-            wp.position = new Point(p.x, p.y);
-            wp.shapes = new <RShape>[new RPolygon(0, 0, p.width, p.height)];
-            add(wp);
-        }
-
+    public function init(wps:Vector.<Object>):void{
+        _waypointSequence = new WaypointSequence();
         _waypointSequence.completeCb = onSequenceComplete;
+
+        for each(var p:Object in wps){
+            var wp:ObjectBase = new ObjectBase();
+            wp.position = new Point(p.rect.x, p.rect.y);
+            wp.shapes = new <RShape>[new RPolygon(0, 0, p.rect.width, p.rect.height)];
+            add(wp, p.turnPoint);
+            trace(p.turnPoint);
+        }
+        _waypointSequence.computeDirections();
     }
 
     public function get waypoints():Vector.<ControllerBase>{
@@ -70,7 +73,7 @@ public class WaypointManager extends EventDispatcher{
 
         var lastVisWp:ObjectBase = Config.field.getControllerByBehavior(lastVisitedWpB).object;
         var nextRegWp:ObjectBase = Config.field.getControllerByBehavior(nextRegisteredWpB).object;
-        if(lastVisWp.intersects(obj)){
+        if(lastVisWp.bounds.intersects(obj.bounds)){ // TODO: diiiiiirty one
             obj.rotation = MathUtil.angleFromVector(lastVisWp.getDirectionTo(nextRegWp));
             obj.position = lastVisWp.center;
         } else{
@@ -90,8 +93,60 @@ public class WaypointManager extends EventDispatcher{
         }
     }
 
-    private function add(wp:ObjectBase):void{
+
+//    public function getNextDirection(obj:ObjectBase):Point{
+//        var lastVisWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
+//        var prevRegWpB:WaypointItemBehavior = _waypointSequence.getPrevWaypoint(lastVisWpB);
+//        var nextRegWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastVisWpB);
+//
+//        if(!lastVisWpB || !prevRegWpB || !nextRegWpB)
+//            return null;
+//
+//        trace(lastVisWpB.name, prevRegWpB.name, nextRegWpB.name)
+//        var lastVisWp:ObjectBase = Config.field.getControllerByBehavior(lastVisWpB).object;
+//        var prevRegWp:ObjectBase = Config.field.getControllerByBehavior(prevRegWpB).object;
+//        var nextRegWp:ObjectBase = Config.field.getControllerByBehavior(nextRegWpB).object;
+//
+//        var lastToPrev:Point = lastVisWp.getDirectionTo(prevRegWp);
+//        var lastToNext:Point = lastVisWp.getDirectionTo(nextRegWp);
+//        var lastToObj:Point = lastVisWp.getDirectionTo(obj);
+//        trace(lastToObj, lastToPrev, lastToNext);
+//
+//        var objPrevAngle:Number = MathUtil.getAngleBetween(lastToObj, lastToPrev);
+//        var objNextAngle:Number = MathUtil.getAngleBetween(lastToObj, lastToNext);
+//        var angleDiff:Number = Math.abs(objPrevAngle) - Math.abs(objNextAngle);
+//
+//        if(angleDiff >=0){
+//            return lastVisWp.getDirectionTo(nextRegWp);
+//        }
+//
+//        return prevRegWp.getDirectionTo(lastVisWp);
+//    }
+
+    public function getActualDirection(obj:ObjectBase):Point{
+        var lastWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
+        if(!lastWpB)
+            return null;
+
+        //-----
+        var nextWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastWpB);
+        var nextWp:ObjectBase = Config.field.getControllerByBehavior(nextWpB).object;
+
+        var curRotationVector:Point = MathUtil.vectorFromAngle(obj.rotation);
+        var angleDiff:Number = MathUtil.getAngleBetween(lastWpB.directionToNext, curRotationVector);
+        if(Math.abs(angleDiff) < 0.1){    // TODO: deprecate angleDiff, use this alignment only when object is close to the wall(far from center)
+            var toPoint:Point = nextWpB.turnPoint ? nextWpB.turnPoint : nextWp.center;
+            trace("toPoint: ", toPoint);
+            return obj.getDirectionToPoint(toPoint);
+        }
+        //------
+
+        return lastWpB.directionToNext;
+    }
+
+    private function add(wp:ObjectBase, rAnchor:Point):void{
         var wpBehavior:WaypointItemBehavior = new WaypointItemBehavior(onInteraction);
+        wpBehavior.turnPoint = rAnchor;
         _waypointSequence.add(wpBehavior);
 
         var wpc:ControllerBase = ControllerBase.create(wp, new <BehaviorBase>[wpBehavior]);

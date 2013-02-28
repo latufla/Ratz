@@ -25,43 +25,39 @@ public class AIControlBehavior extends ControlBehavior{
     private var _turnLeft:Boolean;
     private var _turnRight:Boolean;
 
-    private var _rotateToVector:Point;
-
     public function AIControlBehavior() {
         super();
-    }
-
-    override public function start(c:ControllerBase):void{
-        super.start(c);
-        WaypointManager.instance.addEventListener(CustomEvent.WAYPOINT_VISIT, onWaypointVisit);
-    }
-
-    override public function stop():void{
-        WaypointManager.instance.removeEventListener(CustomEvent.WAYPOINT_VISIT, onWaypointVisit);
-        super.stop();
     }
 
     override public function doStep():void{
         if(!_enabled)
             return;
 
-        _run = true;
-        resolveRotation();
+        _run = true; // use raycast to define if wall is close
+        resolveGeneralRoute();
+        resolveDodgeRoute();
+        resolveOptionalActions();
     }
 
-    // TODO: resolve situation, when object intersects waypoint, but cant move by vector to next wp cause of wall
-    private function resolveRotation():void {
-        if(!_rotateToVector)
+    // resolve main route as it`s kinematic
+    private function resolveGeneralRoute():void {
+        var directionToRotate:Point = WaypointManager.instance.getActualDirection(_controller.object);
+        if(!directionToRotate)
             return;
 
         var curRotationVector:Point = MathUtil.vectorFromAngle(_controller.object.rotation);
-        var angleDiff:Number = MathUtil.getAngleBetween(_rotateToVector, curRotationVector);
+        var angleDiff:Number = MathUtil.getAngleBetween(directionToRotate, curRotationVector);
         if(Math.abs(angleDiff) > 0.06){
             _turnLeft = angleDiff > 0;
             _turnRight = angleDiff < 0;
         } else{
             _turnLeft = _turnRight = false;
         }
+    }
+
+    // dodge from traps and other rats (all, what is behind)
+    private function resolveDodgeRoute():void {
+
     }
 
     private function resolveOptionalActions():void{
@@ -80,12 +76,6 @@ public class AIControlBehavior extends ControlBehavior{
 
     private function resolveBoost():void {
 
-    }
-
-    private function onWaypointVisit(e:CustomEvent):void {
-        var justVisitedWp:ObjectBase = e.data.waypoint;
-        var nextToVisitWp:ObjectBase = e.data.nextToVisitWaypoint;
-        _rotateToVector = justVisitedWp.getDirectionTo(nextToVisitWp);
     }
 
     override public function get turnLeft():Boolean{

@@ -10,6 +10,8 @@ import behaviors.core.WaypointItemBehavior;
 
 import flash.utils.Dictionary;
 
+import utils.Config;
+
 public class WaypointSequence {
 
     private var _list:Vector.<WaypointItemBehavior>; // order matters
@@ -30,6 +32,18 @@ public class WaypointSequence {
         _list.push(wp);
 
         wp.name = "Waypoint " + _list.length;
+    }
+
+    public function computeDirections():void {
+        var nextWpB:WaypointItemBehavior;
+        var nextWp:ObjectBase;
+        var wp:ObjectBase;
+        for each (var p:WaypointItemBehavior in _list){
+            wp = Config.field.getControllerByBehavior(p).object;
+            nextWpB = getNextWaypoint(p);
+            nextWp = Config.field.getControllerByBehavior(nextWpB).object;
+            p.directionToNext = wp.getDirectionTo(nextWp);
+        }
     }
 
     public function visit(wp:WaypointItemBehavior, obj:ObjectBase):void{

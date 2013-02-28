@@ -150,19 +150,20 @@ public class ObjectBase {
     }
 
     public function getDirectionTo(obj:ObjectBase):Point{
-        var b1:Rectangle = obj.bounds;
-        var b2:Rectangle = bounds;
+        var toP:Rectangle = obj.bounds;
+        var fromP:Rectangle = bounds;
 
-        var dir:Point = new Point(b1.x - b2.x, b1.y - b2.y);
+        var dir:Point = new Point(toP.x - fromP.x, toP.y - fromP.y);
         dir.normalize(1);
         return dir;
     }
 
-    public function intersects(obj:ObjectBase):Boolean{
-        var b1:Rectangle = obj.bounds;
-        var b2:Rectangle = bounds;
+    public function getDirectionToPoint(toP:Point):Point{
+        var fromP:Rectangle = bounds;
 
-        return b2.intersects(b1);
+        var dir:Point = new Point(toP.x - fromP.x, toP.y - fromP.y);
+        dir.normalize(1);
+        return dir;
     }
 
     public function get center():Point{

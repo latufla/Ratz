@@ -66,12 +66,12 @@ public class Engine extends Sprite{
         Config.space = new Space();
 
         var border:BitmapData = Bitmap(new Lvl1ViewClass()).bitmapData;
-        var wps:Vector.<Rectangle> = new Vector.<Rectangle>();
-        wps.push(new Rectangle(600, 380, 172, 24));
-        wps.push(new Rectangle(600, 30, 172, 180));
-        wps.push(new Rectangle(30, 30, 180, 180));
-        wps.push(new Rectangle(30, 590, 180, 180));
-        wps.push(new Rectangle(600, 590, 172, 180));
+        var wps:Vector.<Object> = new Vector.<Object>();
+        wps.push({rect: new Rectangle(600, 380, 172, 24), turnPoint: null});
+        wps.push({rect: new Rectangle(600, 30, 172, 180)});
+        wps.push({rect: new Rectangle(30, 30, 180, 180)});
+        wps.push({rect: new Rectangle(30, 590, 180, 180)});
+        wps.push({rect: new Rectangle(600, 590, 172, 180)});
         _field = new Field(border, wps);
 
         var stage:Stage = Ratz.STAGE;
@@ -103,7 +103,16 @@ public class Engine extends Sprite{
         _rat = ObjectBase.create(new Point(650, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, params["other"]["group"]);
         _rat.name = "Rat 1";
 
-        _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new UserControlBehavior(),
+//        _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new UserControlBehavior(),
+//            new RatMoveBehavior(),
+//            new TrapBehavior(),
+//            new BoostBehavior(),
+//            new ShootBehavior(),
+//            new DeathBehavior(),
+//            new StatDisplayBehavior()]);
+//        _field.add(_ratController);
+
+        _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new AIControlBehavior(),
             new RatMoveBehavior(),
             new TrapBehavior(),
             new BoostBehavior(),
@@ -111,15 +120,6 @@ public class Engine extends Sprite{
             new DeathBehavior(),
             new StatDisplayBehavior()]);
         _field.add(_ratController);
-
-//        _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new AIControlBehavior(),
-//            new MoveBehavior(),
-//            new TrapBehavior(),
-//            new BoostBehavior(),
-//            new ShootBehavior(),
-//            new DeathBehavior(),
-//            new StatDisplayBehavior()]);
-//        _field.add(_ratController);
 
 //        var medkit:ObjectBase = ObjectBase.create(new Point(650, 250), new <RShape>[new RPolygon(0, 0, 30, 30)], rMaterial, params["other"]["group"]);
 //        medkit.ammunition.health = 35;

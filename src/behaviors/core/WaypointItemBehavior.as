@@ -26,6 +26,9 @@ public class WaypointItemBehavior extends BehaviorBase {
     private var _interactionCb:Function;
     private var _registeredList:Vector.<String>;
 
+    private var _turnPoint:Point;
+    private var _directionToNext:Point;
+
     public function WaypointItemBehavior(interactionCb:Function) {
         super();
 
@@ -77,6 +80,22 @@ public class WaypointItemBehavior extends BehaviorBase {
     override protected function onInteraction(waypoint:ObjectBase, target:ObjectBase):void{
         if(_interactionCb)
             _interactionCb(waypoint, target);
+    }
+
+    public function get directionToNext():Point {
+        return _directionToNext;
+    }
+
+    public function set directionToNext(value:Point):void {
+        _directionToNext = value;
+    }
+
+    public function get turnPoint():Point {
+        return _turnPoint;
+    }
+
+    public function set turnPoint(value:Point):void {
+        _turnPoint = value;
     }
 }
 }

@@ -28,11 +28,11 @@ public class Field {
 
     private var _controllers:Vector.<ControllerBase>;
 
-    public function Field(border:BitmapData, waypoints:Vector.<Rectangle>) {
+    public function Field(border:BitmapData, waypoints:Vector.<Object>) {
         init(border, waypoints);
     }
 
-    private function init(border:BitmapData, waypoints:Vector.<Rectangle>):void {
+    private function init(border:BitmapData, waypoints:Vector.<Object>):void {
         Config.field = this;
 
         _controllers = new Vector.<ControllerBase>();
@@ -42,7 +42,7 @@ public class Field {
         Ratz.STAGE.addEventListener(Event.ENTER_FRAME, onEFDoBehaviorsStep);
     }
 
-    private function initWaypoints(waypoints:Vector.<Rectangle>):void {
+    private function initWaypoints(waypoints:Vector.<Object>):void {
         WaypointManager.instance.init(waypoints);
     }
 
