@@ -33,6 +33,7 @@ import managers.WaypointManager;
 
 import model.ObjectBase;
 
+
 import nape.space.Space;
 import nape.util.BitmapDebug;
 
@@ -100,26 +101,25 @@ public class Engine extends Sprite{
     private function createNapeObject(params:Object):void{
         var material:Object = params["material"];
         var rMaterial:RMaterial = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);
-        _rat = ObjectBase.create(new Point(650, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, params["other"]["group"]);
-        _rat.name = "Rat 1";
 
-//        _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new UserControlBehavior(),
-//            new RatMoveBehavior(),
-//            new TrapBehavior(),
-//            new BoostBehavior(),
-//            new ShootBehavior(),
-//            new DeathBehavior(),
-//            new StatDisplayBehavior()]);
-//        _field.add(_ratController);
+        createRats(rMaterial, params["other"]["group"]);
 
-        _ratController = ControllerBase.create(_rat, new <BehaviorBase>[new AIControlBehavior(),
+        var rat1 = ObjectBase.create(new Point(650, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, params["other"]["group"]);
+        rat1.name = "Rat 1";
+
+        var rat1Controller = ControllerBase.create(rat1, new <BehaviorBase>[new UserControlBehavior(),
             new RatMoveBehavior(),
             new TrapBehavior(),
             new BoostBehavior(),
             new ShootBehavior(),
             new DeathBehavior(),
             new StatDisplayBehavior()]);
-        _field.add(_ratController);
+        _field.add(rat1Controller);
+
+
+
+
+
 
 //        var medkit:ObjectBase = ObjectBase.create(new Point(650, 250), new <RShape>[new RPolygon(0, 0, 30, 30)], rMaterial, params["other"]["group"]);
 //        medkit.ammunition.health = 35;
@@ -162,6 +162,54 @@ public class Engine extends Sprite{
 //
 //        var trapController5:ControllerBase = ControllerBase.create(trap5, new <BehaviorBase>[new TrapItemBehavior()]);
 //        _field.add(trapController5);
+    }
+
+    private function createRats(rMaterial:RMaterial, group:int):void {
+//        var rat1 = ObjectBase.create(new Point(620, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, group);
+//        rat1.name = "Rat 1";
+//
+//        var rat1Controller = ControllerBase.create(rat1, new <BehaviorBase>[new AIControlBehavior(),
+//            new RatMoveBehavior(),
+//            new TrapBehavior(),
+//            new BoostBehavior(),
+//            new ShootBehavior(),
+//            new DeathBehavior(),
+//            new StatDisplayBehavior()]);
+//        _field.add(rat1Controller);
+
+        var rat2 = ObjectBase.create(new Point(660, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, group);
+        rat2.name = "Rat 2";
+
+        var rat2Controller = ControllerBase.create(rat2, new <BehaviorBase>[new AIControlBehavior(),
+            new RatMoveBehavior(),
+            new TrapBehavior(),
+            new BoostBehavior(),
+            new ShootBehavior(),
+            new DeathBehavior()]);
+        _field.add(rat2Controller);
+
+//        var rat3 = ObjectBase.create(new Point(700, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, group);
+//        rat3.name = "Rat 3";
+//
+//        var rat3Controller = ControllerBase.create(rat3, new <BehaviorBase>[new AIControlBehavior(),
+//            new RatMoveBehavior(),
+//            new TrapBehavior(),
+//            new BoostBehavior(),
+//            new ShootBehavior(),
+//            new DeathBehavior()]);
+//        _field.add(rat3Controller);
+//
+//        var rat4 = ObjectBase.create(new Point(740, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, group);
+//        rat4.name = "Rat 4";
+//
+//        var rat4Controller = ControllerBase.create(rat4, new <BehaviorBase>[new AIControlBehavior(),
+//            new RatMoveBehavior(),
+//            new TrapBehavior(),
+//            new BoostBehavior(),
+//            new ShootBehavior(),
+//            new DeathBehavior()]);
+//        _field.add(rat4Controller);
+
     }
 }
 }

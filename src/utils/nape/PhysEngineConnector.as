@@ -82,6 +82,7 @@ public class PhysEngineConnector {
 
         var obj:ObjectBase = new ObjectBase();
         _physObjects[obj] = _border;
+        obj.material = new RMaterial(10, 0, 0, 1.5, 0.01);
         var borderC:ControllerBase = ControllerBase.create(obj, new <BehaviorBase>[new WallItemBehavior()]);
         Config.field.add(borderC);
     }

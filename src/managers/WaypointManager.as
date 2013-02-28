@@ -129,18 +129,16 @@ public class WaypointManager extends EventDispatcher{
             return null;
 
         //-----
-        var nextWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastWpB);
-        var nextWp:ObjectBase = Config.field.getControllerByBehavior(nextWpB).object;
-
-        var curRotationVector:Point = MathUtil.vectorFromAngle(obj.rotation);
-        var angleDiff:Number = MathUtil.getAngleBetween(lastWpB.directionToNext, curRotationVector);
-        if(Math.abs(angleDiff) < 0.1){    // TODO: deprecate angleDiff, use this alignment only when object is close to the wall(far from center)
-            var toPoint:Point = nextWpB.turnPoint ? nextWpB.turnPoint : nextWp.center;
-            trace("toPoint: ", toPoint);
-            return obj.getDirectionToPoint(toPoint);
-        }
+//        var nextWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastWpB);
+//        var nextWp:ObjectBase = Config.field.getControllerByBehavior(nextWpB).object;
+//
+//        var curRotationVector:Point = MathUtil.vectorFromAngle(obj.rotation);
+//        var angleDiff:Number = MathUtil.getAngleBetween(lastWpB.directionToNext, curRotationVector);
+//        if(Math.abs(angleDiff) < 0.2){    // TODO: deprecate angleDiff, use this alignment only when object is close to the wall(far from center)
+//            var toPoint:Point = nextWpB.turnPoint ? nextWpB.turnPoint : nextWp.center;
+//            return obj.getDirectionToPoint(toPoint);
+//        }
         //------
-
         return lastWpB.directionToNext;
     }
 

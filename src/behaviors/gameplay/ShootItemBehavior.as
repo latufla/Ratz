@@ -10,9 +10,12 @@ import behaviors.BehaviorBase;
 
 import controller.ControllerBase;
 
+import flash.geom.Point;
+
 import model.ObjectBase;
 
 import utils.Config;
+import utils.GuiUtil;
 
 import utils.nape.PhysEngineConnector;
 
@@ -35,8 +38,11 @@ public class ShootItemBehavior extends BehaviorBase{
 
     override protected function onInteraction(shot:ObjectBase, obj:ObjectBase):void{
         var ratC:ControllerBase = obj.controller;
-        if(ratC.isRat)
+        if(ratC.isRat){
             obj.ammunition.health -= shot.ammunition.health;
+            var pos:Point = shot.position;
+            GuiUtil.showPopupText(Ratz.STAGE, new Point(pos.x, pos.y), "-" + shot.ammunition.health, 30, 0xFF0000);
+        }
 
         if(!obj.isPseudo)
             Config.field.remove(shot.controller);
