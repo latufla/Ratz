@@ -158,14 +158,16 @@ public class ObjectBase {
         return dir;
     }
 
+    // TODO: get COM, not fake center
     public function getDirectionToPoint(toP:Point):Point{
-        var fromP:Rectangle = bounds;
+        var fromP:Point = center;
 
         var dir:Point = new Point(toP.x - fromP.x, toP.y - fromP.y);
         dir.normalize(1);
         return dir;
     }
 
+    // fake center
     public function get center():Point{
         var b:Rectangle = bounds;
         return new Point(b.x + b.width / 2, b.y + b.height / 2);

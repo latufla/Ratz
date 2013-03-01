@@ -21,14 +21,21 @@ import utils.VectorUtil;
 
 public class WaypointItemBehavior extends BehaviorBase {
 
+    private const CLOSEST_TO_CORNER:uint = 0;
+    private const LEFT_FROM_CENTER:uint = 1;
+    private const RIGHT_FROM_CENTER:uint = 2;
+    private const FARTHEST_FROM_CORNER:uint = 3;
+
     private const MAX_TURN_POINTS_COUNT:uint = 4;
 
     private var _onBeginInteraction:Function;
     private var _onGoingInteraction:Function;
     private var _onEndInteraction:Function;
 
-    private var _inSide:Line;
-    private var _outSide:Line;
+    private var _inLine:Line;
+    private var _outLine:Line;
+
+    private var _isFinish:Boolean;
 
     private var _containedObjectNames:Vector.<String>;
     private var _registeredObjectNames:Vector.<String>;
@@ -40,10 +47,11 @@ public class WaypointItemBehavior extends BehaviorBase {
         init();
     }
 
-    public static function create(inSide:Line, outSide:Line, callbacks:Vector.<Function>):WaypointItemBehavior{
+    public static function create(inSide:Line, outSide:Line, callbacks:Vector.<Function>, isFinish:Boolean):WaypointItemBehavior{
         var wIB:WaypointItemBehavior = new WaypointItemBehavior();
         wIB.setSides(inSide, outSide);
         wIB.setCallbacks(callbacks[0], callbacks[1], callbacks[2]);
+        wIB.isFinish = isFinish;
         return wIB;
     }
 
@@ -58,7 +66,7 @@ public class WaypointItemBehavior extends BehaviorBase {
         var obj:ObjectBase = _controller.object;
         obj.isPseudo = true;
 //        obj.visible = false;
-        PhysEngineConnector.instance.addInteractionListener(_controller.object, onBeginInteraction, onGoingInteraction, onEndInteraction);
+        PhysEngineConnector.instance.addInteractionListener(_controller.object, onBeginInteraction, null, onEndInteraction);
     }
 
     override public function stop():void{
@@ -77,8 +85,8 @@ public class WaypointItemBehavior extends BehaviorBase {
     }
 
     public function setSides(inSide:Line, outSide:Line):void{
-        _inSide = inSide;
-        _outSide = outSide;
+        _inLine = inSide;
+        _outLine = outSide;
     }
 
     public function register(obj:ObjectBase):void{
@@ -108,28 +116,32 @@ public class WaypointItemBehavior extends BehaviorBase {
     }
 
     // id: 0 to MAX_TURN_POINTS_COUNT - 1
-    public function getTurnPoint(id:uint):Point {
-        if(!_inSide || id >= MAX_TURN_POINTS_COUNT)
+    public function getTurnPoint(id:uint = CLOSEST_TO_CORNER):Point {
+        if(!_inLine || id >= MAX_TURN_POINTS_COUNT || _isFinish)
             return null;
 
-        var tPts:Vector.<Point> = _inSide.getEvenDistributedPoints(MAX_TURN_POINTS_COUNT + 2);
+        var tPts:Vector.<Point> = _inLine.getEvenDistributedPoints(MAX_TURN_POINTS_COUNT + 2);
+        tPts = sortByDistanceFromCorner(tPts);
+        tPts.shift(); // no need them, cause it`s begin and end
+        tPts.pop();
         return tPts[id];
+    }
+
+    private function sortByDistanceFromCorner(rotatePts:Vector.<Point>):Vector.<Point>{
+        var pt:Point;
+        if(_inLine.begin.equals(_outLine.end) || _inLine.end.equals(_outLine.end))
+            pt = _outLine.end;
+        else
+            pt = _outLine.begin;
+
+        if(rotatePts[rotatePts.length - 1].equals(pt))
+            rotatePts = rotatePts.reverse();
+
+        return rotatePts;
     }
 
     public function containsObject(obj:ObjectBase):Boolean{
         return _containedObjectNames.indexOf(obj.name) != -1;
-    }
-
-    public function get containedObjectNames():Vector.<String> {
-        return _containedObjectNames;
-    }
-
-    public function get inSide():Line {
-        return _inSide;
-    }
-
-    public function get outSide():Line {
-        return _outSide;
     }
 
     override protected function onBeginInteraction(waypoint:ObjectBase, target:ObjectBase):void{
@@ -143,13 +155,13 @@ public class WaypointItemBehavior extends BehaviorBase {
             _onBeginInteraction(waypoint, target);
     }
 
-    override protected function onGoingInteraction(waypoint:ObjectBase, target:ObjectBase):void{
-        if(!target.controller.isRat)
-            return;
-
-        if(_onGoingInteraction)
-            _onGoingInteraction(waypoint, target);
-    }
+//    override protected function onGoingInteraction(waypoint:ObjectBase, target:ObjectBase):void{
+//        if(!target.controller.isRat)
+//            return;
+//
+//        if(_onGoingInteraction)
+//            _onGoingInteraction(waypoint, target);
+//    }
 
     override protected function onEndInteraction(waypoint:ObjectBase, target:ObjectBase):void{
         if(!target.controller.isRat)
@@ -159,6 +171,14 @@ public class WaypointItemBehavior extends BehaviorBase {
 
         if(_onEndInteraction)
             _onEndInteraction(waypoint, target);
+    }
+
+    public function get isFinish():Boolean {
+        return _isFinish;
+    }
+
+    public function set isFinish(value:Boolean):void {
+        _isFinish = value;
     }
 }
 }

@@ -8,17 +8,11 @@
 package managers {
 import behaviors.BehaviorBase;
 import behaviors.core.WaypointItemBehavior;
-import behaviors.core.WaypointItemBehavior;
 
 import controller.ControllerBase;
 
-import event.CustomEvent;
-
 import flash.events.EventDispatcher;
-
 import flash.geom.Point;
-
-import flash.geom.Rectangle;
 
 import model.ObjectBase;
 import model.WaypointSequence;
@@ -26,7 +20,6 @@ import model.WaypointSequence;
 import utils.Config;
 import utils.GuiUtil;
 import utils.MathUtil;
-import utils.geom.Line;
 import utils.nape.RPolygon;
 import utils.nape.RShape;
 
@@ -52,7 +45,7 @@ public class WaypointManager extends EventDispatcher{
             var wp:ObjectBase = new ObjectBase();
             wp.position = new Point(p.rect.x, p.rect.y);
             wp.shapes = new <RShape>[new RPolygon(0, 0, p.rect.width, p.rect.height)];
-            add(wp);
+            add(wp, p);
         }
         _waypointSequence.computeDirections();
     }
@@ -93,67 +86,22 @@ public class WaypointManager extends EventDispatcher{
         }
     }
 
-
-//    public function getNextDirection(obj:ObjectBase):Point{
-//        var lastVisWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
-//        var prevRegWpB:WaypointItemBehavior = _waypointSequence.getPrevWaypoint(lastVisWpB);
-//        var nextRegWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastVisWpB);
-//
-//        if(!lastVisWpB || !prevRegWpB || !nextRegWpB)
-//            return null;
-//
-//        trace(lastVisWpB.name, prevRegWpB.name, nextRegWpB.name)
-//        var lastVisWp:ObjectBase = Config.field.getControllerByBehavior(lastVisWpB).object;
-//        var prevRegWp:ObjectBase = Config.field.getControllerByBehavior(prevRegWpB).object;
-//        var nextRegWp:ObjectBase = Config.field.getControllerByBehavior(nextRegWpB).object;
-//
-//        var lastToPrev:Point = lastVisWp.getDirectionTo(prevRegWp);
-//        var lastToNext:Point = lastVisWp.getDirectionTo(nextRegWp);
-//        var lastToObj:Point = lastVisWp.getDirectionTo(obj);
-//        trace(lastToObj, lastToPrev, lastToNext);
-//
-//        var objPrevAngle:Number = MathUtil.getAngleBetween(lastToObj, lastToPrev);
-//        var objNextAngle:Number = MathUtil.getAngleBetween(lastToObj, lastToNext);
-//        var angleDiff:Number = Math.abs(objPrevAngle) - Math.abs(objNextAngle);
-//
-//        if(angleDiff >=0){
-//            return lastVisWp.getDirectionTo(nextRegWp);
-//        }
-//
-//        return prevRegWp.getDirectionTo(lastVisWp);
-//    }
-
-    public function getActualDirection(obj:ObjectBase):Point{
+    // TODO: resolve finish line better
+    public function getActualDirection(obj:ObjectBase, intelligence:uint = 0):Point{
         var lastWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
         if(!lastWpB)
             return null;
 
         var nextWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastWpB);
-        if(nextWpB.containsObject(obj)){
+        if(nextWpB.containsObject(obj) || nextWpB.isFinish) // corner or finish line, which we simply pass
             return nextWpB.directionToNext;
-        }
 
-        return lastWpB.directionToNext;
-
-
-        //-----
-//        var nextWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastWpB);
-//        var nextWp:ObjectBase = Config.field.getControllerByBehavior(nextWpB).object;
-//
-//        var curRotationVector:Point = MathUtil.vectorFromAngle(obj.rotation);
-//        var angleDiff:Number = MathUtil.getAngleBetween(lastWpB.directionToNext, curRotationVector);
-//        if(Math.abs(angleDiff) < 0.2){    // TODO: deprecate angleDiff, use this alignment only when object is close to the wall(far from center)
-//            var toPoint:Point = nextWpB.turnPoint ? nextWpB.turnPoint : nextWp.center;
-//            return obj.getDirectionToPoint(toPoint);
-//        }
-        //------
-
+        return obj.getDirectionToPoint(nextWpB.getTurnPoint(intelligence));
     }
 
-    private function add(wp:ObjectBase):void{
-        var wpBehavior:WaypointItemBehavior = WaypointItemBehavior.create(new Line(new Point(), new Point()),
-                new Line(new Point(), new Point()),
-                new <Function>[null, null, onEndInteraction]);
+    private function add(wp:ObjectBase, params:Object):void{
+        var wpBehavior:WaypointItemBehavior = WaypointItemBehavior.create(params.inLine, params.outLine,
+                new <Function>[null, null, onEndInteraction], params.isFinish);
         _waypointSequence.add(wpBehavior);
 
         var wpc:ControllerBase = ControllerBase.create(wp, new <BehaviorBase>[wpBehavior]);

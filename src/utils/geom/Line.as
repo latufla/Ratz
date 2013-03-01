@@ -38,6 +38,7 @@ public class Line {
             pt = pt.clone().add(interval);
         } while(pt.x <= _end.x && pt.y <= _end.y)
 
+        pts[pts.length - 1] = _end.clone();
         return pts;
     }
 
