@@ -24,17 +24,17 @@ public class RayItemBehavior extends BehaviorBase{
         _controller.object.isPseudo = true;
 
 
-        PhysEngineConnector.instance.addInteractionListener(_controller.object, onInteraction);
+        PhysEngineConnector.instance.addInteractionListener(_controller.object, onBeginInteraction);
     }
 
     override public function stop():void{
         _controller.object.isPseudo = false;
-        PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
+        PhysEngineConnector.instance.removeInteractionListener(_controller.object, onBeginInteraction);
 
         super.stop();
     }
 
-    override protected function onInteraction(ray:ObjectBase, obj:ObjectBase):void{
+    override protected function onBeginInteraction(ray:ObjectBase, obj:ObjectBase):void{
         var ratC:ControllerBase = obj.controller;
         if(!ratC.isRat)
             return;

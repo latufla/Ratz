@@ -23,16 +23,22 @@ import utils.VectorUtil;
 
 public class WaypointItemBehavior extends BehaviorBase {
 
-    private var _interactionCb:Function;
+    private var _onBeginInteraction:Function;
+    private var _onGoingInteraction:Function;
+    private var _onEndInteraction:Function;
+
     private var _registeredList:Vector.<String>;
 
     private var _turnPoint:Point;
     private var _directionToNext:Point;
 
-    public function WaypointItemBehavior(interactionCb:Function) {
+    public function WaypointItemBehavior(onBeginInteraction:Function, onGoingInteraction:Function = null, onEndInteraction:Function = null) {
         super();
 
-        _interactionCb = interactionCb;
+        _onBeginInteraction = onBeginInteraction;
+        _onGoingInteraction = onGoingInteraction;
+        _onEndInteraction = onEndInteraction;
+
         init();
     }
 
@@ -45,15 +51,15 @@ public class WaypointItemBehavior extends BehaviorBase {
 
         var obj:ObjectBase = _controller.object;
         obj.isPseudo = true;
-        obj.visible = false;
-        PhysEngineConnector.instance.addInteractionListener(_controller.object, onInteraction);
+//        obj.visible = false;
+        PhysEngineConnector.instance.addInteractionListener(_controller.object, onBeginInteraction, onGoingInteraction, onEndInteraction);
     }
 
     override public function stop():void{
         var obj:ObjectBase = _controller.object;
         obj.isPseudo = false;
         obj.visible = true;
-        PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
+        PhysEngineConnector.instance.removeInteractionListener(_controller.object);
 
         super.stop();
     }
@@ -77,9 +83,19 @@ public class WaypointItemBehavior extends BehaviorBase {
         return _registeredList.indexOf(obj.name) != -1;
     }
 
-    override protected function onInteraction(waypoint:ObjectBase, target:ObjectBase):void{
-        if(_interactionCb)
-            _interactionCb(waypoint, target);
+    override protected function onBeginInteraction(waypoint:ObjectBase, target:ObjectBase):void{
+        if(_onBeginInteraction)
+            _onBeginInteraction(waypoint, target);
+    }
+
+    override protected function onGoingInteraction(waypoint:ObjectBase, target:ObjectBase):void{
+        if(_onGoingInteraction)
+            _onGoingInteraction(waypoint, target);
+    }
+
+    override protected function onEndInteraction(waypoint:ObjectBase, target:ObjectBase):void{
+        if(_onEndInteraction)
+            _onEndInteraction(waypoint, target);
     }
 
     public function get directionToNext():Point {

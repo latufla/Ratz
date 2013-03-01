@@ -37,7 +37,15 @@ public class BehaviorBase {
     }
 
     // override if there is some event behavior
-    protected function onInteraction(obj:ObjectBase, target:ObjectBase):void{
+    protected function onBeginInteraction(obj:ObjectBase, target:ObjectBase):void{
+
+    }
+
+    protected function onGoingInteraction(obj:ObjectBase, target:ObjectBase):void{
+
+    }
+
+    protected function onEndInteraction(obj:ObjectBase, target:ObjectBase):void{
 
     }
 

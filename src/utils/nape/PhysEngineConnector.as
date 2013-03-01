@@ -9,6 +9,8 @@ package utils.nape {
 import behaviors.BehaviorBase;
 import behaviors.gameplay.WallItemBehavior;
 
+import event.CustomEvent;
+
 import utils.*;
 
 import controller.ControllerBase;
@@ -39,6 +41,8 @@ public class PhysEngineConnector {
     private var _physObjects:Dictionary; // key RObjectBase, value Body
     private var _handlers:Dictionary;
 
+    private var _eventsLib:Dictionary;
+
     private var _border:Body;
 
     private static var _instance:PhysEngineConnector;
@@ -56,6 +60,7 @@ public class PhysEngineConnector {
         _spaces = new Dictionary();
         _physObjects = new Dictionary();
         _handlers = new Dictionary();
+        _eventsLib = new Dictionary();
     }
 
     // TODO: more secure
@@ -67,10 +72,7 @@ public class PhysEngineConnector {
 
         _spaces[f] = space;//new Space();
         createBorder(f, bd);
-
-        var sensorListener:InteractionListener = new InteractionListener(CbEvent.BEGIN, InteractionType.ANY,
-                CbType.ANY_BODY, CbType.ANY_BODY, interactionHandler);
-        space.listeners.add(sensorListener);
+        initEventListeners(space);
     }
 
     // TODO: fix this dirt
@@ -85,6 +87,21 @@ public class PhysEngineConnector {
         obj.material = new RMaterial(10, 0, 0, 1.5, 0.01);
         var borderC:ControllerBase = ControllerBase.create(obj, new <BehaviorBase>[new WallItemBehavior()]);
         Config.field.add(borderC);
+    }
+
+
+    private function initEventListeners(space:Space):void {
+        var listener:InteractionListener = new InteractionListener(CbEvent.BEGIN, InteractionType.ANY,
+                CbType.ANY_BODY, CbType.ANY_BODY, interactionHandler);
+        space.listeners.add(listener);
+
+        listener = new InteractionListener(CbEvent.ONGOING, InteractionType.ANY,
+                CbType.ANY_BODY, CbType.ANY_BODY, interactionHandler);
+        space.listeners.add(listener);
+
+        listener = new InteractionListener(CbEvent.END, InteractionType.ANY,
+                CbType.ANY_BODY, CbType.ANY_BODY, interactionHandler);
+        space.listeners.add(listener);
     }
 
     public function initObject(obj:ObjectBase):void{
@@ -221,16 +238,19 @@ public class PhysEngineConnector {
         physObj.debugDraw = value;
     }
 
-    public function addInteractionListener(obj:ObjectBase, handler:Function):void{
+    public function addInteractionListener(obj:ObjectBase, beginHandler:Function, onGoingHandler:Function = null, endHandler:Function = null):void{
         var body:Body = _physObjects[obj];
         if(!body)
             return;
 
-        _handlers[obj] = handler;
+        _handlers[obj] = new Dictionary();
+        _handlers[obj][CbEvent.BEGIN] = beginHandler;
+        _handlers[obj][CbEvent.ONGOING] = onGoingHandler;
+        _handlers[obj][CbEvent.END] = endHandler;
     }
 
 
-    public function removeInteractionListener(obj:ObjectBase, handler:Function):void{
+    public function removeInteractionListener(obj:ObjectBase, handler:Function = null):void{
         delete _handlers[obj];
     }
 
@@ -241,13 +261,14 @@ public class PhysEngineConnector {
         if(!obj1 || !obj2)
             return;
 
-        var handler:Function = _handlers[obj1];
-        if(handler)
-            handler(obj1, obj2);
+        var evt:CbEvent = cb.event;
+        var handlers:Dictionary = _handlers[obj1];
+        if(handlers && handlers[evt])
+            handlers[evt](obj1, obj2);
 
-        handler = _handlers[obj2];
-        if(handler)
-            handler(obj2, obj1);
+        handlers = _handlers[obj2];
+        if(handlers && handlers[evt])
+            handlers[evt](obj2, obj1);
     }
 
     private function getObjBy(b:Body):ObjectBase{

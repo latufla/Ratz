@@ -29,17 +29,17 @@ public class MedkitItemBehavior extends BehaviorBase{
         super.start(c);
         _controller.object.isPseudo = true;
 
-        PhysEngineConnector.instance.addInteractionListener(_controller.object, onInteraction);
+        PhysEngineConnector.instance.addInteractionListener(_controller.object, onBeginInteraction);
     }
 
     override public function stop():void{
         _controller.object.isPseudo = false;
-        PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
+        PhysEngineConnector.instance.removeInteractionListener(_controller.object, onBeginInteraction);
 
         super.stop();
     }
 
-    override protected function onInteraction(medkit:ObjectBase, rat:ObjectBase):void{
+    override protected function onBeginInteraction(medkit:ObjectBase, rat:ObjectBase):void{
         var ratC:ControllerBase = rat.controller;
         if(!ratC.isRat)
             return;

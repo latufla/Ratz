@@ -68,11 +68,11 @@ public class Engine extends Sprite{
 
         var border:BitmapData = Bitmap(new Lvl1ViewClass()).bitmapData;
         var wps:Vector.<Object> = new Vector.<Object>();
-        wps.push({rect: new Rectangle(600, 380, 172, 24), turnPoint: null});
-        wps.push({rect: new Rectangle(600, 30, 172, 180)});
-        wps.push({rect: new Rectangle(30, 30, 180, 180)});
-        wps.push({rect: new Rectangle(30, 590, 180, 180)});
-        wps.push({rect: new Rectangle(600, 590, 172, 180)});
+        wps.push({rect: new Rectangle(604, 380, 169, 24), turnPoint: null});
+        wps.push({rect: new Rectangle(604, 30, 170, 170)});
+        wps.push({rect: new Rectangle(35, 30, 170, 170)});
+        wps.push({rect: new Rectangle(35, 590, 170, 170)});
+        wps.push({rect: new Rectangle(604, 590, 170, 170)});
         _field = new Field(border, wps);
 
         var stage:Stage = Ratz.STAGE;
@@ -102,7 +102,7 @@ public class Engine extends Sprite{
         var material:Object = params["material"];
         var rMaterial:RMaterial = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);
 
-        createRats(rMaterial, params["other"]["group"]);
+//        createRats(rMaterial, params["other"]["group"]);
 
         var rat1 = ObjectBase.create(new Point(650, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, params["other"]["group"]);
         rat1.name = "Rat 1";
@@ -115,11 +115,6 @@ public class Engine extends Sprite{
             new DeathBehavior(),
             new StatDisplayBehavior()]);
         _field.add(rat1Controller);
-
-
-
-
-
 
 //        var medkit:ObjectBase = ObjectBase.create(new Point(650, 250), new <RShape>[new RPolygon(0, 0, 30, 30)], rMaterial, params["other"]["group"]);
 //        medkit.ammunition.health = 35;

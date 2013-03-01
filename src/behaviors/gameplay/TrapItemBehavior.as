@@ -29,17 +29,17 @@ public class TrapItemBehavior extends BehaviorBase{
         super.start(c);
         _controller.object.isPseudo = true;
 
-        PhysEngineConnector.instance.addInteractionListener(_controller.object, onInteraction);
+        PhysEngineConnector.instance.addInteractionListener(_controller.object, onBeginInteraction);
     }
 
     override public function stop():void{
         _controller.object.isPseudo = false;
-        PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
+        PhysEngineConnector.instance.removeInteractionListener(_controller.object, onBeginInteraction);
 
         super.stop();
     }
 
-    override protected function onInteraction(trap:ObjectBase, obj:ObjectBase):void{
+    override protected function onBeginInteraction(trap:ObjectBase, obj:ObjectBase):void{
         var ratC:ControllerBase = obj.controller;
         if(!ratC.isRat)
             return;

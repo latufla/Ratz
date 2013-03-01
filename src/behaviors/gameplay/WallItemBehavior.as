@@ -25,16 +25,16 @@ public class WallItemBehavior extends BehaviorBase{
     override public function start(c:ControllerBase):void{
         super.start(c);
 
-        PhysEngineConnector.instance.addInteractionListener(_controller.object, onInteraction);
+        PhysEngineConnector.instance.addInteractionListener(_controller.object, onBeginInteraction);
     }
 
     override public function stop():void{
-        PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
+        PhysEngineConnector.instance.removeInteractionListener(_controller.object, onBeginInteraction);
 
         super.stop();
     }
 
-    override protected function onInteraction(wall:ObjectBase, obj:ObjectBase):void{
+    override protected function onBeginInteraction(wall:ObjectBase, obj:ObjectBase):void{
         var c:ControllerBase = Config.field.getControllerByObject(obj);
         if(c.isRat){
             trace(obj.name + " just pushed the wall");

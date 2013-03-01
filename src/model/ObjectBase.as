@@ -171,8 +171,8 @@ public class ObjectBase {
         return new Point(b.x + b.width / 2, b.y + b.height / 2);
     }
 
-    public function addInteractionListener(onInteraction:Function):void{
-        PhysEngineConnector.instance.addInteractionListener(this, onInteraction);
+    public function addInteractionListener(onBeginInteraction:Function, onGoingInteraction:Function = null, onEndInteraction = null):void{
+        PhysEngineConnector.instance.addInteractionListener(this, onBeginInteraction, onGoingInteraction, onEndInteraction);
     }
 
     public function removeInteractionListener(onInteraction:Function):void{

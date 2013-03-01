@@ -27,16 +27,16 @@ public class ShootItemBehavior extends BehaviorBase{
     override public function start(c:ControllerBase):void{
         super.start(c);
 
-        PhysEngineConnector.instance.addInteractionListener(_controller.object, onInteraction);
+        PhysEngineConnector.instance.addInteractionListener(_controller.object, onBeginInteraction);
     }
 
     override public function stop():void{
-        PhysEngineConnector.instance.removeInteractionListener(_controller.object, onInteraction);
+        PhysEngineConnector.instance.removeInteractionListener(_controller.object, onBeginInteraction);
 
         super.stop();
     }
 
-    override protected function onInteraction(shot:ObjectBase, obj:ObjectBase):void{
+    override protected function onBeginInteraction(shot:ObjectBase, obj:ObjectBase):void{
         var ratC:ControllerBase = obj.controller;
         if(ratC.isRat){
             obj.ammunition.health -= shot.ammunition.health;
