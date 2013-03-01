@@ -21,32 +21,30 @@ import utils.VectorUtil;
 
 public class WaypointItemBehavior extends BehaviorBase {
 
-    public static const TOP_SIDE:uint = 0;
-    public static const LEFT_SIDE:uint = 1;
-    public static const BOTTOM_SIDE:uint = 2;
-    public static const RIGHT_SIDE:uint = 3;
+    private const MAX_TURN_POINTS_COUNT:uint = 4;
 
     private var _onBeginInteraction:Function;
     private var _onGoingInteraction:Function;
     private var _onEndInteraction:Function;
 
+    private var _inSide:Line;
+    private var _outSide:Line;
+
     private var _containedObjectNames:Vector.<String>;
     private var _registeredObjectNames:Vector.<String>;
 
-    private var _inSide:Line = new Line(new Point(), new Point());
-    private var _outSide:Line = new Line(new Point(), new Point());
-
-    private var _turnPoint:Point;
     private var _directionToNext:Point;
 
-    public function WaypointItemBehavior(onBeginInteraction:Function, onGoingInteraction:Function = null, onEndInteraction:Function = null) {
+    public function WaypointItemBehavior() {
         super();
-
-        _onBeginInteraction = onBeginInteraction;
-        _onGoingInteraction = onGoingInteraction;
-        _onEndInteraction = onEndInteraction;
-
         init();
+    }
+
+    public static function create(inSide:Line, outSide:Line, callbacks:Vector.<Function>):WaypointItemBehavior{
+        var wIB:WaypointItemBehavior = new WaypointItemBehavior();
+        wIB.setSides(inSide, outSide);
+        wIB.setCallbacks(callbacks[0], callbacks[1], callbacks[2]);
+        return wIB;
     }
 
     private function init():void {
@@ -72,6 +70,17 @@ public class WaypointItemBehavior extends BehaviorBase {
         super.stop();
     }
 
+    public function setCallbacks(onBeginInteraction:Function, onGoingInteraction:Function = null, onEndInteraction:Function = null):void{
+        _onBeginInteraction = onBeginInteraction;
+        _onGoingInteraction = onGoingInteraction;
+        _onEndInteraction = onEndInteraction;
+    }
+
+    public function setSides(inSide:Line, outSide:Line):void{
+        _inSide = inSide;
+        _outSide = outSide;
+    }
+
     public function register(obj:ObjectBase):void{
         _registeredObjectNames.push(obj.name);
 
@@ -88,6 +97,35 @@ public class WaypointItemBehavior extends BehaviorBase {
 
     public function isRegistered(obj:ObjectBase):Boolean{
         return _registeredObjectNames.indexOf(obj.name) != -1;
+    }
+
+    public function get directionToNext():Point {
+        return _directionToNext;
+    }
+
+    public function set directionToNext(value:Point):void {
+        _directionToNext = value;
+    }
+
+    // id: 0 to MAX_TURN_POINTS_COUNT - 1
+    public function getTurnPoint(id:uint):Point {
+        if(!_inSide || id >= MAX_TURN_POINTS_COUNT)
+            return null;
+
+        var tPts:Vector.<Point> = _inSide.getEvenDistributedPoints(MAX_TURN_POINTS_COUNT + 2);
+        return tPts[id];
+    }
+
+    public function get containedObjectNames():Vector.<String> {
+        return _containedObjectNames;
+    }
+
+    public function get inSide():Line {
+        return _inSide;
+    }
+
+    public function get outSide():Line {
+        return _outSide;
     }
 
     override protected function onBeginInteraction(waypoint:ObjectBase, target:ObjectBase):void{
@@ -117,42 +155,6 @@ public class WaypointItemBehavior extends BehaviorBase {
 
         if(_onEndInteraction)
             _onEndInteraction(waypoint, target);
-    }
-
-    public function get directionToNext():Point {
-        return _directionToNext;
-    }
-
-    public function set directionToNext(value:Point):void {
-        _directionToNext = value;
-    }
-
-    public function get turnPoint():Point {
-        return _turnPoint;
-    }
-
-    public function set turnPoint(value:Point):void {
-        _turnPoint = value;
-    }
-
-    public function get containedObjectNames():Vector.<String> {
-        return _containedObjectNames;
-    }
-
-    public function get inSide():Line {
-        return _inSide;
-    }
-
-    public function set inSide(value:Line):void {
-        _inSide = value;
-    }
-
-    public function get outSide():Line {
-        return _outSide;
-    }
-
-    public function set outSide(value:Line):void {
-        _outSide = value;
     }
 }
 }

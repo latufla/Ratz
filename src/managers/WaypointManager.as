@@ -26,6 +26,7 @@ import model.WaypointSequence;
 import utils.Config;
 import utils.GuiUtil;
 import utils.MathUtil;
+import utils.geom.Line;
 import utils.nape.RPolygon;
 import utils.nape.RShape;
 
@@ -51,8 +52,7 @@ public class WaypointManager extends EventDispatcher{
             var wp:ObjectBase = new ObjectBase();
             wp.position = new Point(p.rect.x, p.rect.y);
             wp.shapes = new <RShape>[new RPolygon(0, 0, p.rect.width, p.rect.height)];
-            add(wp, p.turnPoint);
-            trace(p.turnPoint);
+            add(wp);
         }
         _waypointSequence.computeDirections();
     }
@@ -142,9 +142,10 @@ public class WaypointManager extends EventDispatcher{
         return lastWpB.directionToNext;
     }
 
-    private function add(wp:ObjectBase, rAnchor:Point):void{
-        var wpBehavior:WaypointItemBehavior = new WaypointItemBehavior(onInteraction);
-        wpBehavior.turnPoint = rAnchor;
+    private function add(wp:ObjectBase):void{
+        var wpBehavior:WaypointItemBehavior = WaypointItemBehavior.create(new Line(new Point(), new Point()),
+                new Line(new Point(), new Point()),
+                new <Function>[onInteraction, null, null]);
         _waypointSequence.add(wpBehavior);
 
         var wpc:ControllerBase = ControllerBase.create(wp, new <BehaviorBase>[wpBehavior]);

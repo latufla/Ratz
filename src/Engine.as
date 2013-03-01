@@ -104,19 +104,19 @@ public class Engine extends Sprite{
         var material:Object = params["material"];
         var rMaterial:RMaterial = new RMaterial(material["elasticity"], material["dynamicFriction"], material["staticFriction"], material["density"], material["rollingFriction"]);
 
-//        createRats(rMaterial, params["other"]["group"]);
+        createRats(rMaterial, params["other"]["group"]);
 
-        var rat1 = ObjectBase.create(new Point(650, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, params["other"]["group"]);
-        rat1.name = "Rat 1";
-
-        var rat1Controller = ControllerBase.create(rat1, new <BehaviorBase>[new UserControlBehavior(),
-            new RatMoveBehavior(),
-            new TrapBehavior(),
-            new BoostBehavior(),
-            new ShootBehavior(),
-            new DeathBehavior(),
-            new StatDisplayBehavior()]);
-        _field.add(rat1Controller);
+//        var rat1 = ObjectBase.create(new Point(650, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, params["other"]["group"]);
+//        rat1.name = "Rat 1";
+//
+//        var rat1Controller = ControllerBase.create(rat1, new <BehaviorBase>[new UserControlBehavior(),
+//            new RatMoveBehavior(),
+//            new TrapBehavior(),
+//            new BoostBehavior(),
+//            new ShootBehavior(),
+//            new DeathBehavior(),
+//            new StatDisplayBehavior()]);
+//        _field.add(rat1Controller);
 
 //        var medkit:ObjectBase = ObjectBase.create(new Point(650, 250), new <RShape>[new RPolygon(0, 0, 30, 30)], rMaterial, params["other"]["group"]);
 //        medkit.ammunition.health = 35;
