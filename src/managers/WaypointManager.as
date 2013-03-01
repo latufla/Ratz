@@ -128,6 +128,14 @@ public class WaypointManager extends EventDispatcher{
         if(!lastWpB)
             return null;
 
+        var nextWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastWpB);
+        if(nextWpB.containsObject(obj)){
+            return nextWpB.directionToNext;
+        }
+
+        return lastWpB.directionToNext;
+
+
         //-----
 //        var nextWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastWpB);
 //        var nextWp:ObjectBase = Config.field.getControllerByBehavior(nextWpB).object;
@@ -139,20 +147,20 @@ public class WaypointManager extends EventDispatcher{
 //            return obj.getDirectionToPoint(toPoint);
 //        }
         //------
-        return lastWpB.directionToNext;
+
     }
 
     private function add(wp:ObjectBase):void{
         var wpBehavior:WaypointItemBehavior = WaypointItemBehavior.create(new Line(new Point(), new Point()),
                 new Line(new Point(), new Point()),
-                new <Function>[onInteraction, null, null]);
+                new <Function>[null, null, onEndInteraction]);
         _waypointSequence.add(wpBehavior);
 
         var wpc:ControllerBase = ControllerBase.create(wp, new <BehaviorBase>[wpBehavior]);
         Config.field.add(wpc);
     }
 
-    private function onInteraction(wp:ObjectBase, obj:ObjectBase):void {
+    private function onEndInteraction(wp:ObjectBase, obj:ObjectBase):void {
         var ratC:ControllerBase = obj.controller;
         if(!ratC.isRat)
             return;
@@ -160,10 +168,6 @@ public class WaypointManager extends EventDispatcher{
         var wpc:ControllerBase = wp.controller;
         var wpBehavior:WaypointItemBehavior = wpc.getBehaviorByClass(WaypointItemBehavior) as WaypointItemBehavior;
         _waypointSequence.visit(wpBehavior, obj);
-
-        var nextWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(wpBehavior);
-        var nextWpC:ControllerBase = Config.field.getControllerByBehavior(nextWpB);
-        dispatchEvent(new CustomEvent(CustomEvent.WAYPOINT_VISIT, {waypoint: wp, nextToVisitWaypoint: nextWpC.object, object: obj}));
     }
 
     private function onSequenceComplete(obj:ObjectBase):void{

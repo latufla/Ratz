@@ -116,6 +116,10 @@ public class WaypointItemBehavior extends BehaviorBase {
         return tPts[id];
     }
 
+    public function containsObject(obj:ObjectBase):Boolean{
+        return _containedObjectNames.indexOf(obj.name) != -1;
+    }
+
     public function get containedObjectNames():Vector.<String> {
         return _containedObjectNames;
     }
