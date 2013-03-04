@@ -55,15 +55,14 @@ public class Engine extends Sprite{
     [Embed(source="../assets/lvl1.png")]
     private var Lvl1ViewClass:Class;
 
-    private var _rat:ObjectBase;
     private var _spaceView:BitmapDebug;
 
-    private var _ratController:ControllerBase;
 
+    private var _scene:SceneController;
     private var _field:Field;
 
     public function Engine() {
-        init();
+//        init();
 //        TestUtil.startControllerTest();
 
 //        var assetClass:Class = AssetsLib.instance.getAssetClassBy(AssetsLib.CHINA_SIGNED_FLAG);
@@ -74,6 +73,9 @@ public class Engine extends Sprite{
 //        asset = new assetClass() as DisplayObject;
 //        asset.x = 120;
 //        Ratz.STAGE.addChild(asset);
+
+        _scene = new SceneController();
+
     }
 
     private function init():void {

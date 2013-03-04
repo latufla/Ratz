@@ -8,6 +8,7 @@
 package event {
 public class GameEvent extends CustomEvent{
 
+    public static var NEED_MAIN_MENU:String = "needMainMenu";
     public static var NEED_LOBBY:String = "needLobby";
     public static var NEED_CONTROLS:String = "needControls";
     public static var NEED_RACE:String = "needRace";
