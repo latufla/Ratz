@@ -40,6 +40,8 @@ import nape.util.BitmapDebug;
 import starling.display.MovieClip;
 import starling.display.Sprite;
 
+import utils.AssetsLib;
+
 import utils.Config;
 import utils.FPSCounter;
 import utils.geom.Line;
@@ -60,9 +62,8 @@ public class Engine extends Sprite{
     private var _field:Field;
 
     public function Engine() {
-        init();
+//        init();
 //        TestUtil.startControllerTest();
-
     }
 
     private function init():void {
