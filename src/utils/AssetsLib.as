@@ -6,14 +6,15 @@
  * To change this template use File | Settings | File Templates.
  */
 package utils {
+import flash.display.DisplayObjectContainer;
 import flash.display.MovieClip;
 
 public class AssetsLib {
 
     // SCREENS
-    public static const MAIN_SCREEN:String = "mainScreen";
+    public static const MAIN_MENU_SCREEN:String = "mainScreen";
     [Embed(source="../../assets/gui/GUI_0_1_a.swf", symbol="MainScreenView")]
-    private const MainScreen:Class;
+    private const MainMenuScreen:Class;
 
     public static const CONTROLS_SCREEN:String = "controlsScreen";
     [Embed(source="../../assets/gui/GUI_0_1_a.swf", symbol="ControlsScreenView")]
@@ -60,7 +61,7 @@ public class AssetsLib {
 
     private function init():void {
         _assets = [];
-        _assets[MAIN_SCREEN] = MainScreen;
+        _assets[MAIN_MENU_SCREEN] = MainMenuScreen;
         _assets[CONTROLS_SCREEN] = ControlsScreen;
         _assets[LOBBY_SCREEN] = LobbyScreen;
         _assets[RESULT_ITEM] = ResultItem;
@@ -69,7 +70,6 @@ public class AssetsLib {
         _assets[JAPAN_SIGNED_FLAG] = JapanSignedFlag;
         _assets[USA_SIGNED_FLAG] = USASignedFlag;
         _assets[RUSSIA_SIGNED_FLAG] = RussiaSignedFlag;
-
     }
 
     public function getAssetClassBy(name:String):Class{
@@ -81,6 +81,11 @@ public class AssetsLib {
         }
 
         return asset;
+    }
+
+    public function createAssetBy(className:String):DisplayObjectContainer{
+        var asset:Class = getAssetClassBy(className);
+        return new asset() as DisplayObjectContainer;
     }
 }
 }

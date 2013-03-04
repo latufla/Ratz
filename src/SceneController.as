@@ -7,6 +7,7 @@
  */
 package {
 import event.GameEvent;
+import event.GameEvent;
 
 import flash.events.EventDispatcher;
 import flash.utils.Dictionary;
@@ -14,12 +15,17 @@ import flash.utils.Dictionary;
 import model.GameResult;
 import model.RaceResult;
 
+import utils.DisplayObjectUtil;
+
+import utils.EventHeap;
+
 import utils.ObjectUtil;
 
 import view.ControlsView;
 import view.LobbyView;
 import view.MainMenuView;
 import view.RaceResultView;
+import view.ViewBase;
 
 public class SceneController extends EventDispatcher{
     private var _raceResult:RaceResult;
@@ -27,12 +33,21 @@ public class SceneController extends EventDispatcher{
 
     private var _gameEventHandlers:Dictionary; // event type -> function
 
+    private var _mainMenuView:MainMenuView;
+    private var _controlsView:ControlsView;
+
+    private var _view:ViewBase;
+
     public function SceneController() {
         init();
     }
 
     private function init():void {
+        _view = new ViewBase();
+        Ratz.STAGE.addChild(_view);
+
         addEventListeners();
+        EventHeap.instance.dispatch(new GameEvent(GameEvent.NEED_MAIN_MENU));
     }
 
     private function addEventListeners():void {
@@ -44,7 +59,7 @@ public class SceneController extends EventDispatcher{
         _gameEventHandlers[GameEvent.NEED_RACE_RESULT] = onNeedRaceResult;
 
         for (var p:String in _gameEventHandlers){
-            addEventListener(p, onGameEvent);
+            EventHeap.instance.register(p, onGameEvent);
         }
     }
 
@@ -56,11 +71,17 @@ public class SceneController extends EventDispatcher{
     }
 
     private function onNeedMainMenu(data:*):void{
-        trace(MainMenuView);
+        DisplayObjectUtil.removeAll(_view);
+
+        _mainMenuView ||= new MainMenuView();
+        _view.addChild(_mainMenuView);
     }
 
     private function onNeedControls(data:*):void{
-        trace(ControlsView);
+        DisplayObjectUtil.removeAll(_view);
+
+        _controlsView ||= new ControlsView();
+        _view.addChild(_controlsView);
     }
 
     private function onNeedLobby(data:*):void{

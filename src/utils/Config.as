@@ -16,5 +16,7 @@ public class Config {
     public static const ammunitionPanel:AmmunitionPanel = new AmmunitionPanel();
     public static var space:Space;
     public static var field:Field;
+
+    public static var soundEnabled:Boolean = true;
 }
 }
