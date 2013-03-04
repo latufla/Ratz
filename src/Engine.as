@@ -75,7 +75,6 @@ public class Engine extends Sprite{
 //        Ratz.STAGE.addChild(asset);
 
         _scene = new SceneController();
-
     }
 
     private function init():void {

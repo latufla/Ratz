@@ -28,7 +28,6 @@ public class ControlsView extends ViewBase{
         addChild(_container);
 
         backButton.buttonMode =  backButton.useHandCursor = true;
-
         addEventListeners();
     }
 

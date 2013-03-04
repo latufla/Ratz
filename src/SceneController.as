@@ -12,8 +12,9 @@ import event.GameEvent;
 import flash.events.EventDispatcher;
 import flash.utils.Dictionary;
 
-import model.GameResult;
+import model.GameInfo;
 import model.RaceResult;
+import model.UserInfo;
 
 import utils.DisplayObjectUtil;
 
@@ -29,7 +30,7 @@ import view.ViewBase;
 
 public class SceneController extends EventDispatcher{
     private var _raceResult:RaceResult;
-    private var _gameResult:GameResult;
+    private var _gameResult:GameInfo;
 
     private var _gameEventHandlers:Dictionary; // event type -> function
 
@@ -48,6 +49,10 @@ public class SceneController extends EventDispatcher{
 
         addEventListeners();
         EventHeap.instance.dispatch(new GameEvent(GameEvent.NEED_MAIN_MENU));
+
+        var player:UserInfo = UserInfo.create(0, "rat0", UserInfo.USA);
+        _gameResult = new GameInfo(player);
+        trace(_gameResult);
     }
 
     private function addEventListeners():void {
@@ -72,20 +77,17 @@ public class SceneController extends EventDispatcher{
 
     private function onNeedMainMenu(data:*):void{
         DisplayObjectUtil.removeAll(_view);
-
-        _mainMenuView ||= new MainMenuView();
-        _view.addChild(_mainMenuView);
+        _view.addChild(new MainMenuView());
     }
 
     private function onNeedControls(data:*):void{
         DisplayObjectUtil.removeAll(_view);
-
-        _controlsView ||= new ControlsView();
-        _view.addChild(_controlsView);
+        _view.addChild(new ControlsView());
     }
 
     private function onNeedLobby(data:*):void{
-        trace(LobbyView);
+        DisplayObjectUtil.removeAll(_view);
+        _view.addChild(new LobbyView(_gameResult));
     }
 
     private function onNeedRace(data:*):void{
