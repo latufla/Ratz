@@ -24,6 +24,7 @@ import debug.NapeCreateObjectPanel;
 
 import flash.display.Bitmap;
 import flash.display.BitmapData;
+import flash.display.DisplayObject;
 import flash.display.Stage;
 import flash.events.Event;
 import flash.geom.Point;
@@ -62,8 +63,17 @@ public class Engine extends Sprite{
     private var _field:Field;
 
     public function Engine() {
-//        init();
+        init();
 //        TestUtil.startControllerTest();
+
+//        var assetClass:Class = AssetsLib.instance.getAssetClassBy(AssetsLib.CHINA_SIGNED_FLAG);
+//        var asset:DisplayObject = new assetClass() as DisplayObject;
+//        Ratz.STAGE.addChild(asset);
+//
+//        assetClass = AssetsLib.instance.getAssetClassBy(AssetsLib.JAPAN_SIGNED_FLAG);
+//        asset = new assetClass() as DisplayObject;
+//        asset.x = 120;
+//        Ratz.STAGE.addChild(asset);
     }
 
     private function init():void {
