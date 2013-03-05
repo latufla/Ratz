@@ -22,8 +22,8 @@ public class UserInfo {
 
     private var _country:uint = CHINA;
 
-    private var _points:uint = 1500;
-    private var _races:uint = 3;
+    private var _points:uint = 0;
+    private var _races:uint = 0;
 
     // bot
     private var _intelligence:uint = SMART;

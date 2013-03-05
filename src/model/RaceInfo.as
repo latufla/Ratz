@@ -6,6 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 package model {
+import utils.Config;
+
 public class RaceInfo {
 
     private var _id:uint;
@@ -13,8 +15,8 @@ public class RaceInfo {
 
     private var _racers:Vector.<UserInfo>;
 
-    public function RaceInfo(participants:Vector.<UserInfo>) {
-        _racers = participants;
+    public function RaceInfo(racers:Vector.<UserInfo>) {
+        _racers = racers;
     }
 
     public function get racers():Vector.<UserInfo> {
@@ -23,6 +25,18 @@ public class RaceInfo {
 
     public function set racers(value:Vector.<UserInfo>):void {
         _racers = value;
+    }
+
+    public function getRacerPlace(r:UserInfo):int {
+        return _racers.indexOf(r) + 1;
+    }
+
+    public function getRacerPoints(r:UserInfo):int {
+        var place:int = _racers.indexOf(r);
+        if(place == -1)
+            return 0;
+
+        return Config.pointsForPlacePlanet1[place];
     }
 
 }
