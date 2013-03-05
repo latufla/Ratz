@@ -87,5 +87,12 @@ public class AssetsLib {
         var asset:Class = getAssetClassBy(className);
         return new asset() as DisplayObjectContainer;
     }
+
+    public function getFlagByCountryId(id:uint):DisplayObjectContainer{
+        var flags:Array = [CHINA_SIGNED_FLAG, JAPAN_SIGNED_FLAG,
+            RUSSIA_SIGNED_FLAG, USA_SIGNED_FLAG];
+
+        return AssetsLib.instance.createAssetBy(flags[id]);
+    }
 }
 }

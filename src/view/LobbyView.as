@@ -48,11 +48,16 @@ public class LobbyView extends ViewBase{
 
         goButton.buttonMode = goButton.useHandCursor = true;
 
-        var flags:Array = [AssetsLib.CHINA_SIGNED_FLAG, AssetsLib.JAPAN_SIGNED_FLAG,
-            AssetsLib.RUSSIA_SIGNED_FLAG, AssetsLib.USA_SIGNED_FLAG];
-
-        var flag:DisplayObject = AssetsLib.instance.createAssetBy(flags[player.country]);
+        var flag:DisplayObject = AssetsLib.instance.getFlagByCountryId(player.country);
         flagAnchor.addChild(flag);
+
+        var opponents:Vector.<UserInfo> = _gameInfo.opponents;
+        for (var i:int = 0; i < opponents.length; i++) {
+            flag = AssetsLib.instance.getFlagByCountryId(opponents[i].country);
+            flag.x = opponentsOffsetX;
+            flag.y = opponentsoffsetY + opponentsFlagSpaceY * i;
+            opponentsPanel.addChild(flag);
+        }
 
         addEventListeners();
     }
@@ -93,7 +98,20 @@ public class LobbyView extends ViewBase{
         return _container["ratAnchor"];
     }
 
+    private function get opponentsPanel():MovieClip {
+        return _container["opponentsPanel"];
+    }
 
+    private function get opponentsOffsetX():int{
+        return 20;
+    }
 
+    private function get opponentsoffsetY():int{
+        return 45;
+    }
+
+    private function get opponentsFlagSpaceY():int{
+        return 110;
+    }
 }
 }

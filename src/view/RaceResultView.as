@@ -61,15 +61,15 @@ public class RaceResultView extends ViewBase{
         return item;
     }
 
-    private function get offsetX():uint{
+    private function get offsetX():int{
         return 50;
     }
 
-    private function get offsetY():uint{
+    private function get offsetY():int{
         return 30;
     }
 
-    private function get itemSpaceY():uint{
+    private function get itemSpaceY():int{
         return 140;
     }
 
