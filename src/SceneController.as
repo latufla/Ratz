@@ -88,6 +88,10 @@ public class SceneController extends EventDispatcher{
 
     private function onNeedLobby(data:*):void{
         DisplayObjectUtil.removeAll(_view);
+
+        if(data && data.raceInfo)
+            _gameInfo.applyRaceInfo(data.raceInfo);
+
         _view.addChild(new LobbyView(_gameInfo));
     }
 

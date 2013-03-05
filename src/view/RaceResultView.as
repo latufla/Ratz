@@ -6,24 +6,31 @@
  * To change this template use File | Settings | File Templates.
  */
 package view {
+import event.GameEvent;
+
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
-import flash.display.MovieClip;
 import flash.display.MovieClip;
 import flash.display.Sprite;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
+import flash.utils.clearTimeout;
+import flash.utils.setTimeout;
 
 import model.RaceInfo;
 import model.UserInfo;
 
 import utils.AssetsLib;
 import utils.Config;
+import utils.EventHeap;
 
 public class RaceResultView extends ViewBase{
 
+    private static const CLOSE_TIMEOUT:Number = 2000;
+
     private var _container:DisplayObjectContainer;
     private var _raceInfo:RaceInfo;
+
     public function RaceResultView(raceInfo:RaceInfo){
         _raceInfo = raceInfo;
         init();
@@ -41,15 +48,19 @@ public class RaceResultView extends ViewBase{
             _container.addChild(resultItem);
         }
         addChild(_container);
+
+        var tId:uint = setTimeout(function():void{
+            EventHeap.instance.dispatch(new GameEvent(GameEvent.NEED_LOBBY, {raceInfo: _raceInfo}));
+            clearTimeout(tId);
+        }, CLOSE_TIMEOUT);
     }
 
     private function createResultItem(racer:UserInfo, place:uint):DisplayObjectContainer{
         var item:DisplayObjectContainer = AssetsLib.instance.createAssetBy(AssetsLib.RESULT_ITEM) as DisplayObjectContainer;
 
-        var flags:Array = [AssetsLib.CHINA_SIGNED_FLAG, AssetsLib.JAPAN_SIGNED_FLAG,
-            AssetsLib.RUSSIA_SIGNED_FLAG, AssetsLib.USA_SIGNED_FLAG];
-
-        var flag:DisplayObject = AssetsLib.instance.createAssetBy(flags[racer.country]);
+        var flag:DisplayObject = AssetsLib.instance.getFlagByCountryId(racer.country);
+        flag.width = flagWidth;
+        flag.height = flagHeight;
         getResultItemFlagAnchor(item).addChild(flag);
 
         var placeField:TextField = getResultItemPlaceField(item);
@@ -62,15 +73,23 @@ public class RaceResultView extends ViewBase{
     }
 
     private function get offsetX():int{
-        return 50;
+        return 70;
     }
 
     private function get offsetY():int{
-        return 30;
+        return 50;
     }
 
     private function get itemSpaceY():int{
-        return 140;
+        return 110;
+    }
+
+    private function get flagWidth():int{
+        return 86.6;
+    }
+
+    private function get flagHeight():int{
+        return 80;
     }
 
     private function getResultItemFlagAnchor(resultItem:DisplayObjectContainer):MovieClip{

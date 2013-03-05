@@ -15,7 +15,7 @@ public class GameEvent extends CustomEvent{
     public static var NEED_RACE_RESULT:String = "needRaceResult";
 
     public function GameEvent(type:String, data:Object = null, bubbles:Boolean = false, cancelable:Boolean = false){
-        super(type, bubbles, cancelable);
+        super(type, data, bubbles, cancelable);
     }
 }
 }
