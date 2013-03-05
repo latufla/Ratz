@@ -51,5 +51,11 @@ public class GameInfo {
     public function get opponents():Vector.<UserInfo> {
         return _opponents;
     }
+
+    public function get allRacers():Vector.<UserInfo>{
+        var ps:Vector.<UserInfo> = _opponents.concat();
+        ps.unshift(_player);
+        return ps;
+    }
 }
 }

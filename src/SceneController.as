@@ -13,7 +13,7 @@ import flash.events.EventDispatcher;
 import flash.utils.Dictionary;
 
 import model.GameInfo;
-import model.RaceResult;
+import model.RaceInfo;
 import model.UserInfo;
 
 import utils.DisplayObjectUtil;
@@ -29,8 +29,8 @@ import view.RaceResultView;
 import view.ViewBase;
 
 public class SceneController extends EventDispatcher{
-    private var _raceResult:RaceResult;
-    private var _gameResult:GameInfo;
+    private var _raceInfo:RaceInfo;
+    private var _gameInfo:GameInfo;
 
     private var _gameEventHandlers:Dictionary; // event type -> function
 
@@ -51,8 +51,8 @@ public class SceneController extends EventDispatcher{
         EventHeap.instance.dispatch(new GameEvent(GameEvent.NEED_MAIN_MENU));
 
         var player:UserInfo = UserInfo.create(0, "rat0", UserInfo.USA);
-        _gameResult = new GameInfo(player);
-        trace(_gameResult);
+        _gameInfo = new GameInfo(player);
+        trace(_gameInfo);
     }
 
     private function addEventListeners():void {
@@ -60,7 +60,8 @@ public class SceneController extends EventDispatcher{
         _gameEventHandlers[GameEvent.NEED_MAIN_MENU] = onNeedMainMenu;
         _gameEventHandlers[GameEvent.NEED_CONTROLS] = onNeedControls;
         _gameEventHandlers[GameEvent.NEED_LOBBY] = onNeedLobby;
-        _gameEventHandlers[GameEvent.NEED_RACE] = onNeedRace;
+//        _gameEventHandlers[GameEvent.NEED_RACE] = onNeedRace;
+        _gameEventHandlers[GameEvent.NEED_RACE] = onNeedRaceResult;
         _gameEventHandlers[GameEvent.NEED_RACE_RESULT] = onNeedRaceResult;
 
         for (var p:String in _gameEventHandlers){
@@ -87,7 +88,7 @@ public class SceneController extends EventDispatcher{
 
     private function onNeedLobby(data:*):void{
         DisplayObjectUtil.removeAll(_view);
-        _view.addChild(new LobbyView(_gameResult));
+        _view.addChild(new LobbyView(_gameInfo));
     }
 
     private function onNeedRace(data:*):void{
@@ -95,7 +96,9 @@ public class SceneController extends EventDispatcher{
     }
 
     private function onNeedRaceResult(data:*):void{
-        trace(RaceResultView);
+        DisplayObjectUtil.removeAll(_view);
+        _raceInfo = new RaceInfo(_gameInfo.allRacers);
+        _view.addChild(new RaceResultView(_raceInfo));
     }
 
 }
