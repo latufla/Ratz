@@ -105,50 +105,28 @@ public class Field {
     }
 
     private function createRats(raceInfo:RaceInfo):void {
-        var rat1 = ObjectBase.create(new Point(620, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], new RMaterial(), 1);
-        rat1.name = "Rat 1";
-//
-        var rat1Controller = ControllerBase.create(rat1, new <BehaviorBase>[new AIControlBehavior(),
-            new RatMoveBehavior(),
-            new TrapBehavior(),
-            new BoostBehavior(),
-            new ShootBehavior(),
-            new DeathBehavior(),
-            new StatDisplayBehavior()]);
-        add(rat1Controller);
+        var finishWp:Object = raceInfo.finishWaypointDesc;
+        if(!finishWp)
+            return;
 
-//        var rat2 = ObjectBase.create(new Point(660, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], new RMaterial(), 1);
-//        rat2.name = "Rat 2";
-//
-//        var rat2Controller = ControllerBase.create(rat2, new <BehaviorBase>[new AIControlBehavior(),
-//            new RatMoveBehavior(),
-//            new TrapBehavior(),
-//            new BoostBehavior(),
-//            new ShootBehavior(),
-//            new DeathBehavior()]);
-//        Config.field.add(rat2Controller);
+        var startPoints:Vector.<Point> = finishWp.inLine.getEvenDistributedPoints(6);
+        startPoints.shift();
+        startPoints.pop();
 
-        //        var rat3 = ObjectBase.create(new Point(700, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, group);
-//        rat3.name = "Rat 3";
-//
-//        var rat3Controller = ControllerBase.create(rat3, new <BehaviorBase>[new AIControlBehavior(),
-//            new RatMoveBehavior(),
-//            new TrapBehavior(),
-//            new BoostBehavior(),
-//            new ShootBehavior(),
-//            new DeathBehavior()]);
-//        _field.add(rat3Controller);
-//
-//        var rat4 = ObjectBase.create(new Point(740, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, group);
-//        rat4.name = "Rat 4";
-//
-//        var rat4Controller = ControllerBase.create(rat4, new <BehaviorBase>[new AIControlBehavior(),
-//            new RatMoveBehavior(),
-//            new TrapBehavior(),
-//            new BoostBehavior(),
-//            new ShootBehavior(),
-//            new DeathBehavior()]);
-//        _field.add(rat4Controller);
+        var rat:ObjectBase;
+        var ratC:ControllerBase;
+        for(var i:uint = 0; i < 1/*raceInfo.racers.length*/; i++){
+            rat = ObjectBase.create(new Point(startPoints[i].x + i * 10, startPoints[i].y + 20), new <RShape>[new RPolygon(0, 0, 30, 60)], new RMaterial(), 1);
+            rat.name = raceInfo.racers[i].name;
+            ratC = ControllerBase.create(rat, new <BehaviorBase>[new AIControlBehavior(),
+                new RatMoveBehavior(),
+                new TrapBehavior(),
+                new BoostBehavior(),
+                new ShootBehavior(),
+                new DeathBehavior(),
+                new StatDisplayBehavior()]);
+            add(ratC);
+        }
     }
 
     private function createItems(raceInfo:RaceInfo):void {

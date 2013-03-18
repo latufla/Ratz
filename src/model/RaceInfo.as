@@ -60,5 +60,19 @@ public class RaceInfo {
     public function set waypoints(value:Vector.<Object>):void {
         _waypoints = value;
     }
+
+    public function get finishWaypointDesc():Object{
+        var res:Vector.<Object> = _waypoints.filter(function (e:Object, i:int, v:Vector.<Object>):Boolean{
+            return e.isFinish;
+        });
+        return res[0];
+    }
+
+    public function getRacerByName(name:String):UserInfo{
+        var res:Vector.<UserInfo> = _racers.filter(function (e:UserInfo, i:int, v:Vector.<UserInfo>):Boolean{
+            return e.name == name;
+        });
+        return res[0];
+    }
 }
 }
