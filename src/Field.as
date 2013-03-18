@@ -43,7 +43,7 @@ public class Field {
     }
 
     private function initWaypoints(waypoints:Vector.<Object>):void {
-        WaypointManager.instance.init(waypoints);
+        WaypointManager.instance.init(waypoints, null);
     }
 
     private function onEFDoBehaviorsStep(e:Event):void {

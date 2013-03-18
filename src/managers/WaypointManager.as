@@ -15,6 +15,7 @@ import flash.events.EventDispatcher;
 import flash.geom.Point;
 
 import model.ObjectBase;
+import model.RaceInfo;
 import model.WaypointSequence;
 
 import utils.Config;
@@ -26,6 +27,7 @@ import utils.nape.RShape;
 public class WaypointManager extends EventDispatcher{
 
     private var _waypointSequence:WaypointSequence; // order matters
+    private var _raceInfo:RaceInfo;
 
     private static var _instance:WaypointManager;
     public function WaypointManager() {
@@ -37,7 +39,7 @@ public class WaypointManager extends EventDispatcher{
         return _instance;
     }
 
-    public function init(wps:Vector.<Object>):void{
+    public function init(wps:Vector.<Object>, raceInfo:RaceInfo):void{
         _waypointSequence = new WaypointSequence();
         _waypointSequence.completeCb = onSequenceComplete;
 
@@ -48,6 +50,8 @@ public class WaypointManager extends EventDispatcher{
             add(wp, p);
         }
         _waypointSequence.computeDirections();
+
+        _raceInfo = raceInfo;
     }
 
     public function get waypoints():Vector.<ControllerBase>{

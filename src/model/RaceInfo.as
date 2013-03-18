@@ -6,16 +6,22 @@
  * To change this template use File | Settings | File Templates.
  */
 package model {
+import flash.display.BitmapData;
+
 import utils.Config;
 
 public class RaceInfo {
 
     private var _id:uint;
     private var _name:String = "noName";
+    private var _border:BitmapData;
+    private var _waypoints:Vector.<Object>;
 
     private var _racers:Vector.<UserInfo>;
 
-    public function RaceInfo(racers:Vector.<UserInfo>) {
+    public function RaceInfo(border:BitmapData, waypoints:Vector.<Object>, racers:Vector.<UserInfo>) {
+        _border = border;
+        _waypoints = waypoints;
         _racers = racers;
     }
 
@@ -39,5 +45,20 @@ public class RaceInfo {
         return Config.pointsForPlacePlanet1[place];
     }
 
+    public function get border():BitmapData {
+        return _border;
+    }
+
+    public function set border(value:BitmapData):void {
+        _border = value;
+    }
+
+    public function get waypoints():Vector.<Object> {
+        return _waypoints;
+    }
+
+    public function set waypoints(value:Vector.<Object>):void {
+        _waypoints = value;
+    }
 }
 }

@@ -8,14 +8,17 @@
 package utils {
 import debug.AmmunitionPanel;
 
+import model.GameInfo;
+
 import nape.space.Space;
 
 public class Config {
 
     public static const fps:uint = 60;
     public static const ammunitionPanel:AmmunitionPanel = new AmmunitionPanel();
-    public static var space:Space;
+    public static var space:Space = new Space();
     public static var field:Field;
+    public static var gameInfo:GameInfo;
 
     public static var soundEnabled:Boolean = true;
 

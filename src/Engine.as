@@ -78,8 +78,6 @@ public class Engine extends Sprite{
     }
 
     private function init():void {
-        Config.space = new Space();
-
         var border:BitmapData = Bitmap(new Lvl1ViewClass()).bitmapData;
         var wps:Vector.<Object> = new Vector.<Object>();
         wps.push({isFinish: true, rect: new Rectangle(604, 380, 170, 24), inLine: new Line(new Point(604, 404), new Point(774, 404)), outLine:new Line(new Point(604, 380), new Point(774, 380))});

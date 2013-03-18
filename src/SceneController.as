@@ -16,9 +16,12 @@ import model.GameInfo;
 import model.RaceInfo;
 import model.UserInfo;
 
+import utils.Config;
+
 import utils.DisplayObjectUtil;
 
 import utils.EventHeap;
+import utils.LevelsLib;
 
 import utils.ObjectUtil;
 
@@ -29,15 +32,11 @@ import view.RaceResultView;
 import view.ViewBase;
 
 public class SceneController extends EventDispatcher{
-    private var _raceInfo:RaceInfo;
-    private var _gameInfo:GameInfo;
-
     private var _gameEventHandlers:Dictionary; // event type -> function
 
-    private var _mainMenuView:MainMenuView;
-    private var _controlsView:ControlsView;
-
     private var _view:ViewBase;
+
+    private var _field:Field;
 
     public function SceneController() {
         init();
@@ -51,8 +50,8 @@ public class SceneController extends EventDispatcher{
         EventHeap.instance.dispatch(new GameEvent(GameEvent.NEED_MAIN_MENU));
 
         var player:UserInfo = UserInfo.create(0, "rat0", UserInfo.USA);
-        _gameInfo = new GameInfo(player);
-        trace(_gameInfo);
+        Config.gameInfo = new GameInfo(player);
+        trace(Config.gameInfo);
     }
 
     private function addEventListeners():void {
@@ -90,9 +89,9 @@ public class SceneController extends EventDispatcher{
         DisplayObjectUtil.removeAll(_view);
 
         if(data && data.raceInfo)
-            _gameInfo.applyRaceInfo(data.raceInfo);
+            Config.gameInfo.applyRaceInfo(data.raceInfo);
 
-        _view.addChild(new LobbyView(_gameInfo));
+        _view.addChild(new LobbyView(Config.gameInfo));
     }
 
     private function onNeedRace(data:*):void{
@@ -101,8 +100,8 @@ public class SceneController extends EventDispatcher{
 
     private function onNeedRaceResult(data:*):void{
         DisplayObjectUtil.removeAll(_view);
-        _raceInfo = new RaceInfo(_gameInfo.allRacers);
-        _view.addChild(new RaceResultView(_raceInfo));
+        var raceInfo:RaceInfo = LevelsLib.getRaceInfoByLevel(1);
+        _view.addChild(new RaceResultView(raceInfo));
     }
 
 }
