@@ -7,7 +7,9 @@
  */
 package {
 import event.GameEvent;
-import event.GameEvent;
+
+import flash.display.Stage;
+import flash.events.Event;
 
 import flash.events.EventDispatcher;
 import flash.utils.Dictionary;
@@ -16,12 +18,14 @@ import model.GameInfo;
 import model.RaceInfo;
 import model.UserInfo;
 
+import nape.util.BitmapDebug;
+
 import utils.Config;
 
 import utils.DisplayObjectUtil;
 
 import utils.EventHeap;
-import utils.LevelsLib;
+import utils.RaceInfoLib;
 
 import utils.ObjectUtil;
 
@@ -37,6 +41,7 @@ public class SceneController extends EventDispatcher{
     private var _view:ViewBase;
 
     private var _field:Field;
+    private var _fieldDebugView:BitmapDebug;
 
     public function SceneController() {
         init();
@@ -47,11 +52,12 @@ public class SceneController extends EventDispatcher{
         Ratz.STAGE.addChild(_view);
 
         addEventListeners();
-        EventHeap.instance.dispatch(new GameEvent(GameEvent.NEED_MAIN_MENU));
 
         var player:UserInfo = UserInfo.create(0, "rat0", UserInfo.USA);
         Config.gameInfo = new GameInfo(player);
         trace(Config.gameInfo);
+
+        EventHeap.instance.dispatch(new GameEvent(GameEvent.NEED_RACE));
     }
 
     private function addEventListeners():void {
@@ -59,8 +65,8 @@ public class SceneController extends EventDispatcher{
         _gameEventHandlers[GameEvent.NEED_MAIN_MENU] = onNeedMainMenu;
         _gameEventHandlers[GameEvent.NEED_CONTROLS] = onNeedControls;
         _gameEventHandlers[GameEvent.NEED_LOBBY] = onNeedLobby;
-//        _gameEventHandlers[GameEvent.NEED_RACE] = onNeedRace;
-        _gameEventHandlers[GameEvent.NEED_RACE] = onNeedRaceResult;
+        _gameEventHandlers[GameEvent.NEED_RACE] = onNeedRace;
+//        _gameEventHandlers[GameEvent.NEED_RACE] = onNeedRaceResult;
         _gameEventHandlers[GameEvent.NEED_RACE_RESULT] = onNeedRaceResult;
 
         for (var p:String in _gameEventHandlers){
@@ -95,12 +101,26 @@ public class SceneController extends EventDispatcher{
     }
 
     private function onNeedRace(data:*):void{
-        trace("Field");
+        DisplayObjectUtil.removeAll(_view);
+
+        var raceInfo:RaceInfo = RaceInfoLib.getRaceInfoByLevel(1);
+        _field = new Field(raceInfo);
+
+        var stage:Stage = Ratz.STAGE;
+        _fieldDebugView = new BitmapDebug(stage.stageWidth, stage.stageHeight, stage.color);
+        _fieldDebugView.display.x = 0;
+        _fieldDebugView.display.y = 50;
+        stage.addChild(_fieldDebugView.display);
+        stage.addEventListener(Event.ENTER_FRAME, mainLoop);
+    }
+
+    private function mainLoop(e:Event):void {
+        Config.field.simulateStep(1 / 60, _fieldDebugView);
     }
 
     private function onNeedRaceResult(data:*):void{
         DisplayObjectUtil.removeAll(_view);
-        var raceInfo:RaceInfo = LevelsLib.getRaceInfoByLevel(1);
+        var raceInfo:RaceInfo = RaceInfoLib.getRaceInfoByLevel(1);
         _view.addChild(new RaceResultView(raceInfo));
     }
 

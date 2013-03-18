@@ -39,11 +39,11 @@ public class WaypointManager extends EventDispatcher{
         return _instance;
     }
 
-    public function init(wps:Vector.<Object>, raceInfo:RaceInfo):void{
+    public function init(raceInfo:RaceInfo):void{
         _waypointSequence = new WaypointSequence();
         _waypointSequence.completeCb = onSequenceComplete;
 
-        for each(var p:Object in wps){
+        for each(var p:Object in raceInfo.waypoints){
             var wp:ObjectBase = new ObjectBase();
             wp.position = new Point(p.rect.x, p.rect.y);
             wp.shapes = new <RShape>[new RPolygon(0, 0, p.rect.width, p.rect.height)];

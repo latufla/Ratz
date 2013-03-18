@@ -11,13 +11,12 @@ import behaviors.BehaviorBase;
 
 import controller.ControllerBase;
 
-import flash.display.BitmapData;
 import flash.events.Event;
-import flash.geom.Rectangle;
 
 import managers.WaypointManager;
 
 import model.ObjectBase;
+import model.RaceInfo;
 
 import utils.Config;
 
@@ -27,23 +26,21 @@ import utils.VectorUtil;
 public class Field {
 
     private var _controllers:Vector.<ControllerBase>;
+    private var _raceInfo:RaceInfo;
 
-    public function Field(border:BitmapData, waypoints:Vector.<Object>) {
-        init(border, waypoints);
+    public function Field(raceInfo:RaceInfo) {
+        _raceInfo = raceInfo;
+        init();
     }
 
-    private function init(border:BitmapData, waypoints:Vector.<Object>):void {
+    private function init():void {
         Config.field = this;
 
         _controllers = new Vector.<ControllerBase>();
-        PhysEngineConnector.instance.initField(this, border);
-        initWaypoints(waypoints);
+        PhysEngineConnector.instance.initField(this, _raceInfo.border);
+        WaypointManager.instance.init(_raceInfo);
 
         Ratz.STAGE.addEventListener(Event.ENTER_FRAME, onEFDoBehaviorsStep);
-    }
-
-    private function initWaypoints(waypoints:Vector.<Object>):void {
-        WaypointManager.instance.init(waypoints, null);
     }
 
     private function onEFDoBehaviorsStep(e:Event):void {

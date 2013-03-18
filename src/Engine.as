@@ -56,13 +56,10 @@ public class Engine extends Sprite{
     private var Lvl1ViewClass:Class;
 
     private var _spaceView:BitmapDebug;
-
-
     private var _scene:SceneController;
-    private var _field:Field;
 
     public function Engine() {
-//        init();
+        init();
 //        TestUtil.startControllerTest();
 
 //        var assetClass:Class = AssetsLib.instance.getAssetClassBy(AssetsLib.CHINA_SIGNED_FLAG);
@@ -74,40 +71,22 @@ public class Engine extends Sprite{
 //        asset.x = 120;
 //        Ratz.STAGE.addChild(asset);
 
-        _scene = new SceneController();
+//        _scene = new SceneController();
     }
 
     private function init():void {
-        var border:BitmapData = Bitmap(new Lvl1ViewClass()).bitmapData;
-        var wps:Vector.<Object> = new Vector.<Object>();
-        wps.push({isFinish: true, rect: new Rectangle(604, 380, 170, 24), inLine: new Line(new Point(604, 404), new Point(774, 404)), outLine:new Line(new Point(604, 380), new Point(774, 380))});
-        wps.push({rect: new Rectangle(604, 30, 170, 170), inLine: new Line(new Point(604, 200), new Point(774, 200)), outLine:new Line(new Point(604, 30), new Point(604, 200))});
-        wps.push({rect: new Rectangle(35, 30, 170, 170), inLine: new Line(new Point(205, 30), new Point(205, 200)), outLine:new Line(new Point(35, 200), new Point(205, 200))});
-        wps.push({rect: new Rectangle(35, 590, 170, 170), inLine: new Line(new Point(35, 590), new Point(205, 590)), outLine:new Line(new Point(205, 590), new Point(205, 760))});
-        wps.push({rect: new Rectangle(604, 590, 170, 170), inLine: new Line(new Point(604, 590), new Point(604, 760)), outLine:new Line(new Point(604, 590), new Point(774, 590))});
-        _field = new Field(border, wps);
+        _scene = new SceneController();
 
         var stage:Stage = Ratz.STAGE;
         Config.ammunitionPanel.x = 20;
         Config.ammunitionPanel.y = 15;
         stage.addChild(Config.ammunitionPanel);
 
-        _spaceView = new BitmapDebug(stage.stageWidth, stage.stageHeight, stage.color);
-        _spaceView.display.x = 0;
-        _spaceView.display.y = 50;
-        stage.addChild(_spaceView.display);
-        stage.addEventListener(Event.ENTER_FRAME, mainLoop);
-
         var createBodyPanel:NapeCreateObjectPanel = new NapeCreateObjectPanel(createNapeObject);
         createBodyPanel.x = 810;
         stage.addChild(createBodyPanel);
 
         stage.addChild(new FPSCounter(5, 5));
-    }
-
-
-    private function mainLoop(e:Event):void {
-        _field.simulateStep(1 / 60, _spaceView);
     }
 
     private function createNapeObject(params:Object):void{
@@ -193,7 +172,7 @@ public class Engine extends Sprite{
             new BoostBehavior(),
             new ShootBehavior(),
             new DeathBehavior()]);
-        _field.add(rat2Controller);
+        Config.field.add(rat2Controller);
 
 //        var rat3 = ObjectBase.create(new Point(700, 410), new <RShape>[new RPolygon(0, 0, 30, 60)], rMaterial, group);
 //        rat3.name = "Rat 3";

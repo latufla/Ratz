@@ -15,12 +15,12 @@ import model.RaceInfo;
 
 import utils.geom.Line;
 
-public class LevelsLib {
+public class RaceInfoLib {
 
     [Embed(source="../../assets/lvl1.png")]
-    private static var Lvl1ViewClass:Class;
+    private static var Race1BorderViewClass:Class;
 
-    public function LevelsLib() {
+    public function RaceInfoLib() {
         init();
     }
 
@@ -29,7 +29,7 @@ public class LevelsLib {
     }
 
     public static function getRaceInfoByLevel(l:uint = 1):RaceInfo{
-        var border:BitmapData = Bitmap(new Lvl1ViewClass()).bitmapData;
+        var border:BitmapData = Bitmap(new Race1BorderViewClass()).bitmapData;
         var wps:Vector.<Object> = new Vector.<Object>();
         wps.push({isFinish: true, rect: new Rectangle(604, 380, 170, 24), inLine: new Line(new Point(604, 404), new Point(774, 404)), outLine:new Line(new Point(604, 380), new Point(774, 380))});
         wps.push({rect: new Rectangle(604, 30, 170, 170), inLine: new Line(new Point(604, 200), new Point(774, 200)), outLine:new Line(new Point(604, 30), new Point(604, 200))});
