@@ -10,7 +10,6 @@ import event.GameEvent;
 
 import flash.display.Stage;
 import flash.events.Event;
-
 import flash.events.EventDispatcher;
 import flash.utils.Dictionary;
 
@@ -21,13 +20,9 @@ import model.UserInfo;
 import nape.util.BitmapDebug;
 
 import utils.Config;
-
 import utils.DisplayObjectUtil;
-
 import utils.EventHeap;
 import utils.RaceInfoLib;
-
-import utils.ObjectUtil;
 
 import view.ControlsView;
 import view.LobbyView;
@@ -100,29 +95,33 @@ public class SceneController extends EventDispatcher{
         _view.addChild(new LobbyView(Config.gameInfo));
     }
 
-    private function onNeedRace(data:*):void{
-        DisplayObjectUtil.removeAll(_view);
-
-        var raceInfo:RaceInfo = RaceInfoLib.getRaceInfoByLevel(1);
-        _field = new Field(raceInfo);
-
-        var stage:Stage = Ratz.STAGE;
-        _fieldDebugView = new BitmapDebug(stage.stageWidth, stage.stageHeight, stage.color);
-        _fieldDebugView.display.x = 0;
-        _fieldDebugView.display.y = 50;
-        stage.addChild(_fieldDebugView.display);
-        stage.addEventListener(Event.ENTER_FRAME, mainLoop);
-    }
-
-    private function mainLoop(e:Event):void {
-        Config.field.simulateStep(1 / 60, _fieldDebugView);
-    }
-
     private function onNeedRaceResult(data:*):void{
         DisplayObjectUtil.removeAll(_view);
         var raceInfo:RaceInfo = RaceInfoLib.getRaceInfoByLevel(1);
         _view.addChild(new RaceResultView(raceInfo));
     }
 
+    private function onNeedRace(data:*):void{
+        DisplayObjectUtil.removeAll(_view);
+
+        var stage:Stage = Ratz.STAGE;
+        Config.ammunitionPanel.x = 20;
+        Config.ammunitionPanel.y = 15;
+        stage.addChild(Config.ammunitionPanel);
+
+        var raceInfo:RaceInfo = RaceInfoLib.getRaceInfoByLevel(1);
+        _field = new Field(raceInfo);
+
+        _fieldDebugView = new BitmapDebug(stage.stageWidth, stage.stageHeight, stage.color);
+        _fieldDebugView.display.x = 0;
+        _fieldDebugView.display.y = 50;
+        stage.addChild(_fieldDebugView.display);
+
+        stage.addEventListener(Event.ENTER_FRAME, mainLoop);
+    }
+
+    private function mainLoop(e:Event):void {
+        _field.simulateStep(1 / 60, _fieldDebugView);
+    }
 }
 }
