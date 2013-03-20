@@ -9,6 +9,7 @@ package {
 
 import behaviors.BehaviorBase;
 import behaviors.control.ai.AIControlBehavior;
+import behaviors.core.DebugStatDisplayBehavior;
 import behaviors.core.StatDisplayBehavior;
 import behaviors.gameplay.BoostBehavior;
 import behaviors.gameplay.DeathBehavior;
@@ -127,7 +128,8 @@ public class Field {
                 new BoostBehavior(),
                 new ShootBehavior(),
                 new DeathBehavior(),
-                new StatDisplayBehavior()]);
+                new StatDisplayBehavior(),
+                new DebugStatDisplayBehavior()]);
             add(ratC);
         }
     }

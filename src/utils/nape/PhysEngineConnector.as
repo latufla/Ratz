@@ -121,12 +121,9 @@ public class PhysEngineConnector {
         delete _physObjects[o];
     }
 
-    private var _stubPos:Point = new Point();
     public function getPosition(obj:ObjectBase):Point{
         var physObj:Body = _physObjects[obj];
-        _stubPos.x = physObj.position.x;
-        _stubPos.y = physObj.position.y;
-        return _stubPos;
+        return physObj.position.toPoint();
     }
 
     public function setPosition(obj:ObjectBase, pos:Point):void{

@@ -12,6 +12,8 @@ import behaviors.gameplay.RatMoveBehavior;
 
 import controller.ControllerBase;
 
+import flash.display.Sprite;
+
 import flash.geom.Point;
 
 import model.ObjectBase;
@@ -42,7 +44,7 @@ public class WaypointManager{
 
     public function init(raceInfo:RaceInfo):void{
         _waypointSequence = new WaypointSequence();
-        _waypointSequence.completeCb = onSequenceComplete;
+        _waypointSequence.completeCb = onEndLap;
 
         for each(var p:Object in raceInfo.waypoints){
             var wp:ObjectBase = new ObjectBase();
@@ -56,10 +58,10 @@ public class WaypointManager{
     }
 
     public function resolveRacersProgress():void{
-        for each(var p:ControllerBase in Config.field.ratControllers){
-            var racerObj:ObjectBase = p.object;
-            var racerInfo:UserInfo = _raceInfo.getRacerByName(racerObj.name);
-        }
+//        for each(var p:ControllerBase in Config.field.ratControllers){
+//            var racerObj:ObjectBase = p.object;
+//            var racerInfo:UserInfo = _raceInfo.getRacerByName(racerObj.name);
+//        }
     }
 
     public function correctToNextWaypointWhenRespawn(obj:ObjectBase):void {
@@ -102,6 +104,36 @@ public class WaypointManager{
         return obj.getDirectionToPoint(nextWpB.getTurnPoint(intelligence));
     }
 
+    public function getDistanceToFinishLine(obj:ObjectBase):int{
+        var lastVisitedWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
+        var nextWpBToVisit:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastVisitedWpB);
+
+        var nextWpToVisitC:ControllerBase = Config.field.getControllerByBehavior(nextWpBToVisit);
+        if(!nextWpToVisitC)
+            return 0;
+
+        var nextWpToVisit:ObjectBase = nextWpToVisitC.object;
+        var distToNextWpB:int = obj.getVectorTo(nextWpToVisit).length;
+        var distFromNextToFinish:int = nextWpBToVisit.isFinish ? 0 : nextWpBToVisit.distanceToFinishWaypoint;
+        return distToNextWpB + distFromNextToFinish;
+    }
+
+    public function drawLineToNextWaypoint(obj:ObjectBase, lineContainer:Sprite):void{
+        var lastVisitedWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
+        var nextWpBToVisit:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastVisitedWpB);
+
+        var nextWpToVisitC:ControllerBase = Config.field.getControllerByBehavior(nextWpBToVisit);
+        if(!nextWpToVisitC)
+            return;
+
+        var nextWpToVisit:ObjectBase = nextWpToVisitC.object;
+        lineContainer.graphics.clear();
+        lineContainer.graphics.lineStyle(1, 0xFF0000);
+        lineContainer.graphics.moveTo(obj.position.x, obj.position.y + 50);
+        lineContainer.graphics.lineTo(nextWpToVisit.position.x, nextWpToVisit.position.y + 50);
+        lineContainer.graphics.endFill();
+    }
+
     private function add(wp:ObjectBase, params:Object):void{
         var wpBehavior:WaypointItemBehavior = WaypointItemBehavior.create(params.inLine, params.outLine,
                 new <Function>[null, null, onEndInteraction], params.isFinish);
@@ -121,11 +153,7 @@ public class WaypointManager{
         _waypointSequence.visit(wpBehavior, obj);
     }
 
-    private function onSequenceComplete(obj:ObjectBase):void{
-        resolveRacerEndLap(obj);
-    }
-
-    private function resolveRacerEndLap(obj:ObjectBase):void{
+    private function onEndLap(obj:ObjectBase):void{
         var racerInfo:UserInfo = _raceInfo.getRacerByName(obj.name);
         if(++racerInfo.currentLap >= _raceInfo.laps){
             obj.controller.stopBehaviors();

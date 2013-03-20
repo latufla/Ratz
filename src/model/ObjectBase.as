@@ -9,7 +9,6 @@ package model {
 import controller.ControllerBase;
 
 import flash.geom.Point;
-import flash.geom.Point;
 import flash.geom.Rectangle;
 
 import utils.Config;
@@ -150,21 +149,29 @@ public class ObjectBase {
     }
 
     public function getDirectionTo(obj:ObjectBase):Point{
-        var toP:Rectangle = obj.bounds;
-        var fromP:Rectangle = bounds;
-
-        var dir:Point = new Point(toP.x - fromP.x, toP.y - fromP.y);
+        var dir:Point = getVectorTo(obj);
         dir.normalize(1);
         return dir;
     }
 
+    public function getVectorTo(obj:ObjectBase):Point{
+        var toP:Point = obj.position;
+        var fromP:Point = position;
+        var v:Point = new Point(toP.x - fromP.x, toP.y - fromP.y);
+        return v;
+    }
+
     // TODO: get COM, not fake center
     public function getDirectionToPoint(toP:Point):Point{
-        var fromP:Point = center;
-
-        var dir:Point = new Point(toP.x - fromP.x, toP.y - fromP.y);
+        var dir:Point = getVectorToPoint(toP);
         dir.normalize(1);
         return dir;
+    }
+
+    public function getVectorToPoint(toP:Point):Point{
+        var fromP:Point = center;
+        var v:Point = new Point(toP.x - fromP.x, toP.y - fromP.y);
+        return v;
     }
 
     // fake center

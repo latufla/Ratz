@@ -38,12 +38,30 @@ public class WaypointSequence {
         var nextWpB:WaypointItemBehavior;
         var nextWp:ObjectBase;
         var wp:ObjectBase;
-        for each (var p:WaypointItemBehavior in _list){
-            wp = Config.field.getControllerByBehavior(p).object;
-            nextWpB = getNextWaypoint(p);
+        var wpB:WaypointItemBehavior;
+        var n:uint = _list.length;
+        for (var i:int = 0; i < n; i++) {
+            wpB = _list[i];
+            wp = Config.field.getControllerByBehavior(wpB).object;
+            nextWpB = getNextWaypoint(wpB);
             nextWp = Config.field.getControllerByBehavior(nextWpB).object;
-            p.directionToNext = wp.getDirectionTo(nextWp);
+            wpB.vectorToNext = wp.getVectorTo(nextWp);
         }
+
+        for (i = 0; i < n; i++) { // TODO: join with prev loop
+            computeDistanceToFinishWaypoint(_list[i], i);
+        }
+
+    }
+
+    private function computeDistanceToFinishWaypoint(wpB:WaypointItemBehavior, id:uint):void{
+        var dist:int;
+        var n:uint = _list.length;
+        for (var i:int = id; i < n; i++) {
+            dist += _list[i].vectorToNext.length;
+        }
+
+        wpB.distanceToFinishWaypoint = dist;
     }
 
     public function visit(wp:WaypointItemBehavior, obj:ObjectBase):void{
@@ -70,7 +88,6 @@ public class WaypointSequence {
     public function getLastWaypointVisitedBy(obj:ObjectBase){
         return _lastVisitedWaypoints[obj.name];
     }
-
 
     private function tryRegister(wp:WaypointItemBehavior, obj:ObjectBase):void {
         var prevWp:WaypointItemBehavior = getPrevWaypoint(wp);

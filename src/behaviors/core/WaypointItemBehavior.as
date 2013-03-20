@@ -40,7 +40,8 @@ public class WaypointItemBehavior extends BehaviorBase {
     private var _containedObjectNames:Vector.<String>;
     private var _registeredObjectNames:Vector.<String>;
 
-    private var _directionToNext:Point;
+    private var _vectorToNext:Point;
+    private var _distanceToFinishWaypoint:int;
 
     public function WaypointItemBehavior() {
         super();
@@ -107,14 +108,6 @@ public class WaypointItemBehavior extends BehaviorBase {
         return _registeredObjectNames.indexOf(obj.name) != -1;
     }
 
-    public function get directionToNext():Point {
-        return _directionToNext;
-    }
-
-    public function set directionToNext(value:Point):void {
-        _directionToNext = value;
-    }
-
     // id: 0 to MAX_TURN_POINTS_COUNT - 1
     public function getTurnPoint(id:uint = CLOSEST_TO_CORNER):Point {
         if(!_inLine || id >= MAX_TURN_POINTS_COUNT || _isFinish)
@@ -179,6 +172,28 @@ public class WaypointItemBehavior extends BehaviorBase {
 
     public function set isFinish(value:Boolean):void {
         _isFinish = value;
+    }
+
+    public function get vectorToNext():Point {
+        return _vectorToNext;
+    }
+
+    public function set vectorToNext(value:Point):void {
+        _vectorToNext = value;
+    }
+
+    public function get directionToNext():Point {
+        var dir:Point = _vectorToNext.clone();
+        dir.normalize(1);
+        return dir;
+    }
+
+    public function get distanceToFinishWaypoint():int {
+        return _distanceToFinishWaypoint;
+    }
+
+    public function set distanceToFinishWaypoint(value:int):void {
+        _distanceToFinishWaypoint = value;
     }
 }
 }
