@@ -221,7 +221,7 @@ public class PhysEngineConnector {
         physObj.angularVel *= Math.pow(angularK, _pw);
     }
 
-    public function simulateStep(f:Field, step:Number, debugView:BitmapDebug = null):void{
+    public function doStep(f:Field, step:Number, debugView:BitmapDebug = null):void{
         var space:Space = _spaces[f];
         space.step(step);
 

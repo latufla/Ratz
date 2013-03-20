@@ -25,6 +25,8 @@ public class UserInfo {
     private var _points:uint = 0;
     private var _races:uint = 0;
 
+    private var _currentLap:uint = 0;
+
     // bot
     private var _intelligence:uint = SMART;
 
@@ -87,6 +89,14 @@ public class UserInfo {
                 ", points: " + _points +
                 ", races: " + _races +
                 ", intelligence: " + _intelligence + " }";
+    }
+
+    public function get currentLap():uint {
+        return _currentLap;
+    }
+
+    public function set currentLap(value:uint):void {
+        _currentLap = value;
     }
 }
 }

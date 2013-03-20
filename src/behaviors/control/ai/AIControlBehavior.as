@@ -29,6 +29,11 @@ public class AIControlBehavior extends ControlBehavior{
         super();
     }
 
+    override public function stop():void{
+        super.stop();
+        _run = _turnLeft = _turnRight = false;
+    }
+
     override public function doStep():void{
         if(!_enabled)
             return;

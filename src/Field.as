@@ -54,14 +54,6 @@ public class Field {
 
         createItems(_raceInfo);
         createRats(_raceInfo);
-
-        Ratz.STAGE.addEventListener(Event.ENTER_FRAME, onEFDoBehaviorsStep);
-    }
-
-    private function onEFDoBehaviorsStep(e:Event):void {
-        for each(var p:ControllerBase in _controllers){
-            p.doBehaviorsStep();
-        }
     }
 
     public function add(c:ControllerBase):void{
@@ -76,8 +68,15 @@ public class Field {
         VectorUtil.removeElement(_controllers, c);
     }
 
-    public function simulateStep(step:Number, debugView:* = null):void{
-        PhysEngineConnector.instance.simulateStep(this, step, debugView);
+    public function doStep(step:Number, debugView:* = null):void{
+        for each(var p:ControllerBase in _controllers){
+            p.doBehaviorsStep();
+
+            if(p.isRat)
+                p.object.applyTerrainFriction(0.2, 0.01);
+        }
+        PhysEngineConnector.instance.doStep(this, step, debugView);
+        WaypointManager.instance.resolveRacersProgress();
     }
 
     public function getControllerByObject(obj:ObjectBase):ControllerBase{
@@ -102,6 +101,10 @@ public class Field {
         return _controllers.filter(function (e:ControllerBase, i:int, v:Vector.<ControllerBase>):Boolean{
             return e is bClass;
         });
+    }
+
+    public function get ratControllers():Vector.<ControllerBase>{
+        return getControllersByBehaviorClass(RatMoveBehavior);
     }
 
     private function createRats(raceInfo:RaceInfo):void {

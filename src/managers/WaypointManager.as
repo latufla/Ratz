@@ -8,14 +8,15 @@
 package managers {
 import behaviors.BehaviorBase;
 import behaviors.core.WaypointItemBehavior;
+import behaviors.gameplay.RatMoveBehavior;
 
 import controller.ControllerBase;
 
-import flash.events.EventDispatcher;
 import flash.geom.Point;
 
 import model.ObjectBase;
 import model.RaceInfo;
+import model.UserInfo;
 import model.WaypointSequence;
 
 import utils.Config;
@@ -24,7 +25,7 @@ import utils.MathUtil;
 import utils.nape.RPolygon;
 import utils.nape.RShape;
 
-public class WaypointManager extends EventDispatcher{
+public class WaypointManager{
 
     private var _waypointSequence:WaypointSequence; // order matters
     private var _raceInfo:RaceInfo;
@@ -54,13 +55,11 @@ public class WaypointManager extends EventDispatcher{
         _raceInfo = raceInfo;
     }
 
-    public function get waypoints():Vector.<ControllerBase>{
-        var wpBehaviors:Vector.<WaypointItemBehavior> = _waypointSequence.list;
-        var wps:Vector.<ControllerBase> = new Vector.<ControllerBase>();
-        for each(var p:WaypointItemBehavior in wpBehaviors){
-            wps.push(Config.field.getControllerByBehavior(p));
+    public function resolveRacersProgress():void{
+        for each(var p:ControllerBase in Config.field.ratControllers){
+            var racerObj:ObjectBase = p.object;
+            var racerInfo:UserInfo = _raceInfo.getRacerByName(racerObj.name);
         }
-        return wps;
     }
 
     public function correctToNextWaypointWhenRespawn(obj:ObjectBase):void {
@@ -123,7 +122,17 @@ public class WaypointManager extends EventDispatcher{
     }
 
     private function onSequenceComplete(obj:ObjectBase):void{
-        GuiUtil.showPopupText(Ratz.STAGE, new Point(300, 320), "Lap End By "+ obj.name, 30, 0x0000FF);
+        resolveRacerEndLap(obj);
+    }
+
+    private function resolveRacerEndLap(obj:ObjectBase):void{
+        var racerInfo:UserInfo = _raceInfo.getRacerByName(obj.name);
+        if(++racerInfo.currentLap >= _raceInfo.laps){
+            obj.controller.stopBehaviors();
+            obj.controller.startBehaviorByClass(RatMoveBehavior);
+        }
+
+        GuiUtil.showPopupText(Ratz.STAGE, new Point(300, 320), "Lap " + racerInfo.currentLap + " End By "+ obj.name, 30, 0x0000FF);
     }
 }
 }

@@ -121,7 +121,7 @@ public class SceneController extends EventDispatcher{
     }
 
     private function mainLoop(e:Event):void {
-        _field.simulateStep(1 / 60, _fieldDebugView);
+        _field.doStep(1 / 60, _fieldDebugView);
     }
 }
 }

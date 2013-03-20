@@ -7,7 +7,6 @@
  */
 package controller {
 import behaviors.BehaviorBase;
-import behaviors.control.ControlBehavior;
 import behaviors.gameplay.RatMoveBehavior;
 import behaviors.gameplay.WallItemBehavior;
 
@@ -58,6 +57,12 @@ public class ControllerBase {
         for each(var p:BehaviorBase in _behaviors){
             p.start(this);
         }
+    }
+
+    public function startBehaviorByClass(bClass:Class):void{
+        var b:BehaviorBase = getBehaviorByClass(bClass);
+        if(b)
+            b.start(this);
     }
 
     public function stopBehaviors():void{

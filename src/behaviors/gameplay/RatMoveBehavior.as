@@ -50,8 +50,6 @@ public class RatMoveBehavior extends BehaviorBase{
 
         if(controlBehavior.turnLeft)
             applyTurnLeft(obj, controlBehavior.run);
-
-        obj.applyTerrainFriction(0.2, 0.01);
     }
 
     private function applyRun(obj:ObjectBase):void{

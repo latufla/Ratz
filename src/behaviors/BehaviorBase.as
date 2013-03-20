@@ -10,7 +10,7 @@ import controller.ControllerBase;
 
 import model.ObjectBase;
 
-public class BehaviorBase {
+public class BehaviorBase{
 
     private var _id:int;
     private var _name:String;
