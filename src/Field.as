@@ -9,6 +9,7 @@ package {
 
 import behaviors.BehaviorBase;
 import behaviors.control.ai.AIControlBehavior;
+import behaviors.control.user.UserControlBehavior;
 import behaviors.core.DebugStatDisplayBehavior;
 import behaviors.core.StatDisplayBehavior;
 import behaviors.gameplay.BoostBehavior;
@@ -122,7 +123,7 @@ public class Field {
         for(var i:uint = 0; i < 1/*raceInfo.racers.length*/; i++){
             rat = ObjectBase.create(new Point(startPoints[i].x + i * 10, startPoints[i].y + 20), new <RShape>[new RPolygon(0, 0, 30, 60)], new RMaterial(), 1);
             rat.name = raceInfo.racers[i].name;
-            ratC = ControllerBase.create(rat, new <BehaviorBase>[new AIControlBehavior(),
+            ratC = ControllerBase.create(rat, new <BehaviorBase>[new UserControlBehavior(), //new AIControlBehavior(),
                 new RatMoveBehavior(),
                 new TrapBehavior(),
                 new BoostBehavior(),

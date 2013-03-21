@@ -54,7 +54,7 @@ public class DebugStatDisplayBehavior extends BehaviorBase{
         var obj:ObjectBase = _controller.object;
         _statField.x = obj.position.x;
         _statField.y = obj.position.y;
-        _statField.text = String(WaypointManager.instance.getDistanceToFinishLine(obj));
+        _statField.text = String(WaypointManager.instance.getSmartDistanceToFinishLine(obj));
 
         WaypointManager.instance.drawLineToNextWaypoint(obj, _lineContainer);
 

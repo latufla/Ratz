@@ -188,6 +188,10 @@ public class WaypointItemBehavior extends BehaviorBase {
         return dir;
     }
 
+    public function get distanceToNext():int{
+        return _vectorToNext.length;
+    }
+
     public function get distanceToFinishWaypoint():int {
         return _distanceToFinishWaypoint;
     }

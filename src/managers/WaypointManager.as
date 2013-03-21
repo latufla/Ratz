@@ -118,6 +118,34 @@ public class WaypointManager{
         return distToNextWpB + distFromNextToFinish;
     }
 
+    public function getSmartDistanceToFinishLine(obj:ObjectBase):int{
+        var lastVisitedWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
+        var nextToVisit:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastVisitedWpB);
+        var lastRegisteredWpB:WaypointItemBehavior = _waypointSequence.getLastRegisteredWaypointFor(obj);
+        var nextToRegister:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastRegisteredWpB);
+
+        if(!nextToVisit || !nextToRegister)
+            return 0;
+
+        var nextToVisitC:ControllerBase = Config.field.getControllerByBehavior(nextToVisit);
+        var nextToRegisterC:ControllerBase = Config.field.getControllerByBehavior(nextToRegister);
+        if(!nextToVisitC || !nextToRegisterC)
+            return 0;
+
+        var nextWpToVisit:ObjectBase = nextToVisitC.object;
+        var dist1:int = obj.getVectorTo(nextWpToVisit).length;
+
+        var wpsTillNextToRegister:Vector.<WaypointItemBehavior> = _waypointSequence.getWaypointsFromTo(nextToVisit, nextToRegister);
+        var n:uint = wpsTillNextToRegister.length - 1; // without nextToRegister
+        var dist2:int = 0;
+        for (var i:uint = 0; i < n;i++){
+            dist2 += wpsTillNextToRegister[i].distanceToNext;
+        }
+
+        var dist3:int = nextToRegister.isFinish ? 0 : nextToRegister.distanceToFinishWaypoint;
+        return dist1 + dist2 + dist3;
+    }
+
     public function drawLineToNextWaypoint(obj:ObjectBase, lineContainer:Sprite):void{
         var lastVisitedWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
         var nextWpBToVisit:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastVisitedWpB);

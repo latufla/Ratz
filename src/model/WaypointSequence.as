@@ -85,8 +85,28 @@ public class WaypointSequence {
         return _list;
     }
 
-    public function getLastWaypointVisitedBy(obj:ObjectBase){
+    public function getLastWaypointVisitedBy(obj:ObjectBase):WaypointItemBehavior{
         return _lastVisitedWaypoints[obj.name];
+    }
+
+    public function getLastRegisteredWaypointFor(obj:ObjectBase):WaypointItemBehavior{
+        for (var i:int = _list.length - 1; i >=0; i--){
+            if(_list[i].isRegistered(obj))
+                return _list[i];
+        }
+        return null;
+    }
+
+    public function getWaypointsFromTo(fromWp:WaypointItemBehavior, toWp:WaypointItemBehavior):Vector.<WaypointItemBehavior>{
+        var res:Vector.<WaypointItemBehavior> = new Vector.<WaypointItemBehavior>();
+        var nextWp:WaypointItemBehavior = fromWp;
+        res.push(nextWp);
+        while(nextWp != toWp){
+            nextWp = getNextWaypoint(nextWp);
+            res.push(nextWp);
+        }
+
+        return res;
     }
 
     private function tryRegister(wp:WaypointItemBehavior, obj:ObjectBase):void {
