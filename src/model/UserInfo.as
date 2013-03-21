@@ -26,6 +26,7 @@ public class UserInfo {
     private var _races:uint = 0;
 
     private var _currentLap:uint = 0;
+    private var _distanceToFinish:int = 0;
 
     // bot
     private var _intelligence:uint = SMART;
@@ -97,6 +98,14 @@ public class UserInfo {
 
     public function set currentLap(value:uint):void {
         _currentLap = value;
+    }
+
+    public function get distanceToFinish():int {
+        return _distanceToFinish;
+    }
+
+    public function set distanceToFinish(value:int):void {
+        _distanceToFinish = value;
     }
 }
 }

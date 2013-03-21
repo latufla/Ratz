@@ -57,13 +57,6 @@ public class WaypointManager{
         _raceInfo = raceInfo;
     }
 
-    public function resolveRacersProgress():void{
-//        for each(var p:ControllerBase in Config.field.ratControllers){
-//            var racerObj:ObjectBase = p.object;
-//            var racerInfo:UserInfo = _raceInfo.getRacerByName(racerObj.name);
-//        }
-    }
-
     public function correctToNextWaypointWhenRespawn(obj:ObjectBase):void {
         var lastVisitedWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
         var prevRegisteredWpB:WaypointItemBehavior = _waypointSequence.getPrevWaypoint(lastVisitedWpB);

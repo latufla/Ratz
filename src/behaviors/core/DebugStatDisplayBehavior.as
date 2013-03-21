@@ -15,19 +15,21 @@ import flash.display.Sprite;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 
-import managers.WaypointManager;
-
 import model.ObjectBase;
+import model.RaceInfo;
+import model.UserInfo;
 
 import utils.DisplayObjectUtil;
 
 public class DebugStatDisplayBehavior extends BehaviorBase{
 
+    private var _raceInfo:RaceInfo;
     private var _statField:TextField;
     private var _lineContainer:Sprite;
 
-    public function DebugStatDisplayBehavior() {
+    public function DebugStatDisplayBehavior(raceInfo:RaceInfo) {
         super();
+        _raceInfo = raceInfo;
     }
 
     override public function start(c:ControllerBase):void{
@@ -54,11 +56,14 @@ public class DebugStatDisplayBehavior extends BehaviorBase{
         var obj:ObjectBase = _controller.object;
         _statField.x = obj.position.x;
         _statField.y = obj.position.y;
-        _statField.text = String(WaypointManager.instance.getSmartDistanceToFinishLine(obj));
+        var racerInfo:UserInfo = _raceInfo.getRacerByName(obj.name);
 
-        WaypointManager.instance.drawLineToNextWaypoint(obj, _lineContainer);
+        if(racerInfo)
+            _statField.text = _raceInfo.getRacerPlace(racerInfo) + " place " + String(racerInfo.distanceToFinish) + "m";
 
-        Ratz.STAGE.addChild(_lineContainer);
+//        WaypointManager.instance.drawLineToNextWaypoint(obj, _lineContainer);
+
+//        Ratz.STAGE.addChild(_lineContainer);
         Ratz.STAGE.addChild(_statField);
     }
 }

@@ -77,8 +77,10 @@ public class Field {
             if(p.isRat)
                 p.object.applyTerrainFriction(0.2, 0.01);
         }
+
         PhysEngineConnector.instance.doStep(this, step, debugView);
-        WaypointManager.instance.resolveRacersProgress();
+
+        _raceInfo.resolveRaceProgress();
     }
 
     public function getControllerByObject(obj:ObjectBase):ControllerBase{
@@ -101,7 +103,7 @@ public class Field {
 
     public function getControllersByBehaviorClass(bClass:Class):Vector.<ControllerBase>{
         return _controllers.filter(function (e:ControllerBase, i:int, v:Vector.<ControllerBase>):Boolean{
-            return e is bClass;
+            return e.getBehaviorByClass(bClass);
         });
     }
 
@@ -120,17 +122,17 @@ public class Field {
 
         var rat:ObjectBase;
         var ratC:ControllerBase;
-        for(var i:uint = 0; i < 1/*raceInfo.racers.length*/; i++){
+        for(var i:uint = 0; i < 4/*raceInfo.racers.length*/; i++){
             rat = ObjectBase.create(new Point(startPoints[i].x + i * 10, startPoints[i].y + 20), new <RShape>[new RPolygon(0, 0, 30, 60)], new RMaterial(), 1);
             rat.name = raceInfo.racers[i].name;
-            ratC = ControllerBase.create(rat, new <BehaviorBase>[new UserControlBehavior(), //new AIControlBehavior(),
+            ratC = ControllerBase.create(rat, new <BehaviorBase>[new AIControlBehavior(), //new UserControlBehavior(),
                 new RatMoveBehavior(),
                 new TrapBehavior(),
                 new BoostBehavior(),
                 new ShootBehavior(),
                 new DeathBehavior(),
-                new StatDisplayBehavior(),
-                new DebugStatDisplayBehavior()]);
+//                new StatDisplayBehavior(),
+                new DebugStatDisplayBehavior(_raceInfo)]);
             add(ratC);
         }
     }

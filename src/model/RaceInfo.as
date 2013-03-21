@@ -6,7 +6,11 @@
  * To change this template use File | Settings | File Templates.
  */
 package model {
+import controller.ControllerBase;
+
 import flash.display.BitmapData;
+
+import managers.WaypointManager;
 
 import utils.Config;
 
@@ -26,6 +30,31 @@ public class RaceInfo {
         _border = border;
         _waypoints = waypoints;
         _racers = racers;
+    }
+
+    // TODO: deprecate racerInfo.distanceToFinish
+    public function resolveRaceProgress():void{
+        for each(var p:ControllerBase in Config.field.ratControllers) {
+            var racerObj:ObjectBase = p.object;
+            var racerInfo:UserInfo = getRacerByName(racerObj.name);
+            racerInfo.distanceToFinish = WaypointManager.instance.getSmartDistanceToFinishLine(racerObj);
+        }
+        _racers.sort(sortOnDistanceToFinish);
+    }
+
+    private function sortOnDistanceToFinish(a:UserInfo, b:UserInfo){
+        var aDist:Number = a.distanceToFinish;
+        var bDist:Number = b.distanceToFinish;
+        if(a.currentLap > b.currentLap)
+            return -1;
+
+        if(aDist > bDist) {
+            return 1;
+        } else if(aDist < bDist) {
+            return -1;
+        } else  {
+            return 0;
+        }
     }
 
     public function get racers():Vector.<UserInfo> {
