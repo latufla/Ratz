@@ -66,8 +66,11 @@ public class RaceInfo {
     private function sortOnDistanceToFinish(a:UserInfo, b:UserInfo){
         var aDist:Number = a.distanceToFinish;
         var bDist:Number = b.distanceToFinish;
+
         if(a.currentLap > b.currentLap)
             return -1;
+        else if(a.currentLap < b.currentLap)
+            return 1;
 
         if(aDist > bDist) {
             return 1;
