@@ -6,7 +6,10 @@
  * To change this template use File | Settings | File Templates.
  */
 package utils.geom {
+import flash.filters.DisplacementMapFilterMode;
 import flash.geom.Point;
+
+import utils.MathUtil;
 
 // VH and from smaller coords to bigger
 public class Line {
@@ -17,6 +20,14 @@ public class Line {
     public function Line(begin:Point, end:Point) {
         _begin = begin;
         _end = end;
+    }
+
+    public function getPointProjection(p:Point):Point{
+        var vn:Point = _end.subtract(_begin); //сдвинем точку "a" в начало координат
+        vn.normalize(1);    //нормализуем вектор
+        var vp:Point = p.subtract(_begin);   //превратим точку в вектор с началом в начале координат
+        var f:int = MathUtil.scalarMul(vn,vp); //скалярное произведение, порядок не важен
+        return _begin.add(new Point(vn.x * f,  vn.y * f));            //спроецированная точка
     }
 
     public function getEvenDistributedPoints(amount:uint = 10):Vector.<Point>{

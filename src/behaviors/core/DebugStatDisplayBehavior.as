@@ -15,11 +15,14 @@ import flash.display.Sprite;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 
+import managers.WaypointManager;
+
 import model.ObjectBase;
 import model.RaceInfo;
 import model.UserInfo;
 
 import utils.DisplayObjectUtil;
+import utils.geom.Line;
 
 public class DebugStatDisplayBehavior extends BehaviorBase{
 
@@ -56,14 +59,22 @@ public class DebugStatDisplayBehavior extends BehaviorBase{
         var obj:ObjectBase = _controller.object;
         _statField.x = obj.position.x;
         _statField.y = obj.position.y;
-        var racerInfo:UserInfo = _raceInfo.getRacerByName(obj.name);
 
+        var racerInfo:UserInfo = _raceInfo.getRacerByName(obj.name);
         if(racerInfo)
             _statField.text = _raceInfo.getRacerPlace(racerInfo) + " place " + String(racerInfo.distanceToFinish) + "m";
 
-//        WaypointManager.instance.drawLineToNextWaypoint(obj, _lineContainer);
+        var lineToNextWpCenter:Line = WaypointManager.instance.getLineToNextWaypoint(obj);
+        var normalToNextWpInLine:Line = WaypointManager.instance.getNormalToNextWaypoint(obj);
 
-//        Ratz.STAGE.addChild(_lineContainer);
+        _lineContainer.graphics.clear();
+        if(lineToNextWpCenter)
+            DisplayObjectUtil.drawLine(_lineContainer.graphics, lineToNextWpCenter, 0xFF0000);
+
+        if(normalToNextWpInLine)
+            DisplayObjectUtil.drawLine(_lineContainer.graphics, normalToNextWpInLine, 0x0000FF);
+
+        Ratz.STAGE.addChild(_lineContainer);
         Ratz.STAGE.addChild(_statField);
     }
 }

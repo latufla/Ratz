@@ -12,7 +12,6 @@ import behaviors.gameplay.RatMoveBehavior;
 
 import controller.ControllerBase;
 
-import flash.display.Sprite;
 
 import flash.geom.Point;
 
@@ -24,6 +23,7 @@ import model.WaypointSequence;
 import utils.Config;
 import utils.GuiUtil;
 import utils.MathUtil;
+import utils.geom.Line;
 import utils.nape.RPolygon;
 import utils.nape.RShape;
 
@@ -120,13 +120,8 @@ public class WaypointManager{
         if(!nextToVisit || !nextToRegister)
             return 0;
 
-        var nextToVisitC:ControllerBase = Config.field.getControllerByBehavior(nextToVisit);
-        var nextToRegisterC:ControllerBase = Config.field.getControllerByBehavior(nextToRegister);
-        if(!nextToVisitC || !nextToRegisterC)
-            return 0;
-
-        var nextWpToVisit:ObjectBase = nextToVisitC.object;
-        var dist1:int = obj.getVectorTo(nextWpToVisit).length;
+        var projToWpInLine:Point = nextToVisit.getProjectionToInLine(obj.position);
+        var dist1:int = obj.getVectorToPoint(projToWpInLine).length;
 
         var wpsTillNextToRegister:Vector.<WaypointItemBehavior> = _waypointSequence.getWaypointsFromTo(nextToVisit, nextToRegister);
         var n:uint = wpsTillNextToRegister.length - 1; // without nextToRegister
@@ -139,20 +134,29 @@ public class WaypointManager{
         return dist1 + dist2 + dist3;
     }
 
-    public function drawLineToNextWaypoint(obj:ObjectBase, lineContainer:Sprite):void{
+    public function getLineToNextWaypoint(obj:ObjectBase):Line{
         var lastVisitedWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
         var nextWpBToVisit:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastVisitedWpB);
 
         var nextWpToVisitC:ControllerBase = Config.field.getControllerByBehavior(nextWpBToVisit);
         if(!nextWpToVisitC)
-            return;
+            return null;
 
         var nextWpToVisit:ObjectBase = nextWpToVisitC.object;
-        lineContainer.graphics.clear();
-        lineContainer.graphics.lineStyle(1, 0xFF0000);
-        lineContainer.graphics.moveTo(obj.position.x, obj.position.y + 50);
-        lineContainer.graphics.lineTo(nextWpToVisit.position.x, nextWpToVisit.position.y + 50);
-        lineContainer.graphics.endFill();
+        var begin:Point = obj.position;
+        var end:Point = nextWpToVisit.position;
+        return new Line(begin, end);
+    }
+
+    public function getNormalToNextWaypoint(obj:ObjectBase):Line{
+        var lastVisitedWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
+        var nextWpBToVisit:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastVisitedWpB);
+        if(!nextWpBToVisit)
+            return null;
+
+        var begin:Point = obj.position;
+        var end:Point = nextWpBToVisit.getProjectionToInLine(begin);
+        return new Line(begin, end);
     }
 
     private function add(wp:ObjectBase, params:Object):void{

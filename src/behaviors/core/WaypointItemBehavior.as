@@ -120,12 +120,19 @@ public class WaypointItemBehavior extends BehaviorBase {
         return tPts[id];
     }
 
-    private function sortByDistanceFromCorner(rotatePts:Vector.<Point>):Vector.<Point>{
-        var pt:Point;
+    public function get cornerPoint():Point{
         if(_inLine.begin.equals(_outLine.end) || _inLine.end.equals(_outLine.end))
-            pt = _outLine.end;
-        else
-            pt = _outLine.begin;
+            return _outLine.end;
+
+        return _outLine.begin;
+    }
+
+    public function getProjectionToInLine(p:Point):Point{
+        return _inLine.getPointProjection(p);
+    }
+
+    private function sortByDistanceFromCorner(rotatePts:Vector.<Point>):Vector.<Point>{
+        var pt:Point = cornerPoint;
 
         if(rotatePts[rotatePts.length - 1].equals(pt))
             rotatePts = rotatePts.reverse();

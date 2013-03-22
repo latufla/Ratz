@@ -123,7 +123,7 @@ public class Field {
 
         var rat:ObjectBase;
         var ratC:ControllerBase;
-        for(var i:uint = 0; i < 4/*raceInfo.racers.length*/; i++){
+        for(var i:uint = 0; i < raceInfo.racers.length; i++){
             rat = ObjectBase.create(new Point(startPoints[i].x + i * 10, startPoints[i].y + 20), new <RShape>[new RPolygon(0, 0, 30, 60)], new RMaterial(), 1);
             rat.name = raceInfo.racers[i].name;
             ratC = ControllerBase.create(rat, new <BehaviorBase>[new AIControlBehavior(), //new UserControlBehavior(),

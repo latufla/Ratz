@@ -6,9 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 package {
+import flash.geom.Point;
+
 import starling.display.Sprite;
 
 import utils.FPSCounter;
+import utils.geom.Line;
 
 public class Engine extends Sprite{
 
@@ -28,6 +31,10 @@ public class Engine extends Sprite{
 //        Ratz.STAGE.addChild(asset);
 
 //        _scene = new SceneController();
+
+//        var pnt:Point = new Point(10, 12);
+//        var line:Line = new Line(new Point(4, 6), new Point(8, 6));
+//        trace(line.getPointProjection(pnt));
     }
 
     private function init():void {

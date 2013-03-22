@@ -33,5 +33,9 @@ public class MathUtil {
 
         return Math.acos(n / d) * sign;
     }
+
+    public static function scalarMul(v1:Point, v2:Point):int{
+        return v1.x * v2.x + v1.y * v2.y;
+    }
 }
 }
