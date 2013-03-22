@@ -26,7 +26,7 @@ import utils.EventHeap;
 
 public class RaceResultView extends ViewBase{
 
-    private static const CLOSE_TIMEOUT:Number = 2000;
+    private static const CLOSE_TIMEOUT:Number = 7000;
 
     private var _container:DisplayObjectContainer;
     private var _raceInfo:RaceInfo;
@@ -39,10 +39,10 @@ public class RaceResultView extends ViewBase{
     private function init():void{
         _container = new Sprite();
 
-        var racers:Vector.<UserInfo> = _raceInfo.racers;
+        var finishers:Vector.<UserInfo> = _raceInfo.finishers;
         var resultItem:DisplayObjectContainer;
-        for (var i:int = 0; i < racers.length; i++) {
-            resultItem = createResultItem(racers[i], i + 1);
+        for (var i:int = 0; i < finishers.length; i++) {
+            resultItem = createResultItem(finishers[i], i + 1);
             resultItem.x = offsetX;
             resultItem.y = offsetY + itemSpaceY * i;
             _container.addChild(resultItem);

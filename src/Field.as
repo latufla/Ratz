@@ -80,7 +80,8 @@ public class Field {
 
         PhysEngineConnector.instance.doStep(this, step, debugView);
 
-        _raceInfo.resolveRaceProgress();
+        if(!_raceInfo.raceIsFinished)
+            _raceInfo.resolveRaceProgress();
     }
 
     public function getControllerByObject(obj:ObjectBase):ControllerBase{

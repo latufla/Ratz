@@ -8,7 +8,6 @@
 package {
 import event.GameEvent;
 
-import flash.display.Stage;
 import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.utils.Dictionary;
@@ -89,6 +88,7 @@ public class SceneController extends EventDispatcher{
     private function onNeedLobby(data:*):void{
         DisplayObjectUtil.removeAll(_view);
 
+        trace("onNeedLobby", new Error().getStackTrace());
         if(data && data.raceInfo)
             Config.gameInfo.applyRaceInfo(data.raceInfo);
 
@@ -96,28 +96,28 @@ public class SceneController extends EventDispatcher{
     }
 
     private function onNeedRaceResult(data:*):void{
-        DisplayObjectUtil.removeAll(_view);
-        var raceInfo:RaceInfo = RaceInfoLib.getRaceInfoByLevel(1);
-        _view.addChild(new RaceResultView(raceInfo));
+//        DisplayObjectUtil.removeAll(_view);
+        trace("onNeedRaceResult");
+//        var raceInfo:RaceInfo = RaceInfoLib.getRaceInfoByLevel(1);
+//        _view.addChild(new RaceResultView(data.raceInfo));
     }
 
     private function onNeedRace(data:*):void{
         DisplayObjectUtil.removeAll(_view);
 
-        var stage:Stage = Ratz.STAGE;
         Config.ammunitionPanel.x = 20;
         Config.ammunitionPanel.y = 15;
-        stage.addChild(Config.ammunitionPanel);
+        _view.addChild(Config.ammunitionPanel);
 
         var raceInfo:RaceInfo = RaceInfoLib.getRaceInfoByLevel(1);
         _field = new Field(raceInfo);
 
-        _fieldDebugView = new BitmapDebug(stage.stageWidth, stage.stageHeight, stage.color);
+        _fieldDebugView = new BitmapDebug(Ratz.STAGE.stageWidth, Ratz.STAGE.stageHeight, Ratz.STAGE.color);
         _fieldDebugView.display.x = 0;
         _fieldDebugView.display.y = 50;
-        stage.addChild(_fieldDebugView.display);
+        _view.addChild(_fieldDebugView.display);
 
-        stage.addEventListener(Event.ENTER_FRAME, mainLoop);
+        _view.addEventListener(Event.ENTER_FRAME, mainLoop);
     }
 
     private function mainLoop(e:Event):void {

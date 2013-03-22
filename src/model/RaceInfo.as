@@ -8,38 +8,59 @@
 package model {
 import controller.ControllerBase;
 
+import event.GameEvent;
+
 import flash.display.BitmapData;
 
 import managers.WaypointManager;
 
 import utils.Config;
+import utils.EventHeap;
+import utils.VectorUtil;
 
 public class RaceInfo {
 
     private var _id:uint;
     private var _name:String = "noName";
 
-    private var _laps:uint = 2;
+    private var _laps:uint = 1;
 
     private var _border:BitmapData;
     private var _waypoints:Vector.<Object>;
 
     private var _racers:Vector.<UserInfo>;
 
+    private var _runners:Vector.<UserInfo>;
+    private var _finishers:Vector.<UserInfo>;
+
     public function RaceInfo(border:BitmapData, waypoints:Vector.<Object>, racers:Vector.<UserInfo>) {
         _border = border;
         _waypoints = waypoints;
         _racers = racers;
+        _runners = _racers.concat(); // only links
+        _finishers = new Vector.<UserInfo>();
     }
 
     // TODO: deprecate racerInfo.distanceToFinish
     public function resolveRaceProgress():void{
+        if(raceIsFinished)
+            return;
+
         for each(var p:ControllerBase in Config.field.ratControllers) {
             var racerObj:ObjectBase = p.object;
             var racerInfo:UserInfo = getRacerByName(racerObj.name);
-            racerInfo.distanceToFinish = WaypointManager.instance.getSmartDistanceToFinishLine(racerObj);
+
+            if(_runners.indexOf(racerInfo) != -1 && racerInfo.currentLap >= _laps){
+                VectorUtil.removeElement(_runners, racerInfo);
+                _finishers.push(racerInfo);
+            } else{
+                racerInfo.distanceToFinish = WaypointManager.instance.getSmartDistanceToFinishLine(racerObj);
+            }
         }
-        _racers.sort(sortOnDistanceToFinish);
+        _runners.sort(sortOnDistanceToFinish);
+
+        if(raceIsFinished)
+            EventHeap.instance.dispatch(new GameEvent(GameEvent.NEED_RACE_RESULT,{raceInfo:this}));
     }
 
     private function sortOnDistanceToFinish(a:UserInfo, b:UserInfo){
@@ -61,16 +82,17 @@ public class RaceInfo {
         return _racers;
     }
 
-    public function set racers(value:Vector.<UserInfo>):void {
-        _racers = value;
-    }
-
     public function getRacerPlace(r:UserInfo):int {
-        return _racers.indexOf(r) + 1;
+        var fId:int = _finishers.indexOf(r);
+        if(fId != -1)
+            return fId + 1;
+
+        var fCount:uint = _finishers.length;
+        return fCount + _runners.indexOf(r) + 1;
     }
 
     public function getRacerPoints(r:UserInfo):int {
-        var place:int = _racers.indexOf(r);
+        var place:int = _finishers.indexOf(r);
         if(place == -1)
             return 0;
 
@@ -81,16 +103,8 @@ public class RaceInfo {
         return _border;
     }
 
-    public function set border(value:BitmapData):void {
-        _border = value;
-    }
-
     public function get waypoints():Vector.<Object> {
         return _waypoints;
-    }
-
-    public function set waypoints(value:Vector.<Object>):void {
-        _waypoints = value;
     }
 
     public function get finishWaypointDesc():Object{
@@ -109,6 +123,15 @@ public class RaceInfo {
 
     public function get laps():uint {
         return _laps;
+    }
+
+    public function get finishers():Vector.<UserInfo> {
+        return _finishers;
+    }
+
+
+    public function get raceIsFinished():Boolean{
+        return _runners.length == 0;
     }
 }
 }
