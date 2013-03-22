@@ -131,6 +131,10 @@ public class WaypointItemBehavior extends BehaviorBase {
         return _inLine.getPointProjection(p);
     }
 
+    public function getProjectionToOutLine(p:Point):Point{
+        return _outLine.getPointProjection(p);
+    }
+
     private function sortByDistanceFromCorner(rotatePts:Vector.<Point>):Vector.<Point>{
         var pt:Point = cornerPoint;
 

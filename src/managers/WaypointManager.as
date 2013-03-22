@@ -97,20 +97,6 @@ public class WaypointManager{
         return obj.getDirectionToPoint(nextWpB.getTurnPoint(intelligence));
     }
 
-    public function getDistanceToFinishLine(obj:ObjectBase):int{
-        var lastVisitedWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
-        var nextWpBToVisit:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastVisitedWpB);
-
-        var nextWpToVisitC:ControllerBase = Config.field.getControllerByBehavior(nextWpBToVisit);
-        if(!nextWpToVisitC)
-            return 0;
-
-        var nextWpToVisit:ObjectBase = nextWpToVisitC.object;
-        var distToNextWpB:int = obj.getVectorTo(nextWpToVisit).length;
-        var distFromNextToFinish:int = nextWpBToVisit.isFinish ? 0 : nextWpBToVisit.distanceToFinishWaypoint;
-        return distToNextWpB + distFromNextToFinish;
-    }
-
     public function getSmartDistanceToFinishLine(obj:ObjectBase):int{
         var lastVisitedWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
         var nextToVisit:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastVisitedWpB);
@@ -120,7 +106,7 @@ public class WaypointManager{
         if(!nextToVisit || !nextToRegister)
             return 0;
 
-        var projToWpInLine:Point = nextToVisit.getProjectionToInLine(obj.position);
+        var projToWpInLine:Point = nextToVisit.containsObject(obj) ? nextToVisit.getProjectionToOutLine(obj.position) : nextToVisit.getProjectionToInLine(obj.position);
         var dist1:int = obj.getVectorToPoint(projToWpInLine).length;
 
         var wpsTillNextToRegister:Vector.<WaypointItemBehavior> = _waypointSequence.getWaypointsFromTo(nextToVisit, nextToRegister);
@@ -155,7 +141,7 @@ public class WaypointManager{
             return null;
 
         var begin:Point = obj.position;
-        var end:Point = nextWpBToVisit.getProjectionToInLine(begin);
+        var end:Point = nextWpBToVisit.containsObject(obj) ? nextWpBToVisit.getProjectionToOutLine(begin) : nextWpBToVisit.getProjectionToInLine(begin);
         return new Line(begin, end);
     }
 

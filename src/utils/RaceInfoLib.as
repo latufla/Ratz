@@ -38,7 +38,7 @@ public class RaceInfoLib {
         wps.push({rect: new Rectangle(35, 590, 170, 170), inLine: new Line(new Point(35, 590), new Point(205, 590)), outLine:new Line(new Point(205, 590), new Point(205, 760))});
         wps.push({rect: new Rectangle(604, 590, 170, 170), inLine: new Line(new Point(604, 590), new Point(604, 760)), outLine:new Line(new Point(604, 590), new Point(774, 590))});
 
-        return new RaceInfo(border, wps, new <UserInfo>[Config.gameInfo.allRacers[0]]);
+        return new RaceInfo(border, wps, new <UserInfo>[Config.gameInfo.allRacers[0]]/*Config.gameInfo.allRacers*/);
     }
 
 }
