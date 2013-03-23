@@ -1,8 +1,8 @@
-package behaviors.gameplay {
-import behaviors.BehaviorBase;
-import behaviors.control.ControlBehavior;
+package ratz.behaviors.gameplay {
+import core.behaviors.BehaviorBase;
+import ratz.behaviors.control.ControlBehavior;
 import flash.geom.Point;
-import model.ObjectBase;
+import core.model.ObjectBase;
 
 public class MoveBehavior extends BehaviorBase{
 

@@ -2,7 +2,7 @@
 <module type="Flex" version="4">
   <component name="FlexBuildConfigurationManager" active="Ratz">
     <configurations>
-      <configuration name="Ratz" pure-as="true" main-class="Ratz" output-file="Ratz.swf" output-folder="$MODULE_DIR$/out/production/Ratz">
+      <configuration name="Ratz" pure-as="true" main-class="ratz.Ratz" output-file="Ratz.swf" output-folder="$MODULE_DIR$/out/production/Ratz">
         <dependencies target-player="11.1">
           <entries>
             <entry library-id="fc99edf7-304c-43a1-86ae-b710d3842c66">

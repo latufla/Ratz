@@ -30,8 +30,8 @@ public class UserControlBehavior extends ControlBehavior{
     }
 
     override public function stop():void{
-        _gamepad.stop();
         super.stop();
+        _gamepad.stop();
     }
 
     override public function get turnLeft():Boolean{
@@ -44,6 +44,18 @@ public class UserControlBehavior extends ControlBehavior{
 
     override public function get run():Boolean{
         return _gamepad.runKeyPressed;
+    }
+
+    override public function get trap():Boolean{
+        return _gamepad.trapKeyPressed;
+    }
+
+    override public function get boost():Boolean{
+        return _gamepad.boostKeyPressed;
+    }
+
+    override public function get shoot():Boolean{
+        return _gamepad.shootKeyPressed;
     }
 }
 }
