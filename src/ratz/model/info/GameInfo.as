@@ -23,6 +23,15 @@ public class GameInfo {
         _opponents = createOpponents(_player);
     }
 
+    public function refresh():void{
+        for each(var p:UserInfo in _opponents){
+            p.refresh();
+        }
+
+        if(_player)
+            _player.refresh();
+    }
+
     public function toString():String{
         return "{ player: " + _player +  "\n opponents: " + _opponents + "}";
     }

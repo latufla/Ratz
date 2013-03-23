@@ -8,6 +8,7 @@
 package core.utils.nape {
 import core.controller.FieldController;
 import core.model.ObjectBase;
+import core.utils.ObjectUtil;
 
 import flash.display.BitmapData;
 import flash.geom.Point;
@@ -25,15 +26,12 @@ import nape.phys.BodyType;
 import nape.space.Space;
 import nape.util.BitmapDebug;
 
-import ratz.model.Field;
-
 public class PhysEngineConnector {
 
     private var _spaces:Dictionary;
     private var _physObjects:Dictionary; // key RObjectBase, value Body
     private var _handlers:Dictionary;
 
-    private var _eventsLib:Dictionary;
     private var _frictionStep:Number = 1 / 60;
 
     private static var _instance:PhysEngineConnector;
@@ -51,7 +49,6 @@ public class PhysEngineConnector {
         _spaces = new Dictionary();
         _physObjects = new Dictionary();
         _handlers = new Dictionary();
-        _eventsLib = new Dictionary();
     }
 
     public function initField(f:FieldController):void {
@@ -64,20 +61,6 @@ public class PhysEngineConnector {
         body.type = BodyType.STATIC;
         body.position = new Vec2(bd.width / 2, bd.height / 2);
         _physObjects[f] = body;
-    }
-
-    private function initEventListeners(space:Space):void {
-        var listener:InteractionListener = new InteractionListener(CbEvent.BEGIN, InteractionType.ANY,
-                CbType.ANY_BODY, CbType.ANY_BODY, interactionHandler);
-        space.listeners.add(listener);
-
-        listener = new InteractionListener(CbEvent.ONGOING, InteractionType.ANY,
-                CbType.ANY_BODY, CbType.ANY_BODY, interactionHandler);
-        space.listeners.add(listener);
-
-        listener = new InteractionListener(CbEvent.END, InteractionType.ANY,
-                CbType.ANY_BODY, CbType.ANY_BODY, interactionHandler);
-        space.listeners.add(listener);
     }
 
     public function initObject(obj:ObjectBase):void{
@@ -94,7 +77,27 @@ public class PhysEngineConnector {
 
     public function destroyObject(o:ObjectBase):void{
         removeObjectFromField(o);
+        removeInteractionHandlers(o);
         delete _physObjects[o];
+    }
+
+    public function destroyField(f:FieldController):void{
+        trace("PhysEngineConnector destroyField:");
+        trace("objects:");
+        ObjectUtil.debugTrace(_physObjects);
+
+        trace("obj interaction handlers:");
+        ObjectUtil.debugTrace(_handlers);
+
+        var space:Space = _spaces[f];
+        removeEventListeners(space);
+        trace("space listeners:", space.listeners);
+        trace("space bodies:", space.bodies);
+        space.clear();
+        delete _spaces[f];
+        trace("spaces:");
+        ObjectUtil.debugTrace(_spaces);
+
     }
 
     public function getPosition(obj:ObjectBase):Point{
@@ -192,7 +195,8 @@ public class PhysEngineConnector {
 
     public function doStep(f:FieldController, step:Number, debugView:BitmapDebug = null):void {
         var space:Space = _spaces[f];
-        space.step(step);
+        if(space)
+            space.step(step);
 
         if(!debugView)
             return;
@@ -207,7 +211,7 @@ public class PhysEngineConnector {
         physObj.debugDraw = value;
     }
 
-    public function addInteractionListener(obj:ObjectBase, beginHandler:Function, onGoingHandler:Function = null, endHandler:Function = null):void{
+    public function addInteractionHandlers(obj:ObjectBase, beginHandler:Function, onGoingHandler:Function = null, endHandler:Function = null):void{
         var body:Body = _physObjects[obj];
         if(!body)
             return;
@@ -218,9 +222,26 @@ public class PhysEngineConnector {
         _handlers[obj][CbEvent.END] = endHandler;
     }
 
-
-    public function removeInteractionListener(obj:ObjectBase, handler:Function = null):void{
+    public function removeInteractionHandlers(obj:ObjectBase):void{
         delete _handlers[obj];
+    }
+
+    private function initEventListeners(space:Space):void {
+        var listener:InteractionListener = new InteractionListener(CbEvent.BEGIN, InteractionType.ANY,
+                CbType.ANY_BODY, CbType.ANY_BODY, interactionHandler);
+        space.listeners.add(listener);
+
+        listener = new InteractionListener(CbEvent.ONGOING, InteractionType.ANY,
+                CbType.ANY_BODY, CbType.ANY_BODY, interactionHandler);
+        space.listeners.add(listener);
+
+        listener = new InteractionListener(CbEvent.END, InteractionType.ANY,
+                CbType.ANY_BODY, CbType.ANY_BODY, interactionHandler);
+        space.listeners.add(listener);
+    }
+
+    private function removeEventListeners(space:Space):void {
+        space.listeners.clear();
     }
 
     private function interactionHandler(cb:InteractionCallback):void{

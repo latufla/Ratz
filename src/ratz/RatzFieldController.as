@@ -88,7 +88,7 @@ public class RatzFieldController extends FieldController{
                 new ShootBehavior(),
                 new DeathBehavior(),
 //                new StatDisplayBehavior(),
-                new DebugStatDisplayBehavior(field)]);
+                /*new DebugStatDisplayBehavior(field)*/]);
             add(ratC);
         }
     }

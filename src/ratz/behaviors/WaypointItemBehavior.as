@@ -68,16 +68,16 @@ public class WaypointItemBehavior extends BehaviorBase {
 //        obj.visible = false;
 
         if(isFinish)
-            PhysEngineConnector.instance.addInteractionListener(_controller.object, onEndInteraction, null, null);
+            obj.addInteractionListeners(onEndInteraction);
         else
-            PhysEngineConnector.instance.addInteractionListener(_controller.object, onBeginInteraction, null, onEndInteraction);
+            obj.addInteractionListeners(onBeginInteraction, null, onEndInteraction);
     }
 
     override public function stop():void{
         var obj:ObjectBase = _controller.object;
         obj.isPseudo = false;
         obj.visible = true;
-        PhysEngineConnector.instance.removeInteractionListener(_controller.object);
+        obj.removeInteractionListeners();
 
         super.stop();
     }

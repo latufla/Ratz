@@ -21,7 +21,7 @@ import ratz.utils.Config;
 
 public class Field extends ObjectBase{
 
-    private var _laps:uint = 2;
+    private var _laps:uint = 1;
 
     private var _border:BitmapData;
     private var _waypoints:Vector.<Object>;

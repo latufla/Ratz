@@ -43,7 +43,7 @@ public class DebugStatDisplayBehavior extends BehaviorBase{
 
     override public function stop():void{
         super.stop();
-//        DisplayObjectUtil.tryRemove(_statField);
+        DisplayObjectUtil.tryRemove(_statField);
         DisplayObjectUtil.tryRemove(_lineContainer);
     }
 

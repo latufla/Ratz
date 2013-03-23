@@ -93,6 +93,13 @@ public class SceneController extends EventDispatcher{
     }
 
     private function onNeedRaceResult(data:*):void{
+        EventHeap.instance.unregister(Event.ENTER_FRAME, mainLoop);
+        DisplayObjectUtil.removeAll(_view);
+        _field.destroy();
+        Config.gameInfo.refresh();
+
+        _fieldDebugView.clear();
+        _fieldDebugView.flush();
 //        DisplayObjectUtil.removeAll(_view);
         trace("onNeedRaceResult");
 //        var raceInfo:RaceInfo = RaceInfoLib.getRaceInfoByLevel(1);
@@ -114,7 +121,7 @@ public class SceneController extends EventDispatcher{
         _fieldDebugView.display.y = 50;
         _view.addChild(_fieldDebugView.display);
 
-        _view.addEventListener(Event.ENTER_FRAME, mainLoop);
+        EventHeap.instance.register(Event.ENTER_FRAME, mainLoop);
     }
 
     private function mainLoop(e:Event):void {

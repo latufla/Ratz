@@ -21,11 +21,11 @@ public class WallItemBehavior extends BehaviorBase{
     override public function start(c:ControllerBase):void{
         super.start(c);
 
-        PhysEngineConnector.instance.addInteractionListener(_controller.object, onBeginInteraction);
+        _controller.object.addInteractionListeners(onBeginInteraction);
     }
 
     override public function stop():void{
-        PhysEngineConnector.instance.removeInteractionListener(_controller.object, onBeginInteraction);
+        _controller.object.removeInteractionListeners();
 
         super.stop();
     }

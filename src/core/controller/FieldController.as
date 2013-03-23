@@ -37,6 +37,17 @@ public class FieldController extends ControllerBase{
         VectorUtil.removeElement(_controllers, c);
     }
 
+    public function clear():void{
+        while(_controllers.length != 0){
+            remove(_controllers[0]);
+        }
+    }
+
+    public function destroy():void{
+        clear();
+        PhysEngineConnector.instance.destroyField(this);
+    }
+
     public function doStep(step:Number, debugView:* = null):void{
         for each(var p:ControllerBase in _controllers){
             p.doBehaviorsStep();

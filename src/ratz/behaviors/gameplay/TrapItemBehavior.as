@@ -24,14 +24,14 @@ public class TrapItemBehavior extends BehaviorBase{
 
     override public function start(c:ControllerBase):void{
         super.start(c);
-        _controller.object.isPseudo = true;
 
-        PhysEngineConnector.instance.addInteractionListener(_controller.object, onBeginInteraction);
+        _controller.object.isPseudo = true;
+        _controller.object.addInteractionListeners(onBeginInteraction);
     }
 
     override public function stop():void{
         _controller.object.isPseudo = false;
-        PhysEngineConnector.instance.removeInteractionListener(_controller.object, onBeginInteraction);
+        _controller.object.removeInteractionListeners();
 
         super.stop();
     }

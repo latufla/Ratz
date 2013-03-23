@@ -11,7 +11,7 @@ public class ObjectUtil {
     }
 
     public static function debugTrace(o:*):void{
-        for (var p:String in o){
+        for (var p:* in o){
             trace(p, o[p]);
         }
     }

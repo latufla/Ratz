@@ -179,12 +179,12 @@ public class ObjectBase {
         return new Point(b.x + b.width / 2, b.y + b.height / 2);
     }
 
-    public function addInteractionListener(onBeginInteraction:Function, onGoingInteraction:Function = null, onEndInteraction:Function = null):void{
-        PhysEngineConnector.instance.addInteractionListener(this, onBeginInteraction, onGoingInteraction, onEndInteraction);
+    public function addInteractionListeners(onBeginInteraction:Function, onGoingInteraction:Function = null, onEndInteraction:Function = null):void{
+        PhysEngineConnector.instance.addInteractionHandlers(this, onBeginInteraction, onGoingInteraction, onEndInteraction);
     }
 
-    public function removeInteractionListener(onInteraction:Function):void{
-        PhysEngineConnector.instance.removeInteractionListener(this, removeInteractionListener);
+    public function removeInteractionListeners():void{
+        PhysEngineConnector.instance.removeInteractionHandlers(this);
     }
 
     public function get name():String {

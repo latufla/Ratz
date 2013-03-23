@@ -43,6 +43,11 @@ public class UserInfo {
         return info;
     }
 
+    public function refresh():void{
+        _currentLap = 0;
+        _distanceToFinish = 0;
+    }
+
     public function get country():uint {
         return _country;
     }

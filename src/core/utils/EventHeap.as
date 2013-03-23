@@ -8,18 +8,18 @@
 package core.utils {
 import core.event.CustomEvent;
 
-import flash.events.EventDispatcher;
+import flash.display.MovieClip;
 
 public class EventHeap{
 
-    private var _dispatcher:EventDispatcher;
+    private var _dispatcher:MovieClip; // onEF need
     private static var _instance:EventHeap;
     public function EventHeap() {
         init();
     }
 
     private function init():void {
-        _dispatcher = new EventDispatcher();
+        _dispatcher = new MovieClip();
     }
 
     public static function get instance():EventHeap {
