@@ -8,111 +8,68 @@
 package ratz {
 
 import core.behaviors.BehaviorBase;
-import ratz.behaviors.control.ai.AIControlBehavior;
-import ratz.behaviors.control.user.UserControlBehavior;
+import core.controller.ControllerBase;
+import core.controller.FieldController;
+import core.model.ObjectBase;
+import core.utils.nape.CustomMaterial;
+import core.utils.nape.CustomPolygon;
+import core.utils.nape.CustomShape;
+import core.utils.nape.PhysEngineConnector;
+
+import flash.geom.Point;
+
 import ratz.behaviors.DebugStatDisplayBehavior;
-import ratz.behaviors.StatDisplayBehavior;
+import ratz.behaviors.control.ai.AIControlBehavior;
 import ratz.behaviors.gameplay.BoostBehavior;
 import ratz.behaviors.gameplay.DeathBehavior;
 import ratz.behaviors.gameplay.MedkitItemBehavior;
 import ratz.behaviors.gameplay.RatMoveBehavior;
 import ratz.behaviors.gameplay.ShootBehavior;
 import ratz.behaviors.gameplay.TrapBehavior;
-
-import core.controller.ControllerBase;
-
-import flash.events.Event;
-import flash.geom.Point;
-
 import ratz.managers.WaypointManager;
-
-import core.model.ObjectBase;
-import ratz.model.RaceInfo;
-
+import ratz.model.Field;
 import ratz.utils.Config;
 
-import core.utils.nape.PhysEngineConnector;
-import core.utils.VectorUtil;
-import core.utils.nape.CustomMaterial;
-import core.utils.nape.CustomPolygon;
-import core.utils.nape.CustomShape;
+public class RatzFieldController extends FieldController{
 
-public class Field {
+    public function RatzFieldController(field:Field) {
+        _object = field;
 
-    private var _controllers:Vector.<ControllerBase>;
-    private var _raceInfo:RaceInfo;
-
-    public function Field(raceInfo:RaceInfo) {
-        _raceInfo = raceInfo;
-        init();
+        super();
     }
 
-    private function init():void {
-        Config.field = this;
+    override protected function init():void {
+        super.init();
 
-        _controllers = new Vector.<ControllerBase>();
-        PhysEngineConnector.instance.initField(this, _raceInfo.border);
-        WaypointManager.instance.init(_raceInfo);
+        Config.fieldController = this;
+        PhysEngineConnector.instance.createBorders(this, field.border);
+        WaypointManager.instance.init(field);
 
-        createItems(_raceInfo);
-        createRats(_raceInfo);
+        createItems(field);
+        createRats(field);
     }
 
-    public function add(c:ControllerBase):void{
-        PhysEngineConnector.instance.addObjectToField(this, c.object);
-        _controllers.push(c);
-        c.startBehaviors();
+    private function get field():Field{
+        return _object as Field;
     }
 
-    public function remove(c:ControllerBase):void{
-        c.stopBehaviors();
-        PhysEngineConnector.instance.destroyObject(c.object);
-        VectorUtil.removeElement(_controllers, c);
-    }
+    override public function doStep(step:Number, debugView:* = null):void{
+        super.doStep(step, debugView);
 
-    public function doStep(step:Number, debugView:* = null):void{
         for each(var p:ControllerBase in _controllers){
-            p.doBehaviorsStep();
-
             if(p.isRat)
                 p.object.applyTerrainFriction(0.2, 0.01);
         }
 
-        PhysEngineConnector.instance.doStep(this, step, debugView);
-
-        if(!_raceInfo.raceIsFinished)
-            _raceInfo.resolveRaceProgress();
-    }
-
-    public function getControllerByObject(obj:ObjectBase):ControllerBase{
-        for each(var p:ControllerBase in _controllers){
-            if(p.object == obj)
-                return p;
-        }
-
-        return null;
-    }
-
-    public function getControllerByBehavior(b:BehaviorBase):ControllerBase{
-        for each(var p:ControllerBase in _controllers){
-            if(p.hasBehavior(b))
-                return p;
-        }
-
-        return null;
-    }
-
-    public function getControllersByBehaviorClass(bClass:Class):Vector.<ControllerBase>{
-        return _controllers.filter(function (e:ControllerBase, i:int, v:Vector.<ControllerBase>):Boolean{
-            return e.getBehaviorByClass(bClass);
-        });
+        if(!field.raceIsFinished)
+            field.updateRaceProgress();
     }
 
     public function get ratControllers():Vector.<ControllerBase>{
         return getControllersByBehaviorClass(RatMoveBehavior);
     }
 
-    private function createRats(raceInfo:RaceInfo):void {
+    private function createRats(raceInfo:Field):void {
         var finishWp:Object = raceInfo.finishWaypointDesc;
         if(!finishWp)
             return;
@@ -133,12 +90,12 @@ public class Field {
                 new ShootBehavior(),
                 new DeathBehavior(),
 //                new StatDisplayBehavior(),
-                new DebugStatDisplayBehavior(_raceInfo)]);
+                new DebugStatDisplayBehavior(field)]);
             add(ratC);
         }
     }
 
-    private function createItems(raceInfo:RaceInfo):void {
+    private function createItems(raceInfo:Field):void {
         var medkit:ObjectBase = ObjectBase.create(new Point(650, 250), new <CustomShape>[new CustomPolygon(0, 0, 30, 30)], new CustomMaterial(), 1);
         medkit.ammunition.health = 35;
 

@@ -44,9 +44,9 @@ public class WaypointSequence {
         var n:uint = _list.length;
         for (var i:int = 0; i < n; i++) {
             wpB = _list[i];
-            wp = Config.field.getControllerByBehavior(wpB).object;
+            wp = Config.fieldController.getControllerByBehavior(wpB).object;
             nextWpB = getNextWaypoint(wpB);
-            nextWp = Config.field.getControllerByBehavior(nextWpB).object;
+            nextWp = Config.fieldController.getControllerByBehavior(nextWpB).object;
             wpB.vectorToNext = wp.getVectorTo(nextWp);
         }
 

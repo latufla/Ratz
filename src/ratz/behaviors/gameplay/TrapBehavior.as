@@ -57,7 +57,7 @@ public class TrapBehavior extends BehaviorBase{
         trap.ammunition.health = 30;
 
         var trapController:ControllerBase = ControllerBase.create(trap, new <BehaviorBase>[new TrapItemBehavior()]);
-        Config.field.add(trapController);
+        Config.fieldController.add(trapController);
 
         _enabled = false;
         _timeoutId = setTimeout(function():void{_enabled = true; clearTimeout(_timeoutId)},_timeout);

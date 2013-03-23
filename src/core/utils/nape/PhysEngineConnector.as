@@ -8,6 +8,7 @@
 package core.utils.nape {
 import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
+import core.controller.FieldController;
 import core.model.ObjectBase;
 
 import flash.display.BitmapData;
@@ -26,7 +27,6 @@ import nape.phys.BodyType;
 import nape.space.Space;
 import nape.util.BitmapDebug;
 
-import ratz.Field;
 import ratz.behaviors.gameplay.WallItemBehavior;
 import ratz.utils.*;
 
@@ -60,18 +60,16 @@ public class PhysEngineConnector {
 
     // TODO: more secure
     // TODO: fix this dirt with space when no needed
-    public function initField(f:Field, bd:BitmapData):void{
-        var space:Space = Config.space;
+    public function initField(f:FieldController):void {
         if(_spaces[f])
             return;
 
-        _spaces[f] = space;//new Space();
-        createBorder(f, bd);
-        initEventListeners(space);
+        _spaces[f] = new Space();
+        initEventListeners(_spaces[f]);
     }
 
     // TODO: fix this dirt
-    private function createBorder(f:Field, bd:BitmapData):void{
+    public function createBorders(f:FieldController, bd:BitmapData):void {
         _border = NapeUtil.bodyFromBitmapData(bd);
         _border.type = BodyType.STATIC;
         _border.position = new Vec2(bd.width / 2, bd.height / 2);
@@ -81,7 +79,7 @@ public class PhysEngineConnector {
         _physObjects[obj] = _border;
         obj.material = new CustomMaterial(10, 0, 0, 1.5, 0.01);
         var borderC:ControllerBase = ControllerBase.create(obj, new <BehaviorBase>[new WallItemBehavior()]);
-        Config.field.add(borderC);
+        f.add(borderC);
     }
 
 
@@ -103,7 +101,7 @@ public class PhysEngineConnector {
         _physObjects[obj] ||= new Body(BodyType.DYNAMIC);
     }
 
-    public function addObjectToField(f:Field, o:ObjectBase):void{
+    public function addObjectToField(f:FieldController, o:ObjectBase):void {
         _physObjects[o].space = _spaces[f];
     }
 
@@ -213,7 +211,7 @@ public class PhysEngineConnector {
         physObj.angularVel *= Math.pow(angularK, _pw);
     }
 
-    public function doStep(f:Field, step:Number, debugView:BitmapDebug = null):void{
+    public function doStep(f:FieldController, step:Number, debugView:BitmapDebug = null):void {
         var space:Space = _spaces[f];
         space.step(step);
 

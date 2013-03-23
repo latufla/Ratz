@@ -51,7 +51,7 @@ public class TrapItemBehavior extends BehaviorBase{
         var pos:Point = trap.position;
         GuiUtil.showPopupText(Ratz.STAGE, new Point(pos.x, pos.y), "-" + trap.ammunition.health, 30, 0xFF0000);
 
-        Config.field.remove(trap.controller);
+        Config.fieldController.remove(trap.controller);
     }
 }
 }

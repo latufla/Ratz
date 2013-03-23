@@ -19,8 +19,8 @@ import flash.text.TextFieldAutoSize;
 import flash.utils.clearTimeout;
 import flash.utils.setTimeout;
 
-import ratz.model.RaceInfo;
-import ratz.model.UserInfo;
+import ratz.model.Field;
+import ratz.model.info.UserInfo;
 
 import ratz.utils.AssetsLib;
 import ratz.utils.Config;
@@ -31,9 +31,9 @@ public class RaceResultView extends ViewBase{
     private static const CLOSE_TIMEOUT:Number = 7000;
 
     private var _container:DisplayObjectContainer;
-    private var _raceInfo:RaceInfo;
+    private var _raceInfo:Field;
 
-    public function RaceResultView(raceInfo:RaceInfo){
+    public function RaceResultView(raceInfo:Field){
         _raceInfo = raceInfo;
         init();
     }

@@ -37,7 +37,7 @@ public class ObjectBase {
         init();
     }
 
-    private function init():void {
+    protected function init():void {
         PhysEngineConnector.instance.initObject(this);
         PhysEngineConnector.instance.setShapes(this, new <CustomShape>[DEFAULT_SHAPE]);
         PhysEngineConnector.instance.setMaterial(this, new CustomMaterial());
@@ -202,7 +202,7 @@ public class ObjectBase {
     }
 
     public function get controller():ControllerBase{
-        return Config.field.getControllerByObject(this);
+        return Config.fieldController.getControllerByObject(this);
     }
 }
 }

@@ -14,12 +14,13 @@ import ratz.event.GameEvent;
 import flash.display.BitmapData;
 
 import ratz.managers.WaypointManager;
+import ratz.model.info.UserInfo;
 
 import ratz.utils.Config;
 import core.utils.EventHeap;
 import core.utils.VectorUtil;
 
-public class RaceInfo {
+public class Field extends ObjectBase{
 
     private var _id:uint;
     private var _name:String = "noName";
@@ -34,7 +35,9 @@ public class RaceInfo {
     private var _runners:Vector.<UserInfo>;
     private var _finishers:Vector.<UserInfo>;
 
-    public function RaceInfo(border:BitmapData, waypoints:Vector.<Object>, racers:Vector.<UserInfo>) {
+    public function Field(border:BitmapData, waypoints:Vector.<Object>, racers:Vector.<UserInfo>) {
+        super();
+
         _border = border;
         _waypoints = waypoints;
         _racers = racers;
@@ -42,12 +45,14 @@ public class RaceInfo {
         _finishers = new Vector.<UserInfo>();
     }
 
+    override protected function init():void{}
+
     // TODO: deprecate racerInfo.distanceToFinish
-    public function resolveRaceProgress():void{
+    public function updateRaceProgress():void{
         if(raceIsFinished)
             return;
 
-        for each(var p:ControllerBase in Config.field.ratControllers) {
+        for each(var p:ControllerBase in Config.fieldController.ratControllers) {
             var racerObj:ObjectBase = p.object;
             var racerInfo:UserInfo = getRacerByName(racerObj.name);
 

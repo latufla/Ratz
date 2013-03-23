@@ -20,19 +20,19 @@ import ratz.Ratz;
 import ratz.managers.WaypointManager;
 
 import core.model.ObjectBase;
-import ratz.model.RaceInfo;
-import ratz.model.UserInfo;
+import ratz.model.Field;
+import ratz.model.info.UserInfo;
 
 import core.utils.DisplayObjectUtil;
 import core.utils.geom.Line;
 
 public class DebugStatDisplayBehavior extends BehaviorBase{
 
-    private var _raceInfo:RaceInfo;
+    private var _raceInfo:Field;
     private var _statField:TextField;
     private var _lineContainer:Sprite;
 
-    public function DebugStatDisplayBehavior(raceInfo:RaceInfo) {
+    public function DebugStatDisplayBehavior(raceInfo:Field) {
         super();
         _raceInfo = raceInfo;
     }

@@ -5,7 +5,8 @@
  * Time: 14:50
  * To change this template use File | Settings | File Templates.
  */
-package ratz.model {
+package ratz.model.info {
+import ratz.model.*;
 
 import ratz.utils.Config;
 
@@ -41,7 +42,7 @@ public class GameInfo {
         return ps;
     }
 
-    public function applyRaceInfo(raceInfo:RaceInfo):void{
+    public function applyRaceInfo(raceInfo:Field):void{
         _player.points += raceInfo.getRacerPoints(_player);
         _player.races++;
     }

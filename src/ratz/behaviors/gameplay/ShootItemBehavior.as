@@ -47,7 +47,7 @@ public class ShootItemBehavior extends BehaviorBase{
         }
 
         if(!obj.isPseudo)
-            Config.field.remove(shot.controller);
+            Config.fieldController.remove(shot.controller);
     }
 }
 }

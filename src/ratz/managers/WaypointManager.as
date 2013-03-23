@@ -18,8 +18,8 @@ import core.controller.ControllerBase;
 import flash.geom.Point;
 
 import core.model.ObjectBase;
-import ratz.model.RaceInfo;
-import ratz.model.UserInfo;
+import ratz.model.Field;
+import ratz.model.info.UserInfo;
 import ratz.model.WaypointSequence;
 
 import ratz.utils.Config;
@@ -32,7 +32,7 @@ import core.utils.nape.CustomShape;
 public class WaypointManager{
 
     private var _waypointSequence:WaypointSequence; // order matters
-    private var _raceInfo:RaceInfo;
+    private var _raceInfo:Field;
 
     private static var _instance:WaypointManager;
     public function WaypointManager() {
@@ -44,7 +44,7 @@ public class WaypointManager{
         return _instance;
     }
 
-    public function init(raceInfo:RaceInfo):void{
+    public function init(raceInfo:Field):void{
         _waypointSequence = new WaypointSequence();
         _waypointSequence.completeCb = onEndLap;
 
@@ -64,13 +64,13 @@ public class WaypointManager{
         var prevRegisteredWpB:WaypointItemBehavior = _waypointSequence.getPrevWaypoint(lastVisitedWpB);
         var nextRegisteredWpB:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastVisitedWpB);
 
-        var lastVisWp:ObjectBase = Config.field.getControllerByBehavior(lastVisitedWpB).object;
-        var nextRegWp:ObjectBase = Config.field.getControllerByBehavior(nextRegisteredWpB).object;
+        var lastVisWp:ObjectBase = Config.fieldController.getControllerByBehavior(lastVisitedWpB).object;
+        var nextRegWp:ObjectBase = Config.fieldController.getControllerByBehavior(nextRegisteredWpB).object;
         if(lastVisWp.bounds.intersects(obj.bounds)){ // TODO: diiiiiirty one
             obj.rotation = MathUtil.angleFromVector(lastVisWp.getDirectionTo(nextRegWp));
             obj.position = lastVisWp.center;
         } else{
-            var prevRegWp:ObjectBase = Config.field.getControllerByBehavior(prevRegisteredWpB).object;
+            var prevRegWp:ObjectBase = Config.fieldController.getControllerByBehavior(prevRegisteredWpB).object;
 
             var lastToPrev:Point = lastVisWp.getDirectionTo(prevRegWp);
             var lastToNext:Point = lastVisWp.getDirectionTo(nextRegWp);
@@ -126,7 +126,7 @@ public class WaypointManager{
         var lastVisitedWpB:WaypointItemBehavior = _waypointSequence.getLastWaypointVisitedBy(obj);
         var nextWpBToVisit:WaypointItemBehavior = _waypointSequence.getNextWaypoint(lastVisitedWpB);
 
-        var nextWpToVisitC:ControllerBase = Config.field.getControllerByBehavior(nextWpBToVisit);
+        var nextWpToVisitC:ControllerBase = Config.fieldController.getControllerByBehavior(nextWpBToVisit);
         if(!nextWpToVisitC)
             return null;
 
@@ -153,7 +153,7 @@ public class WaypointManager{
         _waypointSequence.add(wpBehavior);
 
         var wpc:ControllerBase = ControllerBase.create(wp, new <BehaviorBase>[wpBehavior]);
-        Config.field.add(wpc);
+        Config.fieldController.add(wpc);
     }
 
     private function onEndInteraction(wp:ObjectBase, obj:ObjectBase):void {

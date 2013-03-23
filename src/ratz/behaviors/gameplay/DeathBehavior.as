@@ -52,14 +52,14 @@ public class DeathBehavior extends BehaviorBase{
         recoveryObj.name = obj.name;
         recoveryObj.ammunition = obj.ammunition;
         var recoveryC:ControllerBase = ControllerBase.create(recoveryObj, obj.controller.behaviors);
-        Config.field.remove(obj.controller);
+        Config.fieldController.remove(obj.controller);
 
         _recoverId = setTimeout(function ():void{
             clearTimeout(_recoverId);
 
             WaypointManager.instance.correctToNextWaypointWhenRespawn(recoveryObj);
             obj.ammunition.health = 100;
-            Config.field.add(recoveryC);
+            Config.fieldController.add(recoveryC);
         }, _recoverTimeout);
     }
 

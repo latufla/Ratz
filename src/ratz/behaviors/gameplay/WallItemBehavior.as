@@ -35,7 +35,7 @@ public class WallItemBehavior extends BehaviorBase{
     }
 
     override protected function onBeginInteraction(wall:ObjectBase, obj:ObjectBase):void{
-        var c:ControllerBase = Config.field.getControllerByObject(obj);
+        var c:ControllerBase = Config.fieldController.getControllerByObject(obj);
         if(c.isRat){
             trace(obj.name + " just pushed the wall");
         }

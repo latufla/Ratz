@@ -11,8 +11,8 @@ import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 
-import ratz.model.RaceInfo;
-import ratz.model.UserInfo;
+import ratz.model.Field;
+import ratz.model.info.UserInfo;
 
 import core.utils.geom.Line;
 
@@ -29,7 +29,7 @@ public class RaceInfoLib {
 
     }
 
-    public static function getRaceInfoByLevel(l:uint = 1):RaceInfo{
+    public static function getRaceInfoByLevel(l:uint = 1):Field{
         var border:BitmapData = Bitmap(new Race1BorderViewClass()).bitmapData;
         var wps:Vector.<Object> = new Vector.<Object>();
         wps.push({isFinish: true, rect: new Rectangle(604, 380, 170, 2), inLine: new Line(new Point(604, 382), new Point(774, 382)), outLine:new Line(new Point(604, 380), new Point(774, 380))});
@@ -39,7 +39,7 @@ public class RaceInfoLib {
         wps.push({rect: new Rectangle(604, 590, 170, 170), inLine: new Line(new Point(604, 590), new Point(604, 760)), outLine:new Line(new Point(604, 590), new Point(774, 590))});
 
 //        return new RaceInfo(border, wps, new <UserInfo>[Config.gameInfo.allRacers[0]]/*Config.gameInfo.allRacers*/);
-        return new RaceInfo(border, wps, Config.gameInfo.allRacers);
+        return new Field(border, wps, Config.gameInfo.allRacers);
     }
 
 }

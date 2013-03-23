@@ -18,8 +18,8 @@ import flash.events.MouseEvent;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 
-import ratz.model.GameInfo;
-import ratz.model.UserInfo;
+import ratz.model.info.GameInfo;
+import ratz.model.info.UserInfo;
 
 import ratz.utils.AssetsLib;
 import ratz.utils.Config;

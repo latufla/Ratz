@@ -12,9 +12,9 @@ import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.utils.Dictionary;
 
-import ratz.model.GameInfo;
-import ratz.model.RaceInfo;
-import ratz.model.UserInfo;
+import ratz.model.info.GameInfo;
+import ratz.model.Field;
+import ratz.model.info.UserInfo;
 
 import nape.util.BitmapDebug;
 
@@ -34,7 +34,7 @@ public class SceneController extends EventDispatcher{
 
     private var _view:ViewBase;
 
-    private var _field:Field;
+    private var _field:RatzFieldController;
     private var _fieldDebugView:BitmapDebug;
 
     public function SceneController() {
@@ -109,8 +109,8 @@ public class SceneController extends EventDispatcher{
         Config.ammunitionPanel.y = 15;
         _view.addChild(Config.ammunitionPanel);
 
-        var raceInfo:RaceInfo = RaceInfoLib.getRaceInfoByLevel(1);
-        _field = new Field(raceInfo);
+        var raceInfo:Field = RaceInfoLib.getRaceInfoByLevel(1);
+        _field = new RatzFieldController(raceInfo);
 
         _fieldDebugView = new BitmapDebug(Ratz.STAGE.stageWidth, Ratz.STAGE.stageHeight, Ratz.STAGE.color);
         _fieldDebugView.display.x = 0;

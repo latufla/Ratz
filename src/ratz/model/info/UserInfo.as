@@ -5,7 +5,7 @@
  * Time: 21:21
  * To change this template use File | Settings | File Templates.
  */
-package ratz.model {
+package ratz.model.info {
 public class UserInfo {
     public static const CHINA:uint = 0;
     public static const JAPAN:uint = 1;
