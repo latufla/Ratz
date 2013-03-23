@@ -6,12 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 package core.utils.nape {
-import core.utils.nape.NapeBitmapDataIso;
-
-import ratz.utils.*;
 
 import flash.display.BitmapData;
-import flash.geom.Point;
 
 import nape.geom.AABB;
 import nape.geom.GeomPoly;

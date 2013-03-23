@@ -21,17 +21,17 @@ import core.utils.nape.CustomPolygon;
 import core.utils.nape.CustomShape;
 
 public class ObjectBase {
-    private var _name:String = "dummy";
+    protected var _name:String = "dummy";
 
     protected static const DEFAULT_SHAPE:CustomPolygon = new CustomPolygon(0, 0, 30, 60);
     protected static const DEFAULT_POSITION:Point = new Point(0, 0);
 
-    private var _shapes:Vector.<CustomShape>;
-    private var _material:CustomMaterial;
+    protected var _shapes:Vector.<CustomShape>;
+    protected var _material:CustomMaterial;
 
-    private var _interactionGroup:int = 1;
+    protected var _interactionGroup:int = 1;
 
-    private var _ammunition:Ammunition;
+    protected var _ammunition:Ammunition;
 
     public function ObjectBase() {
         init();

@@ -14,8 +14,6 @@ import core.model.ObjectBase;
 import core.utils.nape.CustomMaterial;
 import core.utils.nape.CustomPolygon;
 import core.utils.nape.CustomShape;
-import core.utils.nape.PhysEngineConnector;
-
 import flash.geom.Point;
 
 import ratz.behaviors.DebugStatDisplayBehavior;
@@ -34,7 +32,6 @@ public class RatzFieldController extends FieldController{
 
     public function RatzFieldController(field:Field) {
         _object = field;
-
         super();
     }
 
@@ -42,8 +39,8 @@ public class RatzFieldController extends FieldController{
         super.init();
 
         Config.fieldController = this;
-        PhysEngineConnector.instance.createBorders(this, field.border);
         WaypointManager.instance.init(field);
+        add(this);
 
         createItems(field);
         createRats(field);

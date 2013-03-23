@@ -27,7 +27,7 @@ import nape.phys.BodyType;
 import nape.space.Space;
 import nape.util.BitmapDebug;
 
-import ratz.behaviors.gameplay.WallItemBehavior;
+import ratz.model.Field;
 import ratz.utils.*;
 
 public class PhysEngineConnector {
@@ -37,8 +37,6 @@ public class PhysEngineConnector {
     private var _handlers:Dictionary;
 
     private var _eventsLib:Dictionary;
-
-    private var _border:Body;
 
     private static var _instance:PhysEngineConnector;
 
@@ -69,19 +67,12 @@ public class PhysEngineConnector {
     }
 
     // TODO: fix this dirt
-    public function createBorders(f:FieldController, bd:BitmapData):void {
-        _border = NapeUtil.bodyFromBitmapData(bd);
-        _border.type = BodyType.STATIC;
-        _border.position = new Vec2(bd.width / 2, bd.height / 2);
-        _border.space = _spaces[f];
-
-        var obj:ObjectBase = new ObjectBase();
-        _physObjects[obj] = _border;
-        obj.material = new CustomMaterial(10, 0, 0, 1.5, 0.01);
-        var borderC:ControllerBase = ControllerBase.create(obj, new <BehaviorBase>[new WallItemBehavior()]);
-        f.add(borderC);
+    public function createBorders(f:Field, bd:BitmapData):void {
+        var body:Body = NapeUtil.bodyFromBitmapData(bd);
+        body.type = BodyType.STATIC;
+        body.position = new Vec2(bd.width / 2, bd.height / 2);
+        _physObjects[f] = body;
     }
-
 
     private function initEventListeners(space:Space):void {
         var listener:InteractionListener = new InteractionListener(CbEvent.BEGIN, InteractionType.ANY,

@@ -9,6 +9,8 @@ package ratz.model {
 import core.controller.ControllerBase;
 import core.model.ObjectBase;
 
+import core.utils.nape.PhysEngineConnector;
+
 import ratz.event.GameEvent;
 
 import flash.display.BitmapData;
@@ -23,7 +25,6 @@ import core.utils.VectorUtil;
 public class Field extends ObjectBase{
 
     private var _id:uint;
-    private var _name:String = "noName";
 
     private var _laps:uint = 2;
 
@@ -36,16 +37,18 @@ public class Field extends ObjectBase{
     private var _finishers:Vector.<UserInfo>;
 
     public function Field(border:BitmapData, waypoints:Vector.<Object>, racers:Vector.<UserInfo>) {
-        super();
-
         _border = border;
         _waypoints = waypoints;
         _racers = racers;
         _runners = _racers.concat(); // only links
         _finishers = new Vector.<UserInfo>();
+
+        super();
     }
 
-    override protected function init():void{}
+    override protected function init():void{
+        PhysEngineConnector.instance.createBorders(this, _border);
+    }
 
     // TODO: deprecate racerInfo.distanceToFinish
     public function updateRaceProgress():void{
