@@ -7,14 +7,12 @@
  */
 package core.controller {
 import core.behaviors.BehaviorBase;
+import core.model.ObjectBase;
+import core.utils.VectorUtil;
+import core.view.ViewBase;
+
 import ratz.behaviors.gameplay.RatMoveBehavior;
 import ratz.behaviors.gameplay.WallItemBehavior;
-
-import core.model.ObjectBase;
-
-import core.utils.VectorUtil;
-
-import core.view.ViewBase;
 
 public class ControllerBase {
 

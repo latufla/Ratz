@@ -6,9 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz.view {
+import core.utils.EventHeap;
 import core.view.ViewBase;
-
-import ratz.event.GameEvent;
 
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
@@ -19,12 +18,11 @@ import flash.text.TextFieldAutoSize;
 import flash.utils.clearTimeout;
 import flash.utils.setTimeout;
 
+import ratz.event.GameEvent;
 import ratz.model.Field;
 import ratz.model.info.UserInfo;
-
 import ratz.utils.AssetsLib;
 import ratz.utils.Config;
-import core.utils.EventHeap;
 
 public class RaceResultView extends ViewBase{
 

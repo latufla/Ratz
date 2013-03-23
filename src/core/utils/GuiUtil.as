@@ -6,14 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 package core.utils {
-import ratz.utils.*;
-
-import core.utils.DisplayObjectUtil;
-
 import flash.display.DisplayObjectContainer;
 import flash.geom.Point;
-import flash.geom.Rectangle;
-import flash.text.Font;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;

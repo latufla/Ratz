@@ -7,7 +7,6 @@
  */
 package ratz.behaviors {
 import core.behaviors.BehaviorBase;
-import ratz.behaviors.control.ControlBehavior;
 
 import ratz.utils.Config;
 

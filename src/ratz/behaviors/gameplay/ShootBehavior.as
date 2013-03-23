@@ -6,30 +6,19 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz.behaviors.gameplay {
-import ratz.behaviors.*;
-import ratz.behaviors.control.ControlBehavior;
-
-import core.controller.ControllerBase;
-
 import core.behaviors.BehaviorBase;
+import core.controller.ControllerBase;
+import core.model.ObjectBase;
+import core.utils.nape.CustomMaterial;
+import core.utils.nape.CustomPolygon;
+import core.utils.nape.CustomShape;
 
-import flash.display.Stage;
-
-import flash.events.Event;
 import flash.geom.Point;
 import flash.utils.clearTimeout;
 import flash.utils.setTimeout;
 
-import core.model.ObjectBase;
-
+import ratz.behaviors.control.ControlBehavior;
 import ratz.utils.Config;
-
-import ratz.utils.Config;
-import core.utils.nape.CustomMaterial;
-
-import core.utils.nape.CustomPolygon;
-
-import core.utils.nape.CustomShape;
 
 public class ShootBehavior extends BehaviorBase {
 

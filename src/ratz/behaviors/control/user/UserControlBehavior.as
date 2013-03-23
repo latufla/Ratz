@@ -6,11 +6,10 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz.behaviors.control.user {
-import core.behaviors.BehaviorBase;
+import core.controller.ControllerBase;
+
 import ratz.behaviors.control.ControlBehavior;
 import ratz.behaviors.gamepad.GamepadBehavior;
-
-import core.controller.ControllerBase;
 
 public class UserControlBehavior extends ControlBehavior{
 

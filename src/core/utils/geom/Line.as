@@ -6,10 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 package core.utils.geom {
-import flash.filters.DisplacementMapFilterMode;
-import flash.geom.Point;
-
 import core.utils.MathUtil;
+
+import flash.geom.Point;
 
 // VH and from smaller coords to bigger
 public class Line {

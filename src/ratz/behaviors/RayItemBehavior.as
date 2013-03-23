@@ -7,11 +7,8 @@
  */
 package ratz.behaviors {
 import core.behaviors.BehaviorBase;
-
 import core.controller.ControllerBase;
-
 import core.model.ObjectBase;
-
 import core.utils.nape.PhysEngineConnector;
 
 public class RayItemBehavior extends BehaviorBase{

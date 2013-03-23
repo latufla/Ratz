@@ -6,10 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 package core.utils {
-import core.event.CustomEvent;
-import ratz.event.GameEvent;
-import flash.events.IEventDispatcher;
-
 public class ObjectUtil {
     public function ObjectUtil() {
     }

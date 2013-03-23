@@ -6,15 +6,14 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz.utils {
+import core.utils.geom.Line;
+
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 
 import ratz.model.Field;
-import ratz.model.info.UserInfo;
-
-import core.utils.geom.Line;
 
 public class RaceInfoLib {
 

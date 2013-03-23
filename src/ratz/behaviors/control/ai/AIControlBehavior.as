@@ -6,18 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz.behaviors.control.ai {
-import ratz.behaviors.control.ControlBehavior;
-
-import core.controller.ControllerBase;
-
-import core.event.CustomEvent;
+import core.utils.MathUtil;
 
 import flash.geom.Point;
+
+import ratz.behaviors.control.ControlBehavior;
 import ratz.managers.WaypointManager;
-
-import core.model.ObjectBase;
-
-import core.utils.MathUtil;
 
 public class AIControlBehavior extends ControlBehavior{
 

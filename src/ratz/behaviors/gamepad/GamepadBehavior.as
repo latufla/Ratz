@@ -6,14 +6,13 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz.behaviors.gamepad {
-import ratz.Ratz;
-import ratz.behaviors.*;
 import core.behaviors.BehaviorBase;
-
 import core.controller.ControllerBase;
 
 import flash.display.Stage;
 import flash.events.KeyboardEvent;
+
+import ratz.Ratz;
 
 public class GamepadBehavior extends BehaviorBase{
     // default keys

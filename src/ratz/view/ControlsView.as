@@ -6,16 +6,15 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz.view {
+import core.utils.EventHeap;
 import core.view.ViewBase;
-
-import ratz.event.GameEvent;
 
 import flash.display.DisplayObjectContainer;
 import flash.display.MovieClip;
 import flash.events.MouseEvent;
 
+import ratz.event.GameEvent;
 import ratz.utils.AssetsLib;
-import core.utils.EventHeap;
 
 public class ControlsView extends ViewBase{
 

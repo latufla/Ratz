@@ -8,17 +8,15 @@
 package core.model {
 
 import core.controller.ControllerBase;
+import core.utils.nape.CustomMaterial;
+import core.utils.nape.CustomPolygon;
+import core.utils.nape.CustomShape;
+import core.utils.nape.PhysEngineConnector;
 
 import flash.geom.Point;
 import flash.geom.Rectangle;
 
 import ratz.utils.Config;
-
-import core.utils.nape.PhysEngineConnector;
-
-import core.utils.nape.CustomMaterial;
-import core.utils.nape.CustomPolygon;
-import core.utils.nape.CustomShape;
 
 public class ObjectBase {
     protected var _name:String = "dummy";

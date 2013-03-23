@@ -6,12 +6,11 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz.model {
-import ratz.behaviors.WaypointItemBehavior;
-
 import core.model.ObjectBase;
 
 import flash.utils.Dictionary;
 
+import ratz.behaviors.WaypointItemBehavior;
 import ratz.utils.Config;
 
 public class WaypointSequence {

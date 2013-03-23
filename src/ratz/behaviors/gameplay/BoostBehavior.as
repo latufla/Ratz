@@ -7,18 +7,13 @@
  */
 package ratz.behaviors.gameplay {
 import core.behaviors.BehaviorBase;
-import ratz.behaviors.control.ControlBehavior;
+import core.model.ObjectBase;
 
-import core.controller.ControllerBase;
-
-import flash.display.Stage;
-
-import flash.events.Event;
 import flash.geom.Point;
 import flash.utils.clearTimeout;
 import flash.utils.setTimeout;
 
-import core.model.ObjectBase;
+import ratz.behaviors.control.ControlBehavior;
 
 public class BoostBehavior extends BehaviorBase{
 

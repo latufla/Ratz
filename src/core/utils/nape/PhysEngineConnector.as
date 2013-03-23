@@ -6,8 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 package core.utils.nape {
-import core.behaviors.BehaviorBase;
-import core.controller.ControllerBase;
 import core.controller.FieldController;
 import core.model.ObjectBase;
 
@@ -28,7 +26,6 @@ import nape.space.Space;
 import nape.util.BitmapDebug;
 
 import ratz.model.Field;
-import ratz.utils.*;
 
 public class PhysEngineConnector {
 
@@ -37,6 +34,7 @@ public class PhysEngineConnector {
     private var _handlers:Dictionary;
 
     private var _eventsLib:Dictionary;
+    private var _frictionStep:Number = 1 / 60;
 
     private static var _instance:PhysEngineConnector;
 
@@ -56,18 +54,12 @@ public class PhysEngineConnector {
         _eventsLib = new Dictionary();
     }
 
-    // TODO: more secure
-    // TODO: fix this dirt with space when no needed
     public function initField(f:FieldController):void {
-        if(_spaces[f])
-            return;
-
-        _spaces[f] = new Space();
+        _spaces[f] ||= new Space();
         initEventListeners(_spaces[f]);
     }
 
-    // TODO: fix this dirt
-    public function createBorders(f:Field, bd:BitmapData):void {
+    public function createBorders(f:ObjectBase, bd:BitmapData):void {
         var body:Body = NapeUtil.bodyFromBitmapData(bd);
         body.type = BodyType.STATIC;
         body.position = new Vec2(bd.width / 2, bd.height / 2);
@@ -115,12 +107,9 @@ public class PhysEngineConnector {
         physObj.position.setxy(pos.x, pos.y);
     }
 
-    private var _stubVel:Point = new Point();
     public function getVelocity(obj:ObjectBase):Point{
         var physObj:Body = _physObjects[obj];
-        _stubVel.x = physObj.velocity.x;
-        _stubVel.y = physObj.velocity.y;
-        return _stubVel;
+        return physObj.velocity.toPoint();
     }
 
     public function setVelocity(obj:ObjectBase, vel:Point):void{
@@ -195,11 +184,10 @@ public class PhysEngineConnector {
     }
 
     // TODO: fix fps usage
-    private var _pw:Number = 1 / Config.fps;
     public function applyTerrainFriction(obj:ObjectBase, k:Number = 0.2, angularK:Number = 0.1):void{
         var physObj:Body = _physObjects[obj];
-        physObj.velocity.muleq(Math.pow(k, _pw));
-        physObj.angularVel *= Math.pow(angularK, _pw);
+        physObj.velocity.muleq(Math.pow(k, _frictionStep));
+        physObj.angularVel *= Math.pow(angularK, _frictionStep);
     }
 
     public function doStep(f:FieldController, step:Number, debugView:BitmapDebug = null):void {

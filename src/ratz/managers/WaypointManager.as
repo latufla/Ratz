@@ -7,27 +7,23 @@
  */
 package ratz.managers {
 import core.behaviors.BehaviorBase;
-
-import ratz.Ratz;
-import ratz.behaviors.WaypointItemBehavior;
-import ratz.behaviors.gameplay.RatMoveBehavior;
-
 import core.controller.ControllerBase;
-
-
-import flash.geom.Point;
-
 import core.model.ObjectBase;
-import ratz.model.Field;
-import ratz.model.info.UserInfo;
-import ratz.model.WaypointSequence;
-
-import ratz.utils.Config;
 import core.utils.GuiUtil;
 import core.utils.MathUtil;
 import core.utils.geom.Line;
 import core.utils.nape.CustomPolygon;
 import core.utils.nape.CustomShape;
+
+import flash.geom.Point;
+
+import ratz.Ratz;
+import ratz.behaviors.WaypointItemBehavior;
+import ratz.behaviors.gameplay.RatMoveBehavior;
+import ratz.model.Field;
+import ratz.model.WaypointSequence;
+import ratz.model.info.UserInfo;
+import ratz.utils.Config;
 
 public class WaypointManager{
 

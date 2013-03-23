@@ -7,24 +7,19 @@
  */
 package ratz.behaviors {
 import core.behaviors.BehaviorBase;
-
 import core.controller.ControllerBase;
+import core.model.ObjectBase;
+import core.utils.DisplayObjectUtil;
+import core.utils.geom.Line;
 
 import flash.display.Sprite;
-
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 
 import ratz.Ratz;
-
 import ratz.managers.WaypointManager;
-
-import core.model.ObjectBase;
 import ratz.model.Field;
 import ratz.model.info.UserInfo;
-
-import core.utils.DisplayObjectUtil;
-import core.utils.geom.Line;
 
 public class DebugStatDisplayBehavior extends BehaviorBase{
 

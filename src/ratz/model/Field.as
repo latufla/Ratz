@@ -8,23 +8,18 @@
 package ratz.model {
 import core.controller.ControllerBase;
 import core.model.ObjectBase;
-
+import core.utils.EventHeap;
+import core.utils.VectorUtil;
 import core.utils.nape.PhysEngineConnector;
-
-import ratz.event.GameEvent;
 
 import flash.display.BitmapData;
 
+import ratz.event.GameEvent;
 import ratz.managers.WaypointManager;
 import ratz.model.info.UserInfo;
-
 import ratz.utils.Config;
-import core.utils.EventHeap;
-import core.utils.VectorUtil;
 
 public class Field extends ObjectBase{
-
-    private var _id:uint;
 
     private var _laps:uint = 2;
 

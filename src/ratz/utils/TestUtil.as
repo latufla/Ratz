@@ -6,12 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz.utils {
-import ratz.behaviors.gameplay.BoostBehavior;
+import core.controller.ControllerBase;
+
 import ratz.behaviors.gamepad.GamepadBehavior;
+import ratz.behaviors.gameplay.BoostBehavior;
 import ratz.behaviors.gameplay.ShootItemBehavior;
 import ratz.behaviors.gameplay.TrapItemBehavior;
-
-import core.controller.ControllerBase;
 
 public class TestUtil {
     public function TestUtil() {

@@ -8,21 +8,16 @@
 package ratz.behaviors.gameplay {
 import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
+import core.model.ObjectBase;
+import core.utils.GuiUtil;
 
 import flash.geom.Point;
-
 import flash.utils.clearTimeout;
-
 import flash.utils.setTimeout;
 
 import ratz.Ratz;
-
 import ratz.managers.WaypointManager;
-
-import core.model.ObjectBase;
-
 import ratz.utils.Config;
-import core.utils.GuiUtil;
 
 public class DeathBehavior extends BehaviorBase{
 

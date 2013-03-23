@@ -7,19 +7,15 @@
  */
 package ratz.behaviors.gameplay {
 import core.behaviors.BehaviorBase;
-
 import core.controller.ControllerBase;
+import core.model.ObjectBase;
+import core.utils.GuiUtil;
+import core.utils.nape.PhysEngineConnector;
 
 import flash.geom.Point;
 
-import core.model.ObjectBase;
-
 import ratz.Ratz;
-
 import ratz.utils.Config;
-import core.utils.GuiUtil;
-
-import core.utils.nape.PhysEngineConnector;
 
 public class ShootItemBehavior extends BehaviorBase{
     public function ShootItemBehavior() {

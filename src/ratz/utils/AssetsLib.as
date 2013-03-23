@@ -7,7 +7,6 @@
  */
 package ratz.utils {
 import flash.display.DisplayObjectContainer;
-import flash.display.MovieClip;
 
 public class AssetsLib {
 

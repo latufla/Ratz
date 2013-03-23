@@ -12,9 +12,7 @@ import flash.display.BitmapData;
 import nape.geom.AABB;
 import nape.geom.GeomPoly;
 import nape.geom.GeomPolyList;
-
 import nape.geom.IsoFunction;
-
 import nape.geom.MarchingSquares;
 import nape.geom.Vec2;
 import nape.phys.Body;

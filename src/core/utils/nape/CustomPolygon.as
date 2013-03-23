@@ -9,7 +9,6 @@ package core.utils.nape {
 import flash.geom.Rectangle;
 
 import nape.shape.Polygon;
-
 import nape.shape.Shape;
 
 public class CustomPolygon extends CustomShape{

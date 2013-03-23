@@ -6,12 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 package core.utils.nape {
-import flash.display.Bitmap;
 import flash.display.BitmapData;
-import flash.display.DisplayObject;
 
 import nape.geom.AABB;
-
 import nape.geom.IsoFunction;
 
 public class NapeBitmapDataIso implements IsoFunction {

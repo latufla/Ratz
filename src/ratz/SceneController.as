@@ -6,28 +6,25 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz {
-import ratz.event.GameEvent;
+import core.utils.DisplayObjectUtil;
+import core.utils.EventHeap;
+import core.view.ViewBase;
 
 import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.utils.Dictionary;
 
-import ratz.model.info.GameInfo;
-import ratz.model.Field;
-import ratz.model.info.UserInfo;
-
 import nape.util.BitmapDebug;
 
+import ratz.event.GameEvent;
+import ratz.model.Field;
+import ratz.model.info.GameInfo;
+import ratz.model.info.UserInfo;
 import ratz.utils.Config;
-import core.utils.DisplayObjectUtil;
-import core.utils.EventHeap;
 import ratz.utils.RaceInfoLib;
-
 import ratz.view.ControlsView;
 import ratz.view.LobbyView;
 import ratz.view.MainMenuView;
-import ratz.view.RaceResultView;
-import core.view.ViewBase;
 
 public class SceneController extends EventDispatcher{
     private var _gameEventHandlers:Dictionary; // ratz.event type -> function

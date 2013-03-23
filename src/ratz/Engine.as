@@ -6,12 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz {
-import flash.geom.Point;
+import core.utils.FPSCounter;
 
 import starling.display.Sprite;
-
-import core.utils.FPSCounter;
-import core.utils.geom.Line;
 
 public class Engine extends Sprite{
 

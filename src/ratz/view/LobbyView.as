@@ -6,24 +6,21 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz.view {
+import core.utils.EventHeap;
 import core.view.ViewBase;
 
-import ratz.event.GameEvent;
-
 import flash.display.DisplayObject;
-
 import flash.display.DisplayObjectContainer;
 import flash.display.MovieClip;
 import flash.events.MouseEvent;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 
+import ratz.event.GameEvent;
 import ratz.model.info.GameInfo;
 import ratz.model.info.UserInfo;
-
 import ratz.utils.AssetsLib;
 import ratz.utils.Config;
-import core.utils.EventHeap;
 
 public class LobbyView extends ViewBase{
 

@@ -6,10 +6,10 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz.debug {
+import core.utils.ObjectUtil;
+
 import flash.events.MouseEvent;
 import flash.text.TextField;
-
-import core.utils.ObjectUtil;
 
 public class NapeCreateObjectPanel extends DebugNapeCreateObjectPanelView{
 

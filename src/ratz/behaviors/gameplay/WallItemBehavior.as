@@ -8,14 +8,10 @@
 package ratz.behaviors.gameplay {
 import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
-
-import flash.geom.Point;
-
 import core.model.ObjectBase;
+import core.utils.nape.PhysEngineConnector;
 
 import ratz.utils.Config;
-
-import core.utils.nape.PhysEngineConnector;
 
 public class WallItemBehavior extends BehaviorBase{
     public function WallItemBehavior() {

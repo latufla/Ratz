@@ -7,17 +7,14 @@
  */
 package ratz.behaviors {
 import core.behaviors.BehaviorBase;
-
 import core.controller.ControllerBase;
-
-import flash.geom.Point;
-
 import core.model.ObjectBase;
-
 import core.utils.GuiUtil;
+import core.utils.VectorUtil;
 import core.utils.geom.Line;
 import core.utils.nape.PhysEngineConnector;
-import core.utils.VectorUtil;
+
+import flash.geom.Point;
 
 import ratz.Ratz;
 

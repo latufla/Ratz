@@ -14,6 +14,7 @@ import core.model.ObjectBase;
 import core.utils.nape.CustomMaterial;
 import core.utils.nape.CustomPolygon;
 import core.utils.nape.CustomShape;
+
 import flash.geom.Point;
 
 import ratz.behaviors.DebugStatDisplayBehavior;
@@ -66,8 +67,8 @@ public class RatzFieldController extends FieldController{
         return getControllersByBehaviorClass(RatMoveBehavior);
     }
 
-    private function createRats(raceInfo:Field):void {
-        var finishWp:Object = raceInfo.finishWaypointDesc;
+    private function createRats(f:Field):void {
+        var finishWp:Object = f.finishWaypointDesc;
         if(!finishWp)
             return;
 
@@ -77,9 +78,9 @@ public class RatzFieldController extends FieldController{
 
         var rat:ObjectBase;
         var ratC:ControllerBase;
-        for(var i:uint = 0; i < raceInfo.racers.length; i++){
+        for(var i:uint = 0; i < f.racers.length; i++){
             rat = ObjectBase.create(new Point(startPoints[i].x + i * 10, startPoints[i].y + 20), new <CustomShape>[new CustomPolygon(0, 0, 30, 60)], new CustomMaterial(), 1);
-            rat.name = raceInfo.racers[i].name;
+            rat.name = f.racers[i].name;
             ratC = ControllerBase.create(rat, new <BehaviorBase>[new AIControlBehavior(), //new UserControlBehavior(),
                 new RatMoveBehavior(),
                 new TrapBehavior(),
@@ -92,7 +93,7 @@ public class RatzFieldController extends FieldController{
         }
     }
 
-    private function createItems(raceInfo:Field):void {
+    private function createItems(f:Field):void {
         var medkit:ObjectBase = ObjectBase.create(new Point(650, 250), new <CustomShape>[new CustomPolygon(0, 0, 30, 30)], new CustomMaterial(), 1);
         medkit.ammunition.health = 35;
 

@@ -7,17 +7,11 @@
  */
 package ratz.behaviors.gameplay {
 import core.behaviors.BehaviorBase;
-import ratz.behaviors.control.ControlBehavior;
-import ratz.behaviors.gamepad.GamepadBehavior;
-import ratz.behaviors.control.user.UserControlBehavior;
+import core.model.ObjectBase;
 
-import core.controller.ControllerBase;
-
-import flash.display.Stage;
-import flash.events.Event;
 import flash.geom.Point;
 
-import core.model.ObjectBase;
+import ratz.behaviors.control.ControlBehavior;
 
 // note this is a rat
 public class RatMoveBehavior extends BehaviorBase{

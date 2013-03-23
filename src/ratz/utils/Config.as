@@ -8,10 +8,7 @@
 package ratz.utils {
 import ratz.RatzFieldController;
 import ratz.debug.AmmunitionPanel;
-
 import ratz.model.info.GameInfo;
-
-import nape.space.Space;
 
 public class Config {
 

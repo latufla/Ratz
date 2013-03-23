@@ -6,11 +6,10 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz.debug {
-import flash.text.TextField;
-
 import core.model.Ammunition;
-
 import core.utils.TweenUtil;
+
+import flash.text.TextField;
 
 public class AmmunitionPanel extends DebugAmmunitionPanelView{
 

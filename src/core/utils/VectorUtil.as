@@ -6,8 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 package core.utils {
-import flash.geom.Point;
-
 public class VectorUtil {
 
     public static function removeElement(v:*, e:*):void{

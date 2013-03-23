@@ -7,7 +7,6 @@
  */
 package core.behaviors {
 import core.controller.ControllerBase;
-
 import core.model.ObjectBase;
 
 public class BehaviorBase{

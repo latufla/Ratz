@@ -7,7 +7,6 @@
  */
 package ratz.model.info {
 import ratz.model.*;
-
 import ratz.utils.Config;
 
 public class GameInfo {
