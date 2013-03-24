@@ -187,10 +187,10 @@ public class PhysEngineConnector {
     }
 
     // TODO: fix fps usage
-    public function applyTerrainFriction(obj:ObjectBase, k:Number = 0.2, angularK:Number = 0.1):void{
+    public function applyTerrainFriction(obj:ObjectBase, k:Number = 0.2, angularK:Number = 0.1, step:Number = 1 / 60):void{
         var physObj:Body = _physObjects[obj];
-        physObj.velocity.muleq(Math.pow(k, _frictionStep));
-        physObj.angularVel *= Math.pow(angularK, _frictionStep);
+        physObj.velocity.muleq(Math.pow(k, step));
+        physObj.angularVel *= Math.pow(angularK, step);
     }
 
     public function doStep(f:FieldController, step:Number, debugView:BitmapDebug = null):void {

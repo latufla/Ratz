@@ -59,8 +59,8 @@ public class ObjectBase {
         PhysEngineConnector.instance.applyAngularImpulse(this, aImp);
     }
 
-    public function applyTerrainFriction(k:Number = 0.2, angK:Number = 0.1):void{
-        PhysEngineConnector.instance.applyTerrainFriction(this, k, angK);
+    public function applyTerrainFriction(k:Number = 0.2, angK:Number = 0.1, step:Number = 1 / 60):void{
+        PhysEngineConnector.instance.applyTerrainFriction(this, k, angK, step);
     }
 
     public function set isPseudo(value:Boolean):void{

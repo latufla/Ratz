@@ -66,7 +66,7 @@ public class RFieldController extends FieldController{
 
         for each(var p:ControllerBase in _controllers){
             if(p.isRat)
-                p.object.applyTerrainFriction(0.2, 0.01);
+                p.object.applyTerrainFriction(0.2, 0.01, step);
         }
 
         if(!field.raceIsFinished)

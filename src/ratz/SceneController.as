@@ -11,7 +11,6 @@ import core.utils.EventHeap;
 
 import flash.display.MovieClip;
 
-import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.utils.Dictionary;
 
@@ -29,6 +28,9 @@ import ratz.utils.RaceInfoLib;
 import ratz.view.ControlsView;
 import ratz.view.LobbyView;
 import ratz.view.MainMenuView;
+
+import starling.events.EnterFrameEvent;
+
 
 public class SceneController extends EventDispatcher{
     private var _gameEventHandlers:Dictionary; // ratz.event type -> function
@@ -98,7 +100,7 @@ public class SceneController extends EventDispatcher{
     }
 
     private function onNeedRaceResult(data:*):void{
-        EventHeap.instance.unregister(Event.ENTER_FRAME, mainLoop);
+        Config.mainScene.removeEventListener(EnterFrameEvent.ENTER_FRAME, mainLoop);
         DisplayObjectUtil.removeAll(_view);
         _field.destroy();
         Config.gameInfo.refresh();
@@ -119,7 +121,6 @@ public class SceneController extends EventDispatcher{
         _field = new RFieldController(f);
         _field.addBehavior(new CameraBehavior());
         _field.startBehaviors();
-        _field.draw();
 
         if(Config.DEBUG){
             _fieldDebugView = new BitmapDebug(1850, 1870, Ratz.STAGE.color);
@@ -127,12 +128,13 @@ public class SceneController extends EventDispatcher{
             _view.alpha = 0.5;
         }
 
-        EventHeap.instance.register(Event.ENTER_FRAME, mainLoop);
+        Config.mainScene.addEventListener(EnterFrameEvent.ENTER_FRAME, mainLoop);
     }
 
-    private function mainLoop(e:Event):void {
-        _field.doStep(1 / 60, _fieldDebugView);
+    private function mainLoop(e:EnterFrameEvent):void {
         _field.draw();
+        _field.doStep(e.passedTime, _fieldDebugView);
+//        _field.doStep(1 / 60, _fieldDebugView);
 
         if(!_field.view.parent)
             Config.mainScene.addChild(_field.view);
