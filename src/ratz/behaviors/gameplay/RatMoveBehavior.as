@@ -23,11 +23,11 @@ public class RatMoveBehavior extends BehaviorBase{
         super();
     }
 
-    override public function doStep():void{
+    override public function doStep(step:Number):void {
         if(!_enabled)
             return;
 
-        super.doStep();
+        super.doStep(step);
 
         var controlBehavior:ControlBehavior = _controller.getBehaviorByClass(ControlBehavior) as ControlBehavior;
         if(!controlBehavior)
@@ -35,19 +35,19 @@ public class RatMoveBehavior extends BehaviorBase{
 
         var obj:ObjectBase = _controller.object;
         if(controlBehavior.run)
-            applyRun(obj);
+            applyRun(obj, step);
         else
             applyStoppage(obj);
 
         if(controlBehavior.turnRight)
-            applyTurnRight(obj, controlBehavior.run);
+            applyTurnRight(obj, step, controlBehavior.run);
 
         if(controlBehavior.turnLeft)
-            applyTurnLeft(obj, controlBehavior.run);
+            applyTurnLeft(obj, step, controlBehavior.run);
     }
 
-    private function applyRun(obj:ObjectBase):void{
-        obj.applyImpulse(new Point(0, -10));
+    private function applyRun(obj:ObjectBase, step:Number):void{
+        obj.applyImpulse(new Point(0, -590 * step));
     }
 
     private function applyStoppage(obj:ObjectBase):void {
@@ -56,17 +56,17 @@ public class RatMoveBehavior extends BehaviorBase{
             obj.velocity = new Point();
     }
 
-    private function applyTurnLeft(obj:ObjectBase, run:Boolean):void{
+    private function applyTurnLeft(obj:ObjectBase, step:Number, run:Boolean):void{
         if(run || velocitySufficient(obj)){
-            obj.applyAngularImpulse(-150);
+            obj.applyAngularImpulse(-9000 * step);
         } else {
             obj.rotation -= IDLE_ROTATION; // TODO: make correction when Math.PI/2 close
         }
     }
 
-    private function applyTurnRight(obj:ObjectBase, run:Boolean):void{
+    private function applyTurnRight(obj:ObjectBase, step:Number, run:Boolean):void{
         if(run || velocitySufficient(obj)){
-            obj.applyAngularImpulse(150);
+            obj.applyAngularImpulse(9000 * step);
         } else {
             obj.rotation += IDLE_ROTATION;
         }

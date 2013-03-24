@@ -50,7 +50,8 @@ public class FieldController extends ControllerBase{
 
     public function doStep(step:Number, debugView:* = null):void{
         for each(var p:ControllerBase in _controllers){
-            p.doBehaviorsStep();
+            p.doBehaviorsStep(step);
+            p.object.applyTerrainFriction(0.2, 0.01, step);
         }
 
         PhysEngineConnector.instance.doStep(this, step, debugView);

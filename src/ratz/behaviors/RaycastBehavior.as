@@ -19,11 +19,11 @@ public class RaycastBehavior extends BehaviorBase{
     }
 
 
-    override public function doStep():void{
+    override public function doStep(step:Number):void {
         if(!_enabled)
             return;
 
-        super.doStep();
+        super.doStep(step);
     }
 }
 }

@@ -1,8 +1,10 @@
 package ratz.behaviors.gameplay {
 import core.behaviors.BehaviorBase;
-import ratz.behaviors.control.ControlBehavior;
-import flash.geom.Point;
 import core.model.ObjectBase;
+
+import flash.geom.Point;
+
+import ratz.behaviors.control.ControlBehavior;
 
 public class MoveBehavior extends BehaviorBase{
 
@@ -10,11 +12,11 @@ public class MoveBehavior extends BehaviorBase{
         super();
     }
 
-    override public function doStep():void{
+    override public function doStep(step:Number):void {
         if(!_enabled)
             return;
 
-        super.doStep();
+        super.doStep(step);
 
         var controlBehavior:ControlBehavior = _controller.getBehaviorByClass(ControlBehavior) as ControlBehavior;
         if(!controlBehavior)

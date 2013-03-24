@@ -81,9 +81,9 @@ public class ControllerBase {
         }
     }
 
-    public function doBehaviorsStep():void{
+    public function doBehaviorsStep(step:Number):void{
         for each(var p:BehaviorBase in _behaviors){
-            p.doStep();
+            p.doStep(step);
         }
     }
 

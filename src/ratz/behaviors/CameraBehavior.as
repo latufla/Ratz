@@ -11,12 +11,10 @@ import core.controller.ControllerBase;
 import core.view.ViewBase;
 
 import flash.display.DisplayObject;
-
 import flash.geom.Point;
 
-import ratz.controller.RFieldController;
 import ratz.Ratz;
-
+import ratz.controller.RFieldController;
 import ratz.utils.Config;
 
 public class CameraBehavior extends BehaviorBase{
@@ -24,11 +22,11 @@ public class CameraBehavior extends BehaviorBase{
         super();
     }
 
-    override public function doStep():void {
+    override public function doStep(step:Number):void {
         if(!_enabled)
             return;
 
-        super.doStep();
+        super.doStep(step);
 
         if(_controller)
             applyFocus(_controller as RFieldController);

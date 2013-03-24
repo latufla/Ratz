@@ -13,6 +13,7 @@ import flash.display.MovieClip;
 
 import flash.events.EventDispatcher;
 import flash.utils.Dictionary;
+import flash.utils.setTimeout;
 
 import nape.util.BitmapDebug;
 
@@ -112,7 +113,6 @@ public class SceneController extends EventDispatcher{
 
     private function onNeedRace(data:*):void{
         DisplayObjectUtil.removeAll(_view);
-
         Config.ammunitionPanel.x = 20;
         Config.ammunitionPanel.y = 15;
         _view.addChild(Config.ammunitionPanel);
@@ -128,16 +128,15 @@ public class SceneController extends EventDispatcher{
             _view.alpha = 0.5;
         }
 
-        Config.mainScene.addEventListener(EnterFrameEvent.ENTER_FRAME, mainLoop);
+        setTimeout(Config.mainScene.addEventListener, 2000,  EnterFrameEvent.ENTER_FRAME, mainLoop);
     }
 
     private function mainLoop(e:EnterFrameEvent):void {
         _field.draw();
-        _field.doStep(e.passedTime, _fieldDebugView);
-//        _field.doStep(1 / 60, _fieldDebugView);
-
         if(!_field.view.parent)
             Config.mainScene.addChild(_field.view);
+
+        _field.doStep(e.passedTime, _fieldDebugView);
     }
 
     public function get view():MovieClip {

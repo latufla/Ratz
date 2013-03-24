@@ -28,7 +28,7 @@ public class AIControlBehavior extends ControlBehavior{
         _run = _turnLeft = _turnRight = false;
     }
 
-    override public function doStep():void{
+    override public function doStep(step:Number):void {
         if(!_enabled)
             return;
 

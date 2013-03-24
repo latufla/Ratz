@@ -27,11 +27,11 @@ public class BoostBehavior extends BehaviorBase{
     public function BoostBehavior() {
     }
 
-    override public function doStep():void {
+    override public function doStep(step:Number):void {
         if(!_enabled)
             return;
 
-        super.doStep();
+        super.doStep(step);
 
         var controlBehavior:ControlBehavior = _controller.getBehaviorByClass(ControlBehavior) as ControlBehavior;
         if(!controlBehavior)

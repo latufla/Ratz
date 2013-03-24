@@ -47,11 +47,11 @@ public class DebugStatDisplayBehavior extends BehaviorBase{
         DisplayObjectUtil.tryRemove(_lineContainer);
     }
 
-    override public function doStep():void {
+    override public function doStep(step:Number):void {
         if(!_enabled)
             return;
 
-        super.doStep();
+        super.doStep(step);
 
         var obj:ObjectBase = _controller.object;
         _statField.x = obj.position.x;

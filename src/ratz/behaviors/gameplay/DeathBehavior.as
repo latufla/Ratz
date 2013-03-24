@@ -7,7 +7,6 @@
  */
 package ratz.behaviors.gameplay {
 import core.behaviors.BehaviorBase;
-import core.controller.ControllerBase;
 import core.utils.GuiUtil;
 
 import flash.geom.Point;
@@ -28,11 +27,11 @@ public class DeathBehavior extends BehaviorBase{
     public function DeathBehavior() {
     }
 
-    override public function doStep():void {
+    override public function doStep(step:Number):void {
         if(!_enabled)
             return;
 
-        super.doStep();
+        super.doStep(step);
 
         var obj:RObjectBase = _controller.object as RObjectBase;
         if(obj.ammunition.health <=0 && obj.controller)

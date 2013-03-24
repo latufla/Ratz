@@ -25,7 +25,6 @@ import ratz.behaviors.gameplay.MedkitItemBehavior;
 import ratz.behaviors.gameplay.RatMoveBehavior;
 import ratz.behaviors.gameplay.ShootBehavior;
 import ratz.behaviors.gameplay.TrapBehavior;
-import ratz.controller.RControllerBase;
 import ratz.managers.WaypointManager;
 import ratz.model.Field;
 import ratz.model.RObjectBase;
@@ -63,11 +62,6 @@ public class RFieldController extends FieldController{
 
     override public function doStep(step:Number, debugView:* = null):void{
         super.doStep(step, debugView);
-
-        for each(var p:ControllerBase in _controllers){
-            if(p.isRat)
-                p.object.applyTerrainFriction(0.2, 0.01, step);
-        }
 
         if(!field.raceIsFinished)
             field.updateRaceProgress();

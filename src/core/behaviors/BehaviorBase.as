@@ -31,7 +31,7 @@ public class BehaviorBase{
     }
 
     // override if there is some EF behavior
-    public function doStep():void{
+    public function doStep(step:Number):void {
 
     }
 
