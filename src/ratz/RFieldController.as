@@ -46,12 +46,8 @@ public class RFieldController extends FieldController{
         WaypointManager.instance.init(field);
         add(this);
 
-        createItems(field);
+//        createItems(field);
         createRats(field);
-    }
-
-    private function get field():Field{
-        return _object as Field;
     }
 
     override public function doStep(step:Number, debugView:* = null):void{
@@ -68,6 +64,27 @@ public class RFieldController extends FieldController{
 
     public function get ratControllers():Vector.<ControllerBase>{
         return getControllersByBehaviorClass(RatMoveBehavior);
+    }
+
+    public function get playerRatController():ControllerBase{
+        return getRatControllerByUserInfo(field.player);
+    }
+
+    public function getRatControllerByUserInfo(p:UserInfo):ControllerBase{
+        var ratCs:Vector.<ControllerBase> = ratControllers;
+        var res:Vector.<ControllerBase> = _controllers.filter(function (e:ControllerBase, i:int, v:Vector.<ControllerBase>):Boolean{
+            return e.object.name == p.name;
+        });
+
+        if(res.length > 0)
+            return res[0];
+
+        return null;
+    }
+
+
+    private function get field():Field{
+        return _object as Field;
     }
 
     private function createRats(f:Field):void {

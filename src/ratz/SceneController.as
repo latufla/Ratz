@@ -16,6 +16,8 @@ import flash.utils.Dictionary;
 
 import nape.util.BitmapDebug;
 
+import ratz.behaviors.CameraBehavior;
+
 import ratz.event.GameEvent;
 import ratz.model.Field;
 import ratz.model.info.GameInfo;
@@ -49,6 +51,8 @@ public class SceneController extends EventDispatcher{
         trace(Config.gameInfo);
 
         EventHeap.instance.dispatch(new GameEvent(GameEvent.NEED_RACE));
+
+        Config.sceneController = this;
     }
 
     private function addEventListeners():void {
@@ -113,8 +117,11 @@ public class SceneController extends EventDispatcher{
 
         var raceInfo:Field = RaceInfoLib.getRaceInfoByLevel(1);
         _field = new RFieldController(raceInfo);
+        _field.addBehavior(new CameraBehavior());
+        _field.startBehaviors();
 
-        _fieldDebugView = new BitmapDebug(Ratz.STAGE.stageWidth, Ratz.STAGE.stageHeight, Ratz.STAGE.color);
+//        _fieldDebugView = new BitmapDebug(Ratz.STAGE.stageWidth, Ratz.STAGE.stageHeight, Ratz.STAGE.color);
+        _fieldDebugView = new BitmapDebug(1850, 1870, Ratz.STAGE.color);
         _fieldDebugView.display.x = 0;
         _fieldDebugView.display.y = 50;
         _view.addChild(_fieldDebugView.display);
@@ -124,6 +131,18 @@ public class SceneController extends EventDispatcher{
 
     private function mainLoop(e:Event):void {
         _field.doStep(1 / 60, _fieldDebugView);
+    }
+
+    public function get view():ViewBase {
+        return _view;
+    }
+
+    public function get fieldDebugView():BitmapDebug {
+        return _fieldDebugView;
+    }
+
+    public function set fieldDebugView(value:BitmapDebug):void {
+        _fieldDebugView = value;
     }
 }
 }

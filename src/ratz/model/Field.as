@@ -16,6 +16,7 @@ import flash.display.BitmapData;
 
 import ratz.event.GameEvent;
 import ratz.managers.WaypointManager;
+import ratz.model.info.BotInfo;
 import ratz.model.info.UserInfo;
 import ratz.utils.Config;
 
@@ -87,6 +88,17 @@ public class Field extends ObjectBase{
 
     public function get racers():Vector.<UserInfo> {
         return _racers;
+    }
+
+    public function get player():UserInfo{
+        var res:Vector.<UserInfo> = _racers.filter(function (e:UserInfo, i:int, v:Vector.<UserInfo>):Boolean{
+            return !(e is BotInfo);
+        });
+
+        if(res.length > 0)
+            return res[0];
+
+        return null;
     }
 
     public function getRacerPlace(r:UserInfo):int {

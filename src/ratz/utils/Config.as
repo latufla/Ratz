@@ -7,6 +7,7 @@
  */
 package ratz.utils {
 import ratz.RFieldController;
+import ratz.SceneController;
 import ratz.debug.AmmunitionPanel;
 import ratz.model.info.GameInfo;
 
@@ -15,6 +16,7 @@ public class Config {
     public static const fps:uint = 60;
     public static const ammunitionPanel:AmmunitionPanel = new AmmunitionPanel();
     public static var fieldController:RFieldController;
+    public static var sceneController:SceneController;
     public static var gameInfo:GameInfo;
 
     public static var soundEnabled:Boolean = true;
