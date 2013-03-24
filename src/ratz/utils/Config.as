@@ -7,7 +7,7 @@
  */
 package ratz.utils {
 import ratz.Engine;
-import ratz.RFieldController;
+import ratz.controller.RFieldController;
 import ratz.SceneController;
 import ratz.debug.AmmunitionPanel;
 import ratz.model.info.GameInfo;
@@ -15,7 +15,7 @@ import ratz.model.info.GameInfo;
 public class Config {
 
     public static const fps:uint = 60;
-    public static const DEBUG:Boolean = true;
+    public static const DEBUG:Boolean = false;
     public static const ammunitionPanel:AmmunitionPanel = new AmmunitionPanel();
 
     public static var mainScene:Engine;

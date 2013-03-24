@@ -5,7 +5,7 @@
  * Time: 19:39
  * To change this template use File | Settings | File Templates.
  */
-package ratz {
+package ratz.controller {
 
 import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;

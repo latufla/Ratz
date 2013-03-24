@@ -18,6 +18,7 @@ import flash.utils.Dictionary;
 import nape.util.BitmapDebug;
 
 import ratz.behaviors.CameraBehavior;
+import ratz.controller.RFieldController;
 
 import ratz.event.GameEvent;
 import ratz.model.Field;
@@ -102,8 +103,6 @@ public class SceneController extends EventDispatcher{
         _field.destroy();
         Config.gameInfo.refresh();
 
-        _fieldDebugView.clear();
-        _fieldDebugView.flush();
 //        DisplayObjectUtil.removeAll(_view);
 //        var raceInfo:RaceInfo = RaceInfoLib.getRaceInfoByLevel(1);
 //        _view.addChild(new RaceResultView(data.raceInfo));
@@ -116,36 +115,31 @@ public class SceneController extends EventDispatcher{
         Config.ammunitionPanel.y = 15;
         _view.addChild(Config.ammunitionPanel);
 
-        var raceInfo:Field = RaceInfoLib.getRaceInfoByLevel(1);
-        _field = new RFieldController(raceInfo);
+        var f:Field = RaceInfoLib.getRaceInfoByLevel(1);
+        _field = new RFieldController(f);
         _field.addBehavior(new CameraBehavior());
         _field.startBehaviors();
-
-//        _fieldDebugView = new BitmapDebug(Ratz.STAGE.stageWidth, Ratz.STAGE.stageHeight, Ratz.STAGE.color);
-        _fieldDebugView = new BitmapDebug(1850, 1870, Ratz.STAGE.color);
-//        _view.addChild(_fieldDebugView.display);
-//        _view.alpha = 0.5;
         _field.draw();
+
+        if(Config.DEBUG){
+            _fieldDebugView = new BitmapDebug(1850, 1870, Ratz.STAGE.color);
+            _view.addChild(_fieldDebugView.display);
+            _view.alpha = 0.5;
+        }
+
         EventHeap.instance.register(Event.ENTER_FRAME, mainLoop);
     }
 
     private function mainLoop(e:Event):void {
-//        _field.doStep(1 / 60, _fieldDebugView);
-        _field.doStep(1 / 60);
+        _field.doStep(1 / 60, _fieldDebugView);
         _field.draw();
-        Config.mainScene.addChild(_field.view);
+
+        if(!_field.view.parent)
+            Config.mainScene.addChild(_field.view);
     }
 
     public function get view():MovieClip {
         return _view;
-    }
-
-    public function get fieldDebugView():BitmapDebug {
-        return _fieldDebugView;
-    }
-
-    public function set fieldDebugView(value:BitmapDebug):void {
-        _fieldDebugView = value;
     }
 }
 }

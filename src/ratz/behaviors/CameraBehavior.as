@@ -8,10 +8,13 @@
 package ratz.behaviors {
 import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
+import core.view.ViewBase;
+
+import flash.display.DisplayObject;
 
 import flash.geom.Point;
 
-import ratz.RFieldController;
+import ratz.controller.RFieldController;
 import ratz.Ratz;
 
 import ratz.utils.Config;
@@ -37,11 +40,17 @@ public class CameraBehavior extends BehaviorBase{
             return;
 
         var pos:Point = playerRatC.object.position;
-        Config.sceneController.view.x = Ratz.STAGE.stageWidth / 2 - pos.x;
-        Config.sceneController.view.y = Ratz.STAGE.stageHeight / 2 - pos.y;
+        var debugView:DisplayObject = Config.sceneController.view;
+        if(debugView){
+            debugView.x = Ratz.STAGE.stageWidth / 2 - pos.x;
+            debugView.y = Ratz.STAGE.stageHeight / 2 - pos.y;
+        }
 
-        Config.fieldController.view.x = Ratz.STAGE.stageWidth / 2 - pos.x;
-        Config.fieldController.view.y = Ratz.STAGE.stageHeight / 2 - pos.y;
+        var releaseView:ViewBase = Config.fieldController.view;
+        if(releaseView){
+            releaseView.x = Ratz.STAGE.stageWidth / 2 - pos.x;
+            releaseView.y = Ratz.STAGE.stageHeight / 2 - pos.y;
+        }
     }
 
 }
