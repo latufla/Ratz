@@ -26,8 +26,8 @@ public class DisplayObjectUtil {
 
     public static function drawLine(g:Graphics, l:Line, color:uint = 0xFF0000):void{
         g.lineStyle(1, color);
-        g.moveTo(l.begin.x, l.begin.y + 50);
-        g.lineTo(l.end.x, l.end.y + 50);
+        g.moveTo(l.begin.x, l.begin.y);
+        g.lineTo(l.end.x, l.end.y);
         g.endFill();
     }
 }

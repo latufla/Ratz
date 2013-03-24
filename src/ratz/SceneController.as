@@ -8,7 +8,8 @@
 package ratz {
 import core.utils.DisplayObjectUtil;
 import core.utils.EventHeap;
-import core.view.ViewBase;
+
+import flash.display.MovieClip;
 
 import flash.events.Event;
 import flash.events.EventDispatcher;
@@ -31,7 +32,7 @@ import ratz.view.MainMenuView;
 public class SceneController extends EventDispatcher{
     private var _gameEventHandlers:Dictionary; // ratz.event type -> function
 
-    private var _view:ViewBase;
+    private var _view:MovieClip;
 
     private var _field:RFieldController;
     private var _fieldDebugView:BitmapDebug;
@@ -41,7 +42,7 @@ public class SceneController extends EventDispatcher{
     }
 
     private function init():void {
-        _view = new ViewBase();
+        _view = new MovieClip();
         Ratz.STAGE.addChild(_view);
 
         addEventListeners();
@@ -122,18 +123,20 @@ public class SceneController extends EventDispatcher{
 
 //        _fieldDebugView = new BitmapDebug(Ratz.STAGE.stageWidth, Ratz.STAGE.stageHeight, Ratz.STAGE.color);
         _fieldDebugView = new BitmapDebug(1850, 1870, Ratz.STAGE.color);
-        _fieldDebugView.display.x = 0;
-        _fieldDebugView.display.y = 50;
-        _view.addChild(_fieldDebugView.display);
-
+//        _view.addChild(_fieldDebugView.display);
+//        _view.alpha = 0.5;
+        _field.draw();
         EventHeap.instance.register(Event.ENTER_FRAME, mainLoop);
     }
 
     private function mainLoop(e:Event):void {
-        _field.doStep(1 / 60, _fieldDebugView);
+//        _field.doStep(1 / 60, _fieldDebugView);
+        _field.doStep(1 / 60);
+        _field.draw();
+        Config.mainScene.addChild(_field.view);
     }
 
-    public function get view():ViewBase {
+    public function get view():MovieClip {
         return _view;
     }
 

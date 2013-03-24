@@ -43,8 +43,9 @@ public class RaceInfoLib {
         wps.push({rect: new Rectangle(170, 1465, 206, 206), inLine: new Line(new Point(170, 1465), new Point(376, 1465)), outLine:new Line(new Point(376, 1465), new Point(376, 1671))});
         wps.push({rect: new Rectangle(1458, 1465, 206, 206), inLine: new Line(new Point(1458, 1465), new Point(1458, 1671)), outLine:new Line(new Point(1458, 1465), new Point(1664, 1465))});
 
-//        return new RaceInfo(border, wps, new <UserInfo>[Config.gameInfo.allRacers[0]]/*Config.gameInfo.allRacers*/);
-        return new Field(border, wps, Config.gameInfo.allRacers);
+        var f:Field = new Field(border, wps, Config.gameInfo.allRacers);
+        f.libDesc = StarlingAssetsLib.LEVEL_1;
+        return f;
     }
 
     public static function getDemoRaceInfoByLevel():Field{

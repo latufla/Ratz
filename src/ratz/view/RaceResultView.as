@@ -7,7 +7,6 @@
  */
 package ratz.view {
 import core.utils.EventHeap;
-import core.view.ViewBase;
 
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
@@ -24,7 +23,7 @@ import ratz.model.info.UserInfo;
 import ratz.utils.AssetsLib;
 import ratz.utils.Config;
 
-public class RaceResultView extends ViewBase{
+public class RaceResultView extends Sprite{
 
     private static const CLOSE_TIMEOUT:Number = 7000;
 

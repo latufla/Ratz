@@ -16,7 +16,7 @@ public class CustomMaterial {
     private var _density:Number;
     private var _rollingFriction:Number;
 
-    public function CustomMaterial(e:Number = 10, dF:Number = 0, sF:Number = 0, d:Number = 1.5, rF:Number = 0.01) {
+    public function CustomMaterial(e:Number = 10, dF:Number = 0, sF:Number = 0, d:Number = 3, rF:Number = 0.01) {
         _elasticity = e;
         _dynamicFriction = dF;
         _staticFriction = sF;

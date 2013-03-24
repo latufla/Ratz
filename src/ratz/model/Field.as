@@ -20,7 +20,7 @@ import ratz.model.info.BotInfo;
 import ratz.model.info.UserInfo;
 import ratz.utils.Config;
 
-public class Field extends ObjectBase{
+public class Field extends RObjectBase{
 
     private var _laps:uint = 1;
 

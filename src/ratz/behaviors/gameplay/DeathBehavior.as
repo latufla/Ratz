@@ -15,6 +15,7 @@ import flash.utils.clearTimeout;
 import flash.utils.setTimeout;
 
 import ratz.Ratz;
+import ratz.controller.RControllerBase;
 import ratz.managers.WaypointManager;
 import ratz.model.RObjectBase;
 import ratz.utils.Config;
@@ -43,10 +44,10 @@ public class DeathBehavior extends BehaviorBase{
         var pos:Point = obj.position;
         GuiUtil.showStaticText(Ratz.STAGE, new Point(pos.x, pos.y), "BAAAAANG!!!", 30, 0xFF0000);
 
-        var recoveryObj:RObjectBase = RObjectBase.create(obj.position, obj.shapes, obj.material, obj.interactionGroup);
+        var recoveryObj:RObjectBase = RObjectBase.create(obj.libDesc, obj.position, obj.shapes, obj.material, obj.interactionGroup);
         recoveryObj.name = obj.name;
         recoveryObj.ammunition = obj.ammunition;
-        var recoveryC:ControllerBase = ControllerBase.create(recoveryObj, obj.controller.behaviors);
+        var recoveryC:RControllerBase = RControllerBase.create(recoveryObj, obj.controller.behaviors);
         Config.fieldController.remove(obj.controller);
 
         _recoverId = setTimeout(function ():void{

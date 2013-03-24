@@ -39,6 +39,9 @@ public class CameraBehavior extends BehaviorBase{
         var pos:Point = playerRatC.object.position;
         Config.sceneController.view.x = Ratz.STAGE.stageWidth / 2 - pos.x;
         Config.sceneController.view.y = Ratz.STAGE.stageHeight / 2 - pos.y;
+
+        Config.fieldController.view.x = Ratz.STAGE.stageWidth / 2 - pos.x;
+        Config.fieldController.view.y = Ratz.STAGE.stageHeight / 2 - pos.y;
     }
 
 }

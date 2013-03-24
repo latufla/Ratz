@@ -30,7 +30,7 @@ public class GuiUtil {
         tField.textColor = color;
         view.addChild(tField);
 
-        TweenUtil.tween(tField, 2000, { y: tField.y - 50, alpha: 0, onComplete: function():void{DisplayObjectUtil.tryRemove(tField)}});
+        TweenUtil.tween(tField, 2000, { y: tField.y, alpha: 0, onComplete: function():void{DisplayObjectUtil.tryRemove(tField)}});
     }
 
     public static function showStaticText(view:DisplayObjectContainer, pos:Point, text:String, fontSize:uint = 30, color:uint = 0x00FF00):void{

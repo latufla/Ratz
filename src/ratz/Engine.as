@@ -8,6 +8,8 @@
 package ratz {
 import core.utils.FPSCounter;
 
+import ratz.utils.Config;
+
 import starling.display.Sprite;
 
 public class Engine extends Sprite{
@@ -35,6 +37,8 @@ public class Engine extends Sprite{
     }
 
     private function init():void {
+        Config.mainScene = this;
+
         _scene = new SceneController();
         Ratz.STAGE.addChild(new FPSCounter(5, 5));
     }

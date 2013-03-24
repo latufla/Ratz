@@ -7,17 +7,17 @@
  */
 package ratz.view {
 import core.utils.EventHeap;
-import core.view.ViewBase;
 
 import flash.display.DisplayObjectContainer;
 import flash.display.MovieClip;
+import flash.display.Sprite;
 import flash.events.MouseEvent;
 
 import ratz.event.GameEvent;
 import ratz.utils.AssetsLib;
 import ratz.utils.Config;
 
-public class MainMenuView extends ViewBase {
+public class MainMenuView extends Sprite {
 
     private var _container:DisplayObjectContainer;
     public function MainMenuView() {

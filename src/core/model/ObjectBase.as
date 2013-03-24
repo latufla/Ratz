@@ -20,6 +20,7 @@ import ratz.utils.Config;
 
 public class ObjectBase {
     protected var _name:String = "dummy";
+    protected var _libDesc:String = "";
 
     protected static const DEFAULT_SHAPE:CustomPolygon = new CustomPolygon(0, 0, 30, 60);
     protected static const DEFAULT_POSITION:Point = new Point(0, 0);
@@ -189,6 +190,18 @@ public class ObjectBase {
 
     public function get controller():ControllerBase{
         return Config.fieldController.getControllerByObject(this);
+    }
+
+    public function get libDesc():String {
+        return _libDesc;
+    }
+
+    public function set libDesc(value:String):void {
+        _libDesc = value;
+    }
+
+    public function createAsset():*{
+        return null;
     }
 }
 }

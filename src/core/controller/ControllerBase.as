@@ -39,10 +39,22 @@ public class ControllerBase {
         return c;
     }
 
-    public function addBehavior(b:BehaviorBase):void{
-        if(!b)
-            throw new Error("can`t add behavior: null");
 
+    public function draw():void{
+        if(!_object)
+            return;
+
+        _view ||= new ViewBase();
+        _view.content ||= _object.createAsset();
+
+        align();
+    }
+
+    protected function align():void{
+
+    }
+
+    public function addBehavior(b:BehaviorBase):void{
         _behaviors.push(b);
     }
 

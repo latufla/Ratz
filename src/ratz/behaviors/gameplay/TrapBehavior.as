@@ -48,7 +48,7 @@ public class TrapBehavior extends BehaviorBase{
         obj.ammunition.traps--;
 
         var pos:Point = obj.localToField(new Point(0, 51));
-        var trap:RObjectBase =RObjectBase.create(pos, new <CustomShape>[new CustomPolygon(0, 0, 20, 20)], new CustomMaterial(), 1);
+        var trap:RObjectBase = RObjectBase.create("", pos, new <CustomShape>[new CustomPolygon(0, 0, 20, 20)], new CustomMaterial(), 1);
         trap.ammunition.health = 30;
 
         var trapController:ControllerBase = ControllerBase.create(trap, new <BehaviorBase>[new TrapItemBehavior()]);

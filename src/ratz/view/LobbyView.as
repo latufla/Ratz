@@ -7,11 +7,11 @@
  */
 package ratz.view {
 import core.utils.EventHeap;
-import core.view.ViewBase;
 
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.display.MovieClip;
+import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
@@ -22,7 +22,7 @@ import ratz.model.info.UserInfo;
 import ratz.utils.AssetsLib;
 import ratz.utils.Config;
 
-public class LobbyView extends ViewBase{
+public class LobbyView extends Sprite{
 
     private var _container:DisplayObjectContainer;
     private var _gameInfo:GameInfo;

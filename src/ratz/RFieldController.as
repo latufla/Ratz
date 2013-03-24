@@ -25,12 +25,14 @@ import ratz.behaviors.gameplay.MedkitItemBehavior;
 import ratz.behaviors.gameplay.RatMoveBehavior;
 import ratz.behaviors.gameplay.ShootBehavior;
 import ratz.behaviors.gameplay.TrapBehavior;
+import ratz.controller.RControllerBase;
 import ratz.managers.WaypointManager;
 import ratz.model.Field;
 import ratz.model.RObjectBase;
 import ratz.model.info.BotInfo;
 import ratz.model.info.UserInfo;
 import ratz.utils.Config;
+import ratz.utils.StarlingAssetsLib;
 
 public class RFieldController extends FieldController{
 
@@ -46,8 +48,17 @@ public class RFieldController extends FieldController{
         WaypointManager.instance.init(field);
         add(this);
 
-//        createItems(field);
+        createItems(field);
         createRats(field);
+    }
+
+    override public function draw():void{
+        super.draw();
+
+        for each(var p:ControllerBase in ratControllers){
+            p.draw();
+            _view.addChild(p.view);
+        }
     }
 
     override public function doStep(step:Number, debugView:* = null):void{
@@ -72,7 +83,7 @@ public class RFieldController extends FieldController{
 
     public function getRatControllerByUserInfo(p:UserInfo):ControllerBase{
         var ratCs:Vector.<ControllerBase> = ratControllers;
-        var res:Vector.<ControllerBase> = _controllers.filter(function (e:ControllerBase, i:int, v:Vector.<ControllerBase>):Boolean{
+        var res:Vector.<ControllerBase> = ratCs.filter(function (e:ControllerBase, i:int, v:Vector.<ControllerBase>):Boolean{
             return e.object.name == p.name;
         });
 
@@ -101,7 +112,7 @@ public class RFieldController extends FieldController{
         var bhs:Vector.<BehaviorBase>;
         var n:uint = f.racers.length;
         for(var i:uint = 0; i < n; i++){
-            rat = RObjectBase.create(new Point(startPoints[i].x + i * 10, startPoints[i].y + 20), new <CustomShape>[new CustomPolygon(0, 0, 30, 60)], new CustomMaterial(), 1);
+            rat = RObjectBase.create(StarlingAssetsLib.RAT, new Point(startPoints[i].x + i * 10, startPoints[i].y + 20), new <CustomShape>[new CustomPolygon(0, 0, 20, 44)], new CustomMaterial(), 1);
             racer = f.racers[i];
             rat.name = racer.name;
 
@@ -110,12 +121,12 @@ public class RFieldController extends FieldController{
             else
                 bhs = new <BehaviorBase>[new UserControlBehavior(), new RatMoveBehavior(), new TrapBehavior(), new BoostBehavior(), new ShootBehavior(), new DeathBehavior(), new StatDisplayBehavior()];
 
-            add(ControllerBase.create(rat, bhs));
+            add(RControllerBase.create(rat, bhs));
         }
     }
 
     private function createItems(f:Field):void {
-        var medkit:RObjectBase = RObjectBase.create(new Point(650, 250), new <CustomShape>[new CustomPolygon(0, 0, 30, 30)], new CustomMaterial(), 1);
+        var medkit:RObjectBase = RObjectBase.create("", new Point(650, 250), new <CustomShape>[new CustomPolygon(0, 0, 30, 30)], new CustomMaterial(), 1);
         medkit.ammunition.health = 35;
 
         var medkitController:ControllerBase = ControllerBase.create(medkit, new <BehaviorBase>[new MedkitItemBehavior()]);

@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz.utils {
+import ratz.Engine;
 import ratz.RFieldController;
 import ratz.SceneController;
 import ratz.debug.AmmunitionPanel;
@@ -14,7 +15,11 @@ import ratz.model.info.GameInfo;
 public class Config {
 
     public static const fps:uint = 60;
+    public static const DEBUG:Boolean = true;
     public static const ammunitionPanel:AmmunitionPanel = new AmmunitionPanel();
+
+    public static var mainScene:Engine;
+
     public static var fieldController:RFieldController;
     public static var sceneController:SceneController;
     public static var gameInfo:GameInfo;
