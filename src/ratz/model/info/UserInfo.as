@@ -12,34 +12,25 @@ public class UserInfo {
     public static const RUSSIA:uint = 2;
     public static const USA:uint = 3;
 
-    public static const RETARDED:uint = 0;
-    public static const DUMB:uint = 1;
-    public static const ORDINARY:uint = 2;
-    public static const SMART:uint = 3;
+    protected var _id:uint;
+    protected var _name:String = "noName";
 
-    private var _id:uint;
-    private var _name:String = "noName";
+    protected var _country:uint = CHINA;
 
-    private var _country:uint = CHINA;
+    protected var _points:uint = 0;
+    protected var _races:uint = 0;
 
-    private var _points:uint = 0;
-    private var _races:uint = 0;
-
-    private var _currentLap:uint = 0;
-    private var _distanceToFinish:int = 0;
-
-    // bot
-    private var _intelligence:uint = SMART;
+    protected var _currentLap:uint = 0;
+    protected var _distanceToFinish:int = 0;
 
     public function UserInfo(id:uint, name:String) {
         _id = id;
         _name = name;
     }
 
-    public static function create(id:uint, name:String, country:uint, intelligence:uint = SMART):UserInfo{
+    public static function create(id:uint, name:String, country:uint):UserInfo{
         var info:UserInfo = new UserInfo(id, name);
         info.country = country;
-        info.intelligence = intelligence;
         return info;
     }
 
@@ -80,21 +71,12 @@ public class UserInfo {
         _races = value;
     }
 
-    public function get intelligence():uint {
-        return _intelligence;
-    }
-
-    public function set intelligence(value:uint):void {
-        _intelligence = value;
-    }
-
     public function toString():String{
         return "{ id: " + _id  +
                 ", name: " + _name +
                 ", country: " + _country +
                 ", points: " + _points +
-                ", races: " + _races +
-                ", intelligence: " + _intelligence + " }";
+                ", races: " + _races + " }";
     }
 
     public function get currentLap():uint {

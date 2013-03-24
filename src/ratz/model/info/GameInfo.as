@@ -66,7 +66,7 @@ public class GameInfo {
         var opps:Vector.<UserInfo> = new Vector.<UserInfo>();
         var bot:UserInfo;
         for (var i:uint = 0; i < Config.maxBotsCount && countries.length != 0; i++){
-            bot = UserInfo.create(i + 1, "rat" + (i + 1), countries.shift(), UserInfo.SMART);
+            bot = BotInfo.create(i + 1, "rat" + (i + 1), countries.shift(), BotInfo.SMART);
             opps.push(bot);
         }
         return opps;

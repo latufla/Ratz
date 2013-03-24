@@ -10,11 +10,11 @@ import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
 import core.model.ObjectBase;
 import core.utils.GuiUtil;
-import core.utils.nape.PhysEngineConnector;
 
 import flash.geom.Point;
 
 import ratz.Ratz;
+import ratz.model.RObjectBase;
 import ratz.utils.Config;
 
 public class TrapItemBehavior extends BehaviorBase{
@@ -41,10 +41,12 @@ public class TrapItemBehavior extends BehaviorBase{
         if(!ratC.isRat)
             return;
 
-        obj.ammunition.health -= trap.ammunition.health;
+        var r:RObjectBase = obj as RObjectBase;
+        var tr:RObjectBase = trap as RObjectBase;
+        r.ammunition.health -= tr.ammunition.health;
 
         var pos:Point = trap.position;
-        GuiUtil.showPopupText(Ratz.STAGE, new Point(pos.x, pos.y), "-" + trap.ammunition.health, 30, 0xFF0000);
+        GuiUtil.showPopupText(Ratz.STAGE, new Point(pos.x, pos.y), "-" + tr.ammunition.health, 30, 0xFF0000);
 
         Config.fieldController.remove(trap.controller);
     }

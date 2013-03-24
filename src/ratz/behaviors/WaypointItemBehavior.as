@@ -12,7 +12,6 @@ import core.model.ObjectBase;
 import core.utils.GuiUtil;
 import core.utils.VectorUtil;
 import core.utils.geom.Line;
-import core.utils.nape.PhysEngineConnector;
 
 import flash.geom.Point;
 

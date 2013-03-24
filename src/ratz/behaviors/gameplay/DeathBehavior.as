@@ -8,7 +8,6 @@
 package ratz.behaviors.gameplay {
 import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
-import core.model.ObjectBase;
 import core.utils.GuiUtil;
 
 import flash.geom.Point;
@@ -17,6 +16,7 @@ import flash.utils.setTimeout;
 
 import ratz.Ratz;
 import ratz.managers.WaypointManager;
+import ratz.model.RObjectBase;
 import ratz.utils.Config;
 
 public class DeathBehavior extends BehaviorBase{
@@ -33,17 +33,17 @@ public class DeathBehavior extends BehaviorBase{
 
         super.doStep();
 
-        var obj:ObjectBase = _controller.object;
+        var obj:RObjectBase = _controller.object as RObjectBase;
         if(obj.ammunition.health <=0 && obj.controller)
             applyDeath(obj);
     }
 
     // TODO: think about standart clone
-    private function applyDeath(obj:ObjectBase):void {
+    private function applyDeath(obj:RObjectBase):void {
         var pos:Point = obj.position;
         GuiUtil.showStaticText(Ratz.STAGE, new Point(pos.x, pos.y), "BAAAAANG!!!", 30, 0xFF0000);
 
-        var recoveryObj:ObjectBase = ObjectBase.create(obj.position, obj.shapes, obj.material, obj.interactionGroup);
+        var recoveryObj:RObjectBase = RObjectBase.create(obj.position, obj.shapes, obj.material, obj.interactionGroup);
         recoveryObj.name = obj.name;
         recoveryObj.ammunition = obj.ammunition;
         var recoveryC:ControllerBase = ControllerBase.create(recoveryObj, obj.controller.behaviors);

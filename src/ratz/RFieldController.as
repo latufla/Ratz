@@ -10,15 +10,15 @@ package ratz {
 import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
 import core.controller.FieldController;
-import core.model.ObjectBase;
 import core.utils.nape.CustomMaterial;
 import core.utils.nape.CustomPolygon;
 import core.utils.nape.CustomShape;
 
 import flash.geom.Point;
 
-import ratz.behaviors.DebugStatDisplayBehavior;
+import ratz.behaviors.StatDisplayBehavior;
 import ratz.behaviors.control.ai.AIControlBehavior;
+import ratz.behaviors.control.user.UserControlBehavior;
 import ratz.behaviors.gameplay.BoostBehavior;
 import ratz.behaviors.gameplay.DeathBehavior;
 import ratz.behaviors.gameplay.MedkitItemBehavior;
@@ -27,11 +27,14 @@ import ratz.behaviors.gameplay.ShootBehavior;
 import ratz.behaviors.gameplay.TrapBehavior;
 import ratz.managers.WaypointManager;
 import ratz.model.Field;
+import ratz.model.RObjectBase;
+import ratz.model.info.BotInfo;
+import ratz.model.info.UserInfo;
 import ratz.utils.Config;
 
-public class RatzFieldController extends FieldController{
+public class RFieldController extends FieldController{
 
-    public function RatzFieldController(field:Field) {
+    public function RFieldController(field:Field) {
         _object = field;
         super();
     }
@@ -76,25 +79,26 @@ public class RatzFieldController extends FieldController{
         startPoints.shift();
         startPoints.pop();
 
-        var rat:ObjectBase;
-        var ratC:ControllerBase;
-        for(var i:uint = 0; i < f.racers.length; i++){
-            rat = ObjectBase.create(new Point(startPoints[i].x + i * 10, startPoints[i].y + 20), new <CustomShape>[new CustomPolygon(0, 0, 30, 60)], new CustomMaterial(), 1);
-            rat.name = f.racers[i].name;
-            ratC = ControllerBase.create(rat, new <BehaviorBase>[new AIControlBehavior(), //new UserControlBehavior(),
-                new RatMoveBehavior(),
-                new TrapBehavior(),
-                new BoostBehavior(),
-                new ShootBehavior(),
-                new DeathBehavior(),
-//                new StatDisplayBehavior(),
-                /*new DebugStatDisplayBehavior(field)*/]);
-            add(ratC);
+        var racer:UserInfo;
+        var rat:RObjectBase;
+        var bhs:Vector.<BehaviorBase>;
+        var n:uint = f.racers.length;
+        for(var i:uint = 0; i < n; i++){
+            rat = RObjectBase.create(new Point(startPoints[i].x + i * 10, startPoints[i].y + 20), new <CustomShape>[new CustomPolygon(0, 0, 30, 60)], new CustomMaterial(), 1);
+            racer = f.racers[i];
+            rat.name = racer.name;
+
+            if(racer is BotInfo)
+                bhs = new <BehaviorBase>[new AIControlBehavior(), new RatMoveBehavior(), new TrapBehavior(), new BoostBehavior(), new ShootBehavior(), new DeathBehavior()];
+            else
+                bhs = new <BehaviorBase>[new UserControlBehavior(), new RatMoveBehavior(), new TrapBehavior(), new BoostBehavior(), new ShootBehavior(), new DeathBehavior(), new StatDisplayBehavior()];
+
+            add(ControllerBase.create(rat, bhs));
         }
     }
 
     private function createItems(f:Field):void {
-        var medkit:ObjectBase = ObjectBase.create(new Point(650, 250), new <CustomShape>[new CustomPolygon(0, 0, 30, 30)], new CustomMaterial(), 1);
+        var medkit:RObjectBase = RObjectBase.create(new Point(650, 250), new <CustomShape>[new CustomPolygon(0, 0, 30, 30)], new CustomMaterial(), 1);
         medkit.ammunition.health = 35;
 
         var medkitController:ControllerBase = ControllerBase.create(medkit, new <BehaviorBase>[new MedkitItemBehavior()]);

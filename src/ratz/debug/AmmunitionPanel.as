@@ -6,10 +6,11 @@
  * To change this template use File | Settings | File Templates.
  */
 package ratz.debug {
-import core.model.Ammunition;
 import core.utils.TweenUtil;
 
 import flash.text.TextField;
+
+import ratz.model.info.AmmunitionInfo;
 
 public class AmmunitionPanel extends DebugAmmunitionPanelView{
 
@@ -17,7 +18,7 @@ public class AmmunitionPanel extends DebugAmmunitionPanelView{
     public function AmmunitionPanel() {
     }
 
-    public function set data(value:Ammunition):void{
+    public function set data(value:AmmunitionInfo):void{
         refreshField(aShotsField, String(value.shots));
         refreshField(aBoostField, String(value.boost));
         refreshField(aTrapsField, String(value.traps));

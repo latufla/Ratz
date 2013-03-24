@@ -7,13 +7,13 @@
  */
 package ratz.behaviors.gameplay {
 import core.behaviors.BehaviorBase;
-import core.model.ObjectBase;
 
 import flash.geom.Point;
 import flash.utils.clearTimeout;
 import flash.utils.setTimeout;
 
 import ratz.behaviors.control.ControlBehavior;
+import ratz.model.RObjectBase;
 
 public class BoostBehavior extends BehaviorBase{
 
@@ -37,12 +37,12 @@ public class BoostBehavior extends BehaviorBase{
         if(!controlBehavior)
             return;
 
-        var obj:ObjectBase = _controller.object;
+        var obj:RObjectBase = _controller.object as RObjectBase;
         if(_applying || (controlBehavior.boost && obj.ammunition.boost > 0))
             applyBoost(obj);
     }
 
-    private function applyBoost(obj:ObjectBase):void {
+    private function applyBoost(obj:RObjectBase):void {
         obj.applyImpulse(new Point(0, -10));
 
         if(_applying)

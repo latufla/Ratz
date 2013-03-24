@@ -10,11 +10,11 @@ import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
 import core.model.ObjectBase;
 import core.utils.GuiUtil;
-import core.utils.nape.PhysEngineConnector;
 
 import flash.geom.Point;
 
 import ratz.Ratz;
+import ratz.model.RObjectBase;
 import ratz.utils.Config;
 
 public class MedkitItemBehavior extends BehaviorBase{
@@ -43,10 +43,12 @@ public class MedkitItemBehavior extends BehaviorBase{
         if(!ratC.isRat)
             return;
 
-        rat.ammunition.health += medkit.ammunition.health;
+        var r:RObjectBase = rat as RObjectBase;
+        var mk:RObjectBase = medkit as RObjectBase;
+        r.ammunition.health += mk.ammunition.health;
 
         var pos:Point = medkit.position;
-        GuiUtil.showPopupText(Ratz.STAGE, new Point(pos.x, pos.y), "+" + medkit.ammunition.health);
+        GuiUtil.showPopupText(Ratz.STAGE, new Point(pos.x, pos.y), "+" + mk.ammunition.health);
 
         Config.fieldController.remove(medkit.controller);
     }

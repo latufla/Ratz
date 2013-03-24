@@ -31,7 +31,7 @@ public class SceneController extends EventDispatcher{
 
     private var _view:ViewBase;
 
-    private var _field:RatzFieldController;
+    private var _field:RFieldController;
     private var _fieldDebugView:BitmapDebug;
 
     public function SceneController() {
@@ -85,7 +85,6 @@ public class SceneController extends EventDispatcher{
     private function onNeedLobby(data:*):void{
         DisplayObjectUtil.removeAll(_view);
 
-        trace("onNeedLobby", new Error().getStackTrace());
         if(data && data.raceInfo)
             Config.gameInfo.applyRaceInfo(data.raceInfo);
 
@@ -101,7 +100,6 @@ public class SceneController extends EventDispatcher{
         _fieldDebugView.clear();
         _fieldDebugView.flush();
 //        DisplayObjectUtil.removeAll(_view);
-        trace("onNeedRaceResult");
 //        var raceInfo:RaceInfo = RaceInfoLib.getRaceInfoByLevel(1);
 //        _view.addChild(new RaceResultView(data.raceInfo));
     }
@@ -114,7 +112,7 @@ public class SceneController extends EventDispatcher{
         _view.addChild(Config.ammunitionPanel);
 
         var raceInfo:Field = RaceInfoLib.getRaceInfoByLevel(1);
-        _field = new RatzFieldController(raceInfo);
+        _field = new RFieldController(raceInfo);
 
         _fieldDebugView = new BitmapDebug(Ratz.STAGE.stageWidth, Ratz.STAGE.stageHeight, Ratz.STAGE.color);
         _fieldDebugView.display.x = 0;

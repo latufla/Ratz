@@ -5,8 +5,8 @@
  * Time: 18:31
  * To change this template use File | Settings | File Templates.
  */
-package core.model {
-public class Ammunition {
+package ratz.model.info {
+public class AmmunitionInfo {
 
     private var _shots:int = 2;
     private var _boost:int = 2;
@@ -14,7 +14,7 @@ public class Ammunition {
 
     private var _health:int = 100;
 
-    public function Ammunition() {
+    public function AmmunitionInfo() {
     }
 
 

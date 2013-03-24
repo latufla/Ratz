@@ -10,11 +10,11 @@ import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
 import core.model.ObjectBase;
 import core.utils.GuiUtil;
-import core.utils.nape.PhysEngineConnector;
 
 import flash.geom.Point;
 
 import ratz.Ratz;
+import ratz.model.RObjectBase;
 import ratz.utils.Config;
 
 public class ShootItemBehavior extends BehaviorBase{
@@ -37,9 +37,11 @@ public class ShootItemBehavior extends BehaviorBase{
     override protected function onBeginInteraction(shot:ObjectBase, obj:ObjectBase):void{
         var ratC:ControllerBase = obj.controller;
         if(ratC.isRat){
-            obj.ammunition.health -= shot.ammunition.health;
+            var o:RObjectBase = obj as RObjectBase;
+            var s:RObjectBase = shot as RObjectBase;
+            o.ammunition.health -= s.ammunition.health;
             var pos:Point = shot.position;
-            GuiUtil.showPopupText(Ratz.STAGE, new Point(pos.x, pos.y), "-" + shot.ammunition.health, 30, 0xFF0000);
+            GuiUtil.showPopupText(Ratz.STAGE, new Point(pos.x, pos.y), "-" + s.ammunition.health, 30, 0xFF0000);
         }
 
         if(!obj.isPseudo)

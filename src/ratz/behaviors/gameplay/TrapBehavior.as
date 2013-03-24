@@ -8,7 +8,6 @@
 package ratz.behaviors.gameplay {
 import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
-import core.model.ObjectBase;
 import core.utils.nape.CustomMaterial;
 import core.utils.nape.CustomPolygon;
 import core.utils.nape.CustomShape;
@@ -18,6 +17,7 @@ import flash.utils.clearTimeout;
 import flash.utils.setTimeout;
 
 import ratz.behaviors.control.ControlBehavior;
+import ratz.model.RObjectBase;
 import ratz.utils.Config;
 
 public class TrapBehavior extends BehaviorBase{
@@ -39,16 +39,16 @@ public class TrapBehavior extends BehaviorBase{
         if(!controlBehavior)
             return;
 
-        var obj:ObjectBase = _controller.object;
+        var obj:RObjectBase = _controller.object as RObjectBase;
         if(controlBehavior.trap && obj.ammunition.traps > 0)
             applyTrap(obj);
     }
 
-    private function applyTrap(obj:ObjectBase):void {
+    private function applyTrap(obj:RObjectBase):void {
         obj.ammunition.traps--;
 
         var pos:Point = obj.localToField(new Point(0, 51));
-        var trap:ObjectBase = ObjectBase.create(pos, new <CustomShape>[new CustomPolygon(0, 0, 20, 20)], new CustomMaterial(), 1);
+        var trap:RObjectBase =RObjectBase.create(pos, new <CustomShape>[new CustomPolygon(0, 0, 20, 20)], new CustomMaterial(), 1);
         trap.ammunition.health = 30;
 
         var trapController:ControllerBase = ControllerBase.create(trap, new <BehaviorBase>[new TrapItemBehavior()]);

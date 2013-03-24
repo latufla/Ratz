@@ -8,7 +8,6 @@
 package ratz.behaviors.gameplay {
 import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
-import core.model.ObjectBase;
 import core.utils.nape.CustomMaterial;
 import core.utils.nape.CustomPolygon;
 import core.utils.nape.CustomShape;
@@ -18,6 +17,7 @@ import flash.utils.clearTimeout;
 import flash.utils.setTimeout;
 
 import ratz.behaviors.control.ControlBehavior;
+import ratz.model.RObjectBase;
 import ratz.utils.Config;
 
 public class ShootBehavior extends BehaviorBase {
@@ -38,16 +38,16 @@ public class ShootBehavior extends BehaviorBase {
         if(!controlBehavior)
             return;
 
-        var obj:ObjectBase = _controller.object;
+        var obj:RObjectBase = _controller.object as RObjectBase;
         if(controlBehavior.shoot && obj.ammunition.shots > 0)
             applyShoot(obj);
     }
 
-    private function applyShoot(obj:ObjectBase):void {
+    private function applyShoot(obj:RObjectBase):void {
         obj.ammunition.shots--;
 
         var pos:Point = obj.localToField(new Point(0, -41));
-        var shot:ObjectBase = ObjectBase.create(pos, new <CustomShape>[new CustomPolygon(0, 0, 6, 6)], new CustomMaterial(), 1);
+        var shot:RObjectBase = RObjectBase.create(pos, new <CustomShape>[new CustomPolygon(0, 0, 6, 6)], new CustomMaterial(), 1);
         shot.ammunition.health = 20;
         shot.velocity = obj.localVecToField(new Point(0, -500));
 

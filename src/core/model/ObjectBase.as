@@ -29,8 +29,6 @@ public class ObjectBase {
 
     protected var _interactionGroup:int = 1;
 
-    protected var _ammunition:Ammunition;
-
     public function ObjectBase() {
         init();
     }
@@ -40,8 +38,6 @@ public class ObjectBase {
         PhysEngineConnector.instance.setShapes(this, new <CustomShape>[DEFAULT_SHAPE]);
         PhysEngineConnector.instance.setMaterial(this, new CustomMaterial());
         PhysEngineConnector.instance.setPosition(this, DEFAULT_POSITION);
-
-        _ammunition = new Ammunition();
     }
 
     public static function create(pos:Point, shapes:Vector.<CustomShape>, material:CustomMaterial, interactionGroup:int):ObjectBase{
@@ -129,14 +125,6 @@ public class ObjectBase {
 
     public function get bounds():Rectangle{
         return PhysEngineConnector.instance.getBounds(this);
-    }
-
-    public function get ammunition():Ammunition {
-        return _ammunition;
-    }
-
-    public function set ammunition(value:Ammunition):void {
-        _ammunition = value;
     }
 
     public function get interactionGroup():int {

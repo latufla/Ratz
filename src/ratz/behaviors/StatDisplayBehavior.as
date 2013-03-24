@@ -8,6 +8,7 @@
 package ratz.behaviors {
 import core.behaviors.BehaviorBase;
 
+import ratz.model.RObjectBase;
 import ratz.utils.Config;
 
 public class StatDisplayBehavior extends BehaviorBase{
@@ -20,7 +21,7 @@ public class StatDisplayBehavior extends BehaviorBase{
 
         super.doStep();
 
-        Config.ammunitionPanel.data = _controller.object.ammunition;
+        Config.ammunitionPanel.data = (_controller.object as RObjectBase).ammunition;
     }
 }
 }

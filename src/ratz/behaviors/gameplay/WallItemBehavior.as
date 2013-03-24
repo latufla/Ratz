@@ -9,7 +9,6 @@ package ratz.behaviors.gameplay {
 import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
 import core.model.ObjectBase;
-import core.utils.nape.PhysEngineConnector;
 
 import ratz.utils.Config;
 
