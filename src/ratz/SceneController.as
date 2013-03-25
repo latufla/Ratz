@@ -136,7 +136,8 @@ public class SceneController extends EventDispatcher{
         if(!_field.view.parent)
             Config.mainScene.addChild(_field.view);
 
-        _field.doStep(e.passedTime, _fieldDebugView);
+        var passedTime:Number = e.passedTime != 0 ? e.passedTime : 0.00001;
+        _field.doStep(passedTime, _fieldDebugView);
     }
 
     public function get view():MovieClip {
